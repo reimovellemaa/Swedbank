@@ -1,1 +1,0 @@
-# Swedbank-Data-Quality-Visualization
