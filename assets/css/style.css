@@ -74,7 +74,7 @@ a, a:hover, a:focus {
 /*Theme Backgrounds*/
 
 .bg-theme {
-	background-color: #68dff0;
+	background-color: #000;
 }
 
 .bg-theme02 {
@@ -210,18 +210,18 @@ hr {
 }
 
 .bg-theme {
-	background-color: #68dff0;
+	background-color: #000;
 }
 
 ul.top-menu > li > .logout {
-	color: #f2f2f2;
+	color: #ee7023;
 	font-size: 12px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border: 1px solid #64c3c2 !important;
+	border: 1px solid #000000 !important;
 	padding: 5px 15px;
 	margin-right: 15px;
-	background: #68dff0;
+	background: #000000;
 	margin-top: 15px;
 }
 
@@ -232,11 +232,11 @@ ul.top-menu > li > .logout {
     width: 210px;
     height: 100%;
     position: fixed;
-    background: #424a5d;
+    background: #ebe7e2;
 }
 
 #sidebar h5 {
-	color: #f2f2f2;
+	color: #ee7023;
 	font-weight: 700;
 }
 
@@ -295,7 +295,7 @@ ul.sidebar-menu {
 }
 
 ul.sidebar-menu li ul.sub li{
-    background: #424a5d;
+    background: #ee7023;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
@@ -316,7 +316,7 @@ ul.sidebar-menu li ul.sub li a {
     -o-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    color: #aeb2b7;
+    color: #000000;
 }
 
 ul.sidebar-menu li ul.sub li a:hover {
@@ -325,7 +325,7 @@ ul.sidebar-menu li ul.sub li a:hover {
 }
 
 ul.sidebar-menu li ul.sub li.active a {
-    color: #68dff0;
+    color: #fff;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -350,7 +350,7 @@ ul.sidebar-menu li a span{
 }
 
 ul.sidebar-menu li a{
-    color: #aeb2b7;
+    color: #000000;
     text-decoration: none;
     display: block;
     padding: 15px 0 15px 10px;
@@ -364,7 +364,7 @@ ul.sidebar-menu li a{
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: #68dff0;
+    background: #ee7023;
     color: #fff;
     display: block;
 
@@ -413,7 +413,7 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #ffd777;
+    background: #ee7023;
     border-bottom: 1px solid #c9aa5f;
 }
 
@@ -478,13 +478,13 @@ ul.top-menu > li > a {
 }
 
 ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
-    border:1px solid #b6b6b6 !important;
+    border:1px solid #000000 !important;
     background-color: transparent !important;
-    border-color: #b6b6b6 !important;
+    border-color: #000000 !important;
     text-decoration: none;
     border-radius: 4px;
     -webkit-border-radius: 4px;
-    color: #b6b6b6 !important;
+    color: #000000 !important;
 }
 
 .notify-row .badge {
@@ -523,7 +523,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.extended li p.green {
-    background-color: #68dff0;
+    background-color: #ee7023;
     color: #fff;
 }
 
@@ -644,7 +644,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .full-width .dropdown-menu.extended.logout > li > a:hover {
     background: none !important;
-    color: #50c8ea !important;
+    color: #ee7023 !important;
 }
 
 .dropdown-menu.extended.logout > li > a:hover {
@@ -686,8 +686,8 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .top-nav .nav .caret {
-    border-bottom-color: #A4AABA;
-    border-top-color: #A4AABA;
+    border-bottom-color: #ee7023;
+    border-top-color: #ee7023;
 }
 .top-nav ul.top-menu > li > a:hover .caret {
     border-bottom-color: #000;
@@ -728,8 +728,8 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 .notify-arrow-green {
     border-color: transparent transparent #68dff0;
-    border-bottom-color: #68dff0 !important;
-    border-top-color: #68dff0 !important;
+    border-bottom-color: #000 !important;
+    border-top-color: #000 !important;
 }
 
 
@@ -781,7 +781,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 	line-height: 60px;
 	height: 60px;
 	margin: 0;
-	background: #ff865c;
+	background: #ee7023;
 	text-align: center;
 }
 
@@ -825,7 +825,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .ds a {
-	color: #68dff0;
+	color: #ee7023;
 }
 
 /* LINE ICONS CONFIGURATION */
