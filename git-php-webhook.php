@@ -16,8 +16,8 @@
   *
 **/
 // Set Variables
-$LOCAL_ROOT         = "html";
-$LOCAL_REPO_NAME    = "Swedbank";
+$LOCAL_ROOT         = "Swedbank";
+$LOCAL_REPO_NAME    = "";
 $LOCAL_REPO         = "{$LOCAL_ROOT}/{$LOCAL_REPO_NAME}";
 $REMOTE_REPO        = "https://github.com/reimovellemaa/Swedbank.git";
 $BRANCH             = "master";
