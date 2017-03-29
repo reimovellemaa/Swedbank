@@ -19,7 +19,7 @@ public class DBConnection {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
-			url = "jdbc:postgresql://52.56.206.102:5432/postgres";			
+			url = "jdbc:postgresql://52.56.213.74:5432/postgres";			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
