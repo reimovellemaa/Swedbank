@@ -4,6 +4,7 @@ getAndmed();
 
 
 
+
 function getAndmed() {
 	
 	$.ajax({
