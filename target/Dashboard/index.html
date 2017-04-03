@@ -1,380 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<script src="https://d3js.org/d3.v4.min.js"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Dashboard">
-    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+<head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Dashboard">
+<meta name="keyword"
+	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Swedbank Data Quality Visualization</title>
+<title>Swedbank Data Quality Visualization</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="assets/css/zabuto_calendar.css">
-    <link rel="stylesheet" type="text/css" href="assets/js/gritter/css/jquery.gritter.css" />
-    <link rel="stylesheet" type="text/css" href="assets/lineicons/style.css">    
-    
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="assets/css/zabuto_calendar.css">
+<link rel="stylesheet" type="text/css"
+	href="assets/js/gritter/css/jquery.gritter.css" />
+<link rel="stylesheet" type="text/css" href="assets/lineicons/style.css">
 
-    <script src="assets/js/chart-master/Chart.js"></script>
-    <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
-    <script src="assets/js/andmed.js"></script>
-    
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/style-responsive.css" rel="stylesheet">
+
+<script src="assets/js/chart-master/Chart.js"></script>
+<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script src="assets/js/andmed.js"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    
-  </head>
 
-  <body>
 
-  <section id="container" >
-      
-      
-      <!-- **********************************************************************************************************************************************************
+</head>
+
+<body>
+
+	<section id="container">
+
+
+		<!-- **********************************************************************************************************************************************************
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">        	  	
-                  <li class="mt">
-                      <a class="active" href="index.html">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Dashboard</span>
-                      </a>
-                  </li>
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<!-- sidebar menu start-->
+				<ul class="sidebar-menu" id="nav-accordion">
+					<li class="mt"><a class="active" href="index.html"> <i
+							class="fa fa-dashboard"></i> <span>Dashboard</span>
+					</a></li>
 
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-desktop"></i>
-                          <span>UI Elements</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="general.html">General</a></li>
-                          <li><a  href="buttons.html">Buttons</a></li>
-                          <li><a  href="panels.html">Panels</a></li>
-                      </ul>
-                  </li>
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-desktop"></i> <span>UI Elements</span>
+					</a>
+						<ul class="sub">
+							<li><a href="general.html">General</a></li>
+							<li><a href="buttons.html">Buttons</a></li>
+							<li><a href="panels.html">Panels</a></li>
+						</ul></li>
 
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-cogs"></i>
-                          <span>Components</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="calendar.html">Calendar</a></li>
-                          <li><a  href="gallery.html">Gallery</a></li>
-                          <li><a  href="todo_list.html">Todo List</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-book"></i>
-                          <span>Extra Pages</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="blank.html">Blank Page</a></li>
-                          <li><a  href="login.html">Login</a></li>
-                          <li><a  href="lock_screen.html">Lock Screen</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-tasks"></i>
-                          <span>Forms</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Form Components</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-th"></i>
-                          <span>Data Tables</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="basic_table.html">Basic Table</a></li>
-                          <li><a  href="responsive_table.html">Responsive Table</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span>Charts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                      </ul>
-                  </li>
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-cogs"></i> <span>Components</span>
+					</a>
+						<ul class="sub">
+							<li><a href="calendar.html">Calendar</a></li>
+							<li><a href="gallery.html">Gallery</a></li>
+							<li><a href="todo_list.html">Todo List</a></li>
+						</ul></li>
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-book"></i> <span>Extra Pages</span>
+					</a>
+						<ul class="sub">
+							<li><a href="blank.html">Blank Page</a></li>
+							<li><a href="login.html">Login</a></li>
+							<li><a href="lock_screen.html">Lock Screen</a></li>
+						</ul></li>
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-tasks"></i> <span>Forms</span>
+					</a>
+						<ul class="sub">
+							<li><a href="form_component.html">Form Components</a></li>
+						</ul></li>
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-th"></i> <span>Data Tables</span>
+					</a>
+						<ul class="sub">
+							<li><a href="basic_table.html">Basic Table</a></li>
+							<li><a href="responsive_table.html">Responsive Table</a></li>
+						</ul></li>
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class=" fa fa-bar-chart-o"></i> <span>Charts</span>
+					</a>
+						<ul class="sub">
+							<li><a href="morris.html">Morris</a></li>
+							<li><a href="chartjs.html">Chartjs</a></li>
+						</ul></li>
 
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
-      
-      <!-- **********************************************************************************************************************************************************
+				</ul>
+				<!-- sidebar menu end-->
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+		<!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-          
-          <select>
-			  <option value="estonia">Estonia</option>
-			  <option value="latvia">Latvia</option>
-			  <option value="lithuania">Lithuania</option>
-		</select>
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
 
-              
-                  
-                      
-                      <div class="row mt">
-                      <!-- SERVER STATUS PANELS -->
-                      	<div class="col-md-4 col-sm-4 mb">
-                      		<div class="white-panel pn donut-chart">
-                      			<div class="white-header">
-						  			<h5>SERVER LOAD</h5>
-                      			</div>
-								<div class="row">
-									<div class="col-sm-6 col-xs-6">
-										<p><i class="fa fa-database"></i> 70%</p>
-									</div>
-	                      		</div>
-								<canvas id="serverstatus01" height="120" width="120"></canvas>
-								<script>
-									var doughnutData = [
-											{
-												value: 70,
-												color:"#68dff0"
-											},
-											{
-												value : 30,
-												color : "#fdfdfd"
-											}
-										];
-										var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
-								</script>
-	                      	</div><! --/grey-panel -->
-                      	</div><!-- /col-md-4-->
-                      	
+				<select>
+					<option value="estonia">Estonia</option>
+					<option value="latvia">Latvia</option>
+					<option value="lithuania">Lithuania</option>
+				</select>
 
-                      	<div class="col-md-4 col-sm-4 mb">
-                      		<div class="white-panel pn">
-                      			<div class="white-header">
-						  			<h5>REFERENTIAL INTEGRITY</h5>
-                      			</div>
-								<div class="row">
-									<div class="col-sm-6 col-xs-6">
-										<p><i class="fa fa-database"></i> 90%</p>
-									</div>
-	                      		</div>
-	                      		<canvas id="serverstatus03" height="120" width="120"></canvas>
-								<script>
-									var doughnutData = [
-											{
-												value: 90,
-												color:"#68dff0"
-											},
-											{
-												value : 10,
-												color : "#fdfdfd"
-											}
-										];
-										var myDoughnut = new Chart(document.getElementById("serverstatus03").getContext("2d")).Doughnut(doughnutData);
-								</script>
-                      		</div>
-                      	</div><!-- /col-md-4 -->
-                      	
-                      	<div class="col-md-4 col-sm-4 mb">
-                      		<div class="white-panel pn">
-                      			<div class="white-header">
-						  			<h5>COMPLETNESS</h5>
-                      			</div>
-                      			<div class="row">
-									<div class="col-sm-6 col-xs-6">
-									<p><i class="fa fa-database"></i> 97%</p>
-									</div>
-								</div>
-								<canvas id="serverstatus04" height="120" width="120"></canvas>
-								<script>
-									var doughnutData = [
-											{
-												value: 97,
-												color:"#68dff0"
-											},
-											{
-												value : 3,
-												color : "#444c57"
-											}
-										];
-										var myDoughnut = new Chart(document.getElementById("serverstatus04").getContext("2d")).Doughnut(doughnutData);
-								</script>
-	                      		</div>
-                      		</div>
-                      	</div><!-- /col-md-4 -->
-                      	
-                      	
 
-                    </div><!-- /row -->
-                    
-                    				
-					<div class="row">
-						<!-- TWITTER PANEL -->
-						<div class="col-md-4 mb">
-                      		<div class="darkblue-panel pn">
-                      			<div class="darkblue-header">
-						  			<h5>CONSISTENCY</h5>
-                      			</div>
-                      			<div class="row">
-									<div class="col-sm-6 col-xs-6"></div>
-									<p><i class="fa fa-database"></i> 95%</p>
-								</div>
-								<canvas id="serverstatus02" height="120" width="120"></canvas>
-								<script>
-									var doughnutData = [
-											{
-												value: 95,
-												color:"#68dff0"
-											},
-											{
-												value : 5,
-												color : "#444c57"
-											}
-										];
-										var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
-								</script>
-								<p>April 3, 2017</p>
-                      		</div><! -- /darkblue panel -->
-						</div><!-- /col-md-4 -->
-						
-						
-						<div class="col-md-4 col-sm-4 mb">
-							<!-- REVENUE PANEL -->
-							<div class="darkblue-panel pn">
-								<div class="darkblue-header">
-									<h5>CONFORMANCE</h5>
-								</div>
-								<div class="row">
-									<div class="col-sm-6 col-xs-6"></div>
-									<p><i class="fa fa-database"></i> 89%</p>
-								</div>
-								<canvas id="serverstatus05" height="120" width="120"></canvas>
-								<script>
-									var doughnutData = [
-											{
-												value: 89,
-												color:"#68dff0"
-											},
-											{
-												value : 11,
-												color : "#444c57"
-											}
-										];
-										var myDoughnut = new Chart(document.getElementById("serverstatus05").getContext("2d")).Doughnut(doughnutData);
-								</script>
+
+				<script>
+// siin toimub võlukunst------------------------------------------
+					var xhReq = new XMLHttpRequest();
+					xhReq.open("GET", "rest/andmed/getKPI", false);
+					xhReq.send(null);
+					var jsonObject = JSON.parse(xhReq.responseText);
+//----------------------------------------------------------------
+				</script>
+				<div class="row mt">
+					<!-- SERVER STATUS PANELS -->
+					<div class="col-md-4 col-sm-4 mb">
+						<div class="white-panel pn donut-chart">
+							<div class="white-header">
+								<h5 id = "kpiTitle">Server load</h5>
 							</div>
-						</div><!-- /col-md-4 -->
-						
-						<div class="col-md-4 col-sm-4 mb">
-							<!-- REVENUE PANEL -->
-							<div class="darkblue-panel pn">
-								<div class="darkblue-header">
-									<h5>UNIQUENESS</h5>
+							<div class="row">
+								<div class="col-sm-6 col-xs-6">
+									<p id="kpiPercent">
+										<i class="fa fa-database"></i> 70%
+									</p>
 								</div>
-								<div class="row">
-									<div class="col-sm-6 col-xs-6"></div>
-									<p><i class="fa fa-database"></i> 99%</p>
-								</div>
-								<canvas id="serverstatus06" height="120" width="120"></canvas>
-								<script>
-									var doughnutData = [
-											{
-												value: 99,
-												color:"#68dff0"
-											},
-											{
-												value : 1,
-												color : "#444c57"
-											}
-										];
-										var myDoughnut = new Chart(document.getElementById("serverstatus06").getContext("2d")).Doughnut(doughnutData);
-								</script>
-								
 							</div>
-						</div><!-- /col-md-4 -->
-						
-					</div><!-- /row -->
-					
-					<div class="row mt">
-                      <!--CUSTOM CHART START -->
-                      <div class="border-head">
-                          <h3>TIMELINE</h3>
-                      </div>
-                      <div class="custom-bar-chart">
-                          <ul class="y-axis">
-                              <li><span>10.000</span></li>
-                              <li><span>8.000</span></li>
-                              <li><span>6.000</span></li>
-                              <li><span>4.000</span></li>
-                              <li><span>2.000</span></li>
-                              <li><span>0</span></li>
-                          </ul>
-                         
-                       
-                              <div class="chart mt">
-									<div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#000" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+							<canvas id="serverstatus01" height="120" width="120"></canvas>
+
+							<script>
+//json objektist võtab kpi väärtuse
+								document.getElementById("kpiPercent").innerHTML = JSON.stringify(jsonObject.kpi)+ "%";
+//json objektist võtab servicename väärtuse
+                              document.getElementById("kpiTitle").innerHTML = JSON.stringify(jsonObject.serviceName);
+                        
+								var doughnutData = [ {
+                                    //paneb jsonobjekti kpi key väärtuse sõõriku valueks
+									value : parseInt(jsonObject.kpi),
+									color : "#68dff0"
+								}, {
+									value : 100 - parseInt(jsonObject.kpi),
+									color : "#fdfdfd"
+								} ];
+								var myDoughnut = new Chart(document
+										.getElementById("serverstatus01")
+										.getContext("2d"))
+										.Doughnut(doughnutData);
+							</script>
+						</div>
+						<! --/grey-panel -->
+					</div>
+					<!-- /col-md-4-->
+
+
+					<div class="col-md-4 col-sm-4 mb">
+						<div class="white-panel pn">
+							<div class="white-header">
+								<h5>REFERENTIAL INTEGRITY</h5>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-xs-6">
+									<p>
+										<i class="fa fa-database"></i> 90%
+									</p>
 								</div>
-                         
-                          
-                      </div>
-                      <!--custom chart end-->
-					</div><!-- /row -->	
-					
-                  </div><!-- /col-lg-9 END SECTION MIDDLE -->
-                  
-                  
-     
+							</div>
+							<canvas id="serverstatus03" height="120" width="120"></canvas>
+							<script>
+								var doughnutData = [ {
+									value : 90,
+									color : "#68dff0"
+								}, {
+									value : 10,
+									color : "#fdfdfd"
+								} ];
+								var myDoughnut = new Chart(document
+										.getElementById("serverstatus03")
+										.getContext("2d"))
+										.Doughnut(doughnutData);
+							</script>
+						</div>
+					</div>
+					<!-- /col-md-4 -->
 
-      <!--main content end-->
-  </section>
+					<div class="col-md-4 col-sm-4 mb">
+						<div class="white-panel pn">
+							<div class="white-header">
+								<h5>COMPLETNESS</h5>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-xs-6">
+									<p>
+										<i class="fa fa-database"></i> 97%
+									</p>
+								</div>
+							</div>
+							<canvas id="serverstatus04" height="120" width="120"></canvas>
+							<script>
+								var doughnutData = [ {
+									value : 97,
+									color : "#68dff0"
+								}, {
+									value : 3,
+									color : "#444c57"
+								} ];
+								var myDoughnut = new Chart(document
+										.getElementById("serverstatus04")
+										.getContext("2d"))
+										.Doughnut(doughnutData);
+							</script>
+						</div>
+					</div>
+				</div>
+				<!-- /col-md-4 -->
 
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/jquery-1.8.3.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-    <script src="assets/js/jquery.sparkline.js"></script>
 
 
-    <!--common script for all pages-->
-    <script src="assets/js/common-scripts.js"></script>
-    
-    <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
-    <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
+				</div>
+				<!-- /row -->
 
-    <!--script for this page-->
-    <script src="assets/js/sparkline-chart.js"></script>    
-	<script src="assets/js/zabuto_calendar.js"></script>	
 
-	
-	
-	
-	<script type="application/javascript">
+				<div class="row">
+					<!-- TWITTER PANEL -->
+					<div class="col-md-4 mb">
+						<div class="darkblue-panel pn">
+							<div class="darkblue-header">
+								<h5>CONSISTENCY</h5>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-xs-6"></div>
+								<p>
+									<i class="fa fa-database"></i> 95%
+								</p>
+							</div>
+							<canvas id="serverstatus02" height="120" width="120"></canvas>
+							<script>
+								var doughnutData = [ {
+									value : 95,
+									color : "#68dff0"
+								}, {
+									value : 5,
+									color : "#444c57"
+								} ];
+								var myDoughnut = new Chart(document
+										.getElementById("serverstatus02")
+										.getContext("2d"))
+										.Doughnut(doughnutData);
+							</script>
+							<p>April 3, 2017</p>
+						</div>
+						<! -- /darkblue panel -->
+					</div>
+					<!-- /col-md-4 -->
+
+
+					<div class="col-md-4 col-sm-4 mb">
+						<!-- REVENUE PANEL -->
+						<div class="darkblue-panel pn">
+							<div class="darkblue-header">
+								<h5>CONFORMANCE</h5>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-xs-6"></div>
+								<p>
+									<i class="fa fa-database"></i> 89%
+								</p>
+							</div>
+							<canvas id="serverstatus05" height="120" width="120"></canvas>
+							<script>
+								var doughnutData = [ {
+									value : 89,
+									color : "#68dff0"
+								}, {
+									value : 11,
+									color : "#444c57"
+								} ];
+								var myDoughnut = new Chart(document
+										.getElementById("serverstatus05")
+										.getContext("2d"))
+										.Doughnut(doughnutData);
+							</script>
+						</div>
+					</div>
+					<!-- /col-md-4 -->
+
+					<div class="col-md-4 col-sm-4 mb">
+						<!-- REVENUE PANEL -->
+						<div class="darkblue-panel pn">
+							<div class="darkblue-header">
+								<h5>UNIQUENESS</h5>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-xs-6"></div>
+								<p>
+									<i class="fa fa-database"></i> 99%
+								</p>
+							</div>
+							<canvas id="serverstatus06" height="120" width="120"></canvas>
+							<script>
+								var doughnutData = [ {
+									value : 99,
+									color : "#68dff0"
+								}, {
+									value : 1,
+									color : "#444c57"
+								} ];
+								var myDoughnut = new Chart(document
+										.getElementById("serverstatus06")
+										.getContext("2d"))
+										.Doughnut(doughnutData);
+							</script>
+
+						</div>
+					</div>
+					<!-- /col-md-4 -->
+
+				</div>
+				<!-- /row -->
+
+				<div class="row mt">
+					<!--CUSTOM CHART START -->
+					<div class="border-head">
+						<h3>TIMELINE</h3>
+					</div>
+					<div class="custom-bar-chart">
+						<ul class="y-axis">
+							<li><span>10.000</span></li>
+							<li><span>8.000</span></li>
+							<li><span>6.000</span></li>
+							<li><span>4.000</span></li>
+							<li><span>2.000</span></li>
+							<li><span>0</span></li>
+						</ul>
+
+
+						<div class="chart mt">
+							<div class="sparkline" data-type="line" data-resize="true"
+								data-height="75" data-width="90%" data-line-width="1"
+								data-line-color="#000" data-spot-color="#fff" data-fill-color=""
+								data-highlight-line-color="#fff" data-spot-radius="4"
+								data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+						</div>
+
+
+					</div>
+					<!--custom chart end-->
+				</div>
+				<!-- /row -->
+
+				</div>
+				<!-- /col-lg-9 END SECTION MIDDLE -->
+
+
+
+
+				<!--main content end-->
+			</section>
+
+			<!-- js placed at the end of the document so the pages load faster -->
+			<script src="assets/js/jquery.js"></script>
+			<script src="assets/js/jquery-1.8.3.min.js"></script>
+			<script src="assets/js/bootstrap.min.js"></script>
+			<script class="include" type="text/javascript"
+				src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+			<script src="assets/js/jquery.scrollTo.min.js"></script>
+			<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+			<script src="assets/js/jquery.sparkline.js"></script>
+
+
+			<!--common script for all pages-->
+			<script src="assets/js/common-scripts.js"></script>
+
+			<script type="text/javascript"
+				src="assets/js/gritter/js/jquery.gritter.js"></script>
+			<script type="text/javascript" src="assets/js/gritter-conf.js"></script>
+
+			<!--script for this page-->
+			<script src="assets/js/sparkline-chart.js"></script>
+			<script src="assets/js/zabuto_calendar.js"></script>
+
+
+
+
+			<script type="application/javascript">
+				
+				
         $(document).ready(function () {
             $("#date-popover").popover({html: true, trigger: "manual"});
             $("#date-popover").hide();
@@ -407,8 +435,8 @@
             var to = $("#" + id).data("to");
             console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
         }
-    </script>
-  
-
-  </body>
+    
+			
+			</script>
+</body>
 </html>
