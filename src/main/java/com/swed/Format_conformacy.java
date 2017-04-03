@@ -1,15 +1,16 @@
 package com.swed;
 
+
 public class Format_conformacy {
 	 public Format_conformacy() {}
-	 private int kpi=0;
+	 private long kpi= 0;
 	 private String serviceName="";
 	 private String validationRuleComment="";
 
-     public int getKPI() {
+     public long getKPI() {
          return this.kpi;
      }
-     public void setKPI(int value) {
+     public void setKPI(long value) {
          this.kpi=value;
      }
      public String getServiceName(){
