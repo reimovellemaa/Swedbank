@@ -134,7 +134,32 @@ public class AndmedDAO {
 		String jsonInString = "";
 		ResultSet rs = null;
 		Statement stmt = null;
-
+		String query = "SELECT distinct dim2.expected_result_cnt,"
+				+ " dim2.validation_rule_comment,"
+				+ " f.validation_rule_id,"
+				+ " dim2.quality_metric_type_name,"
+				+ " f.fact_row_no,"
+				+ " dim1.service_main_group_name,"
+				+ " f.fact_col_no,"
+				+ " dim2.expected_result_amt,"
+				+ " f.measure_amt,"
+				+ " f.measure_cnt,"
+				+ " dim1.service_domain_name,"
+				+ " dim2.since201702_metric_cnt,"
+				+ " dim2.expected_result_cnt,"
+				+ " dim1.service_domain_name,"
+			+	 " f.measure_fact_date"
+			+	" FROM mesa.PL_MEASURE_FACT_PRT f"
+			+	" INNER JOIN mesa.PL_SERVICE_PRT dim1"
+			+	" ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"
+			+	" INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2"
+			+	" ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id)"
+			+	" WHERE f.country_shortname ='GR'"
+			+	" --AND dim2.quality_metric_categ_shortname='DQERR'"
+			+	" AND dim2.quality_metric_type_code='3'"
+			+	" AND f.fact_row_no ='1'"
+			+	" AND f.fact_col_no ='20'"
+			+	" AND f.validation_rule_id='2738'";
 		try {
 			conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
@@ -143,19 +168,7 @@ public class AndmedDAO {
 			Random randomGenerator = new Random();
 			int randomInt = randomGenerator.nextInt(10000);
 
-			// ResultSet rs = stmt.executeQuery( "SELECT DISTINCT
-			// dim2.expected_result_cnt,dim2.validation_rule_comment,dim2.quality_metric_type_name,f.fact_row_no,dim1.service_main_group_name,f.fact_col_no,dim2.expected_result_amt,f.measure_amt,dim1.service_domain_name,
-			// dim2.since201702_metric_cnt,
-			// dim2.expected_result_cnt,dim1.service_domain_name,f.measure_fact_date
-			// FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT
-			// dim1 ON (f.validation_service_shortname =
-			// dim1.Service_Component_ShortName) INNER JOIN
-			// mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id =
-			// dim2.Validation_Rule_Id) WHERE f.country_shortname='EE' AND
-			// dim2.quality_metric_categ_shortname='DQKPI' AND
-			// f.fact_row_no='10' AND f.fact_col_no='7' ;" );
-			rs = stmt.executeQuery(
-					"SELECT distinct dim2.expected_result_cnt, dim2.validation_rule_comment, f.validation_rule_id,  dim2.quality_metric_type_name,  f.fact_row_no,  dim1.service_main_group_name,  f.fact_col_no,  dim2.expected_result_amt,f.measure_amt, f.measure_cnt,  dim1.service_domain_name,  dim2.since201702_metric_cnt,  dim2.expected_result_cnt,  dim1.service_domain_name, f.measure_fact_date FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname ='GR' --AND dim2.quality_metric_categ_shortname='DQERR' AND dim2.quality_metric_type_code='3' AND f.fact_row_no ='1' AND f.fact_col_no ='20' AND f.validation_rule_id='2738'");
+			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				// int numColumns = rs.getColumnCount();
 
@@ -177,9 +190,13 @@ public class AndmedDAO {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
+			if (stmt != null) { 
+				stmt.close(); 
+			}
+			if (rs != null) { 
+				rs.close(); 
+			}
 			DBConnection.close(conn);
-			rs.close();
-			stmt.close();
 		}
 
 		return jsonInString;
