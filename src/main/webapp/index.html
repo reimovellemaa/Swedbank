@@ -19,8 +19,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="/css/loader.css">
 <!--http://blocks.org/mccannf/1629644-->
 	
 	<script>
@@ -124,7 +126,7 @@
 									    if(count===3){
 									    	 var divTag = "divMap_" + new Date().getTime().toString();
 								        	   container =   angular.element(document.querySelector("#container"));
-									           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 25%;"><div id="'+divTag+'""></div></div>')(container);
+									           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="'+divTag+'""></div></div>')(container);
 									           container.prepend(childNode);
 								        	   mapChart(divTag,country,measures,json[i-1].qualityMetricTypeComment);
 									    	  count=0;
@@ -455,6 +457,8 @@ li a:hover:not(.active) {
 		</select>
 	<p id="demo"></p>
     <button add-div>Click Me</button>
+    <div class="loader"></div>
+    
   	   <div ng-app="test" ng-controller="testCtrl">
         <div id="container"></div>
         </div>

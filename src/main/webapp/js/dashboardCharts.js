@@ -5,13 +5,16 @@ function mapChart(divTag,country,measures,extrainfo){
 				    type: 'scattergeo',
 				    mode: 'markers+text',
 				    locations: country,
+				    z:measures,
+				    text:measures,
 				    marker: {
-				        size: [10, 30, 15, 10],
-				        color: [10, 20, 40, 50],
+				        size: 30,
+				        color:measures,
 				        cmin: 0,
 				        cmax: 100,
-				        hoverinfo: 'label+percent',
-				        colorscale: 'Greens',
+				        cauto: false,
+				        hoverinfo: 'label+text',
+				        colorscale: [['0','rgb(239,35,35)'], ['1',' rgb(53,183,20)']],
 				        colorbar: {
 				            title: 'Completeness',
 				            ticksuffix: '%',
@@ -29,14 +32,17 @@ function mapChart(divTag,country,measures,extrainfo){
 				    	title:extrainfo,
 						'geo': {
 				        'scope': 'europe',
-				        'resolution': 1000
+				        'resolution': 1000,
+				         projection: {
+				              type: 'robinson'
+				          }
 				    }
 				};
 
 			
 
 
-			      Plotly.plot(divTag, data, layout, {showLink: false});
+			      Plotly.plot(divTag, data, layout, {showLink: true});
 				
 				
 			}
