@@ -13,8 +13,7 @@
   <script src="js/app-ajax.js" type="text/javascript"></script>
   <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script type="text/javascript" src="js/gauge.js"></script>
-  <script type="text/javascript" src="js/charts.js"></script>
+  <script type="text/javascript" src="js/dashboardCharts.js"></script>
   <script type="text/javascript" src="js/draggable.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
@@ -76,7 +75,9 @@
 			           
 			           var ecountry = document.getElementById("CountrySelect");
 			           var country = ecountry.options[ecountry.selectedIndex].text;
-			           
+			           if(country==="All"){
+			        	   country="GR";
+			           }
 			           var eMetricType = document.getElementById("MetricType");
 			           var MetricType =eMetricType.options[eMetricType.selectedIndex].text;
 			           
@@ -190,7 +191,99 @@
 			           
 				        });
 			           }
-			           if(strUser=="Circle"){
+ 						 if(strUser=="Line"){
+			        	   
+			        	   $.get('rest/andmed/getBarData', {
+				               metric_categ:MetricType,
+				               service_group_name:serviceGroupName,
+				               country:country,
+				               metric_name:qualityMetricName,
+				               date1:date1,
+				               date2:date2
+				        }, function(responseText) {
+				        
+				                 //  var dd = JSON.parse(result);
+				                 var dataX=[];
+				                 var dataY=[];
+								 var extraInfo=[];
+
+								 var json = jQuery.parseJSON(responseText);
+					        	 if (json.length>0) {
+		              
+							               for(var i = 0; i < json.length; i++) {
+												    var obj = json[i];
+													dataX.push(obj.measure_date);
+													dataY.push(obj.measure_amt);
+													extraInfo.push(obj.service_main_group_name);
+													
+													 
+													
+										  }
+							            
+							               var divTag = "divBar_" + new Date().getTime().toString();
+							        	   container =   angular.element(document.querySelector("#container"));
+								           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="'+divTag+'""></div></div>')(container);
+								           container.prepend(childNode);
+								       	   lineChart(divTag,dataX,dataY);
+				        		   
+								       	 document.getElementById("demo").innerHTML ="";
+				        	 }else{
+				        		 
+				        		 document.getElementById("demo").innerHTML ="No result";
+				        	 }
+			        	   
+			           
+				        });
+			           }
+ 						 if(strUser=="Heat map"){
+ 				        	   
+ 				        	   $.get('rest/andmed/getHeatMapData', {
+ 					               metric_categ:MetricType,
+ 					               service_group_name:serviceGroupName,
+ 					               country:country,
+ 					               metric_name:qualityMetricName,
+ 					               date1:date1,
+ 					               date2:date2
+ 					        }, function(responseText) {
+ 					        
+ 					                 //  var dd = JSON.parse(result);
+ 					                 var dataX=[];
+ 					                 var dataY=[];
+ 					               	 var dataZ=[];
+ 					               	 var dataZFull=[];
+ 									 var extraInfo=[];
+
+ 									 var json = jQuery.parseJSON(responseText);
+ 						        	 if (json.length>0) {
+ 			              
+ 								               for(var i = 0; i < json.length; i++) {
+ 													    var obj = json[i];
+ 														dataX.push(obj.qualityMetricTypeComment);
+ 														dataZFull.push(dataZ.push(obj.measure_amt));
+ 														dataY.push(obj.qualityMetricTypeName);
+ 														extraInfo.push(obj.service_main_group_name);
+ 													
+ 														
+ 														 
+ 														
+ 											  }
+ 								               
+ 								               var divTag = "divBar_" + new Date().getTime().toString();
+ 								        	   container =   angular.element(document.querySelector("#container"));
+ 									           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><div id="'+divTag+'""></div></div>')(container);
+ 									           container.prepend(childNode);
+ 									       	   heatMap(divTag,dataX,dataY,dataZ,serviceGroupName);
+ 					        		   
+ 									       	 document.getElementById("demo").innerHTML ="";
+ 					        	 }else{
+ 					        		 
+ 					        		 document.getElementById("demo").innerHTML ="No result";
+ 					        	 }
+ 				        	   
+ 				           
+ 					        });
+ 				           }
+			           if(strUser=="Donut"){
 				        	   
 				        	 $.get('rest/andmed/getDonutData', {
 					               metric_categ:MetricType,
@@ -236,15 +329,14 @@
 			 
 			   
 			});
-	    
-			
+		
 			</script>
 			<style>
 			.box {
     border: 1px solid black;
-    height: 500px;
+    height: 400px;
     float:left;
-    width:500px;
+    width:400px;
     
 }
 header img {
@@ -301,27 +393,26 @@ li a:hover:not(.active) {
 	</ul>
   <div ng-controller="firstCtrl" style="margin-left:25%;padding:1px 16px;height:1000px;" >
   
-  	<p>Date: <input type="text" id="date1"></p>
-	<p>Between: <input type="text" id="date2"></p>
+  	<p>Date: <input type="text" id="date1" value="2016-11-01"></p>
+	<p>Between: <input type="text" id="date2" value="2017-11-01"></p>
      Chart:  <select id="ChartSelect">
 			  <option value="ChartType">Bar</option>
-			  <option value="ChartType">Pie</option>
 			  <option value="ChartType">Line</option>
 			  <option value="ChartType">Heat map</option>
 			  <option value="ChartType">Map</option>
-			  <option value="ChartType">Circle</option>
+			  <option value="ChartType"  selected>Donut</option>
 		</select>
    	Country:<select id="CountrySelect">
-			  <option value="CountryType">EE</option>
+			  <option value="CountryType"  selected>EE</option>
 			  <option value="CountryType">LT</option>
 			  <option value="CountryType">LI</option>
-			  <option value="CountryType">GR</option>
+			  <option value="CountryType">All</option>
 	
 		</select>
 	Service rule
 	    <select id="Quality_metric_type_name">
 			  <option value="name">CLARITY</option>
-			  <option value="name">COMPLETENESS</option>
+			  <option value="name"  selected>COMPLETENESS</option>
 			  <option value="name">FORMAT  CONFORMANCY</option>
 			  <option value="name">UNIQUE IDENTIFIABILITY</option>
 			  <option value="name">REFERENTIAL INTEGRITY</option>
@@ -342,7 +433,7 @@ li a:hover:not(.active) {
 			  <option value="Service">Customer Management</option>
 			  <option value="Service">Data in - External companies</option>
 			  <option value="Service">DW Application </option>
-			  <option value="Service">BB Data Warehouse</option>
+			  <option value="Service"  selected>BB Data Warehouse</option>
 			  <option value="Service">BI Infrastructure</option>
 			  <option value="Service">Data in - Manual preparation </option>
 			  <option value="Service">BI Common Analytical Services</option>
@@ -355,8 +446,9 @@ li a:hover:not(.active) {
 		</select>
 	Metric type
 	    <select id="MetricType">
-			  <option value="Rule">DQKPI</option>
+			  <option value="Rule"  selected>DQKPI</option>
 			  <option value="Rule">DQERR</option>
+			  <option value="Rule">DQPRF</option>
 			  <option value="Rule">NA</option>
 	
 	

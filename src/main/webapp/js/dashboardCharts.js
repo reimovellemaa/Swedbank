@@ -45,13 +45,16 @@ function mapChart(divTag,country,measures,extrainfo){
 			
 			function circleChart(divTag,value,serviceName,country,dqName,info,categType){
 				
+			    if(country==="GR"){
+		        	   country="All";
+		        }
 				 
 				var data = [{
-					  values: [100-value,value],
-					  labels: ['UNCOMPLETENESS',dqName],
-					  marker:{  colors:['rgb(215, 56, 24)']},
+					  values: [value],
+					  labels: [dqName],
+					  marker:{  colors:['rgb(122, 181, 87)']},
 					  domain: {
-					    x: [0, .55]
+					    x: [0, .65]
 					  },
 					  name: categType,
 					  hoverinfo: 'label+percent+name+text',
@@ -61,8 +64,8 @@ function mapChart(divTag,country,measures,extrainfo){
 
 					var layout = {
 					  title: serviceName+" "+country+"<br>"+info,
-					  height: 500,
-					  width: 500
+					  height: 300,
+					  width: 400
 					
 					  
 					};
@@ -99,28 +102,90 @@ function mapChart(divTag,country,measures,extrainfo){
 				
 			}
 			<!-- Line chart-->
-			function lineChart(){		
+			function lineChart(divTag,dataX,dataY){		
 				var data = [
 					  {
-					    x: ['2013-10-04 22:23:00', '2013-11-04 22:23:00', '2013-12-04 22:23:00'],
-					    y: [1, 3, 6],
+					    x: dataX,
+					    y: dataY,
 					    type: 'scatter'
 					  }
 					];
-				Plotly.newPlot('timeSeries', data);
+				Plotly.newPlot(divTag,data);
 			}
 			
 			<!-- Heatmap chart-->
-			function heatMap(){
+			function heatMap(divTag,xValues,yValues,zValues,serviceGroupName){
 				
-				var data = [
-					  {
-					    z: [[1, 20, 30], [20, 1, 60], [30, 60, 1]],
-					    type: 'heatmap'
-					  }
-					];
+				var xValues =xValues;
 
-					Plotly.plot('myDiv', data);
+				var yValues =yValues;
+
+				var zValues = zValues;
+				var colorscaleValue = [
+				  [0, '#3D9970'],
+				  [1, '#001f3f']
+				];
+
+				var data = [{
+				  x: xValues,
+				  y: yValues,
+				  z: zValues,
+				  type: 'heatmap',
+				  colorscale: colorscaleValue,
+				  showscale: true
+				}];
+
+				var layout = {
+				  title: serviceGroupName,
+				  annotations: [],
+				  xaxis: {
+				    ticks: '',
+				    side: 'top'
+				  },
+				  yaxis: {
+				    ticks: '',
+				    ticksuffix: ' ',
+				    width: 700,
+				    height: 700,
+				    autosize: true
+				  }
+				};
+
+				for ( var i = 0; i < yValues.length; i++ ) {
+					
+				
+					
+				    var currentValue = zValues[i];
+				    var zVal=zValues[i];
+				    if (currentValue >50) {
+				      var textColor = 'white';
+				    }else{
+				      var textColor = 'black';
+				    }
+				   
+				    
+				    var result = {
+				      xref: 'x1',
+				      yref: 'y1',
+				      x: xValues[i],
+				      y: yValues[i],
+				      text: zVal,
+				      font: {
+				        family: 'Arial',
+				        size: 12,
+				        color: 'rgb(50, 171, 96)'
+				      },
+				      showarrow: false,
+				      font: {
+				        color: textColor
+				      }
+				    };
+				    layout.annotations.push(result);
+				    
+				  
+				}
+
+				Plotly.newPlot(divTag, data, layout);
 			}
 			
 			
