@@ -153,7 +153,7 @@ function mapChart(divTag,country,measures,extrainfo){
 
 				for ( var i = 0; i < yValues.length; i++ ) {
 					
-				
+					//From O(n pow 3) to O(n) if needed could make it O(n log n) with divide and conguer
 					
 				    var currentValue = zValues[i];
 				    var zVal=zValues[i];
