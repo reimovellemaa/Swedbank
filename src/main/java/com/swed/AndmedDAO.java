@@ -107,6 +107,7 @@ public class AndmedDAO {
 		 	
 		 		QualityModel model=new QualityModel();
 		 		model.setMeasureAmt(rs.getInt("average_amt"));
+		 		model.setQualityMetricType(rs.getString("quality_metric_type_name"));
 		 		model.setServiceMainGroupName(rs.getString("service_main_group_name"));
 		 		model.setDate(rs.getString("measure_fact_date"));
 		 		String country=rs.getString("country_shortname");

@@ -1,4 +1,4 @@
-function mapChart(divTag,country,measures,extrainfo){
+function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 				
 			
 				var data = [{
@@ -8,7 +8,7 @@ function mapChart(divTag,country,measures,extrainfo){
 				    z:measures,
 				    text:measures,
 				    marker: {
-				        size: 30,
+				        size: 25,
 				        color:measures,
 				        cmin: 0,
 				        cmax: 100,
@@ -16,7 +16,7 @@ function mapChart(divTag,country,measures,extrainfo){
 				        hoverinfo: 'label+text',
 				        colorscale: [['0','rgb(239,35,35)'], ['1',' rgb(53,183,20)']],
 				        colorbar: {
-				            title: 'Completeness',
+				            title: metricTypeName,
 				            ticksuffix: '%',
 				            showticksuffix: 'first'
 				        },
@@ -143,6 +143,13 @@ function mapChart(divTag,country,measures,extrainfo){
 
 				var layout = {
 				  title: serviceGroupName,
+				  margin: {
+					   l: 220,
+					    r: 80,
+					    b: 80,
+					    t: 170,
+					    pad: 0
+					  },
 				  annotations: [],
 				  xaxis: {
 				    ticks: '',
