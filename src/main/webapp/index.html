@@ -187,7 +187,7 @@
 
                                     var divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 25%;"><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
 
@@ -403,7 +403,7 @@
 			class="label label-danger" style="float: right;">0</span></a> <a href="homeDashboard.html">Home</a>
             </div>
             <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
-
+			
                 <p>
                     Date: <input type="text" id="date1" value="2016-11-01">
                 </p>

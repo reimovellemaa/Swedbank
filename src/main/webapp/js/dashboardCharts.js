@@ -42,7 +42,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 			
 
 
-			      Plotly.plot(divTag, data, layout, {showLink: true});
+			      Plotly.plot(divTag, data, layout, {showLink: false});
 				
 				
 			}
@@ -54,7 +54,15 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 			    if(country==="GR"){
 		        	   country="All";
 		        }
-				 
+				if(categType==="DQERR"){
+					if(value>0){
+						value=value-100;
+					}else{
+						value=100;
+					}					
+				}
+			    
+			    
 				var data = [{
 					  values: [value],
 					  labels: [dqName],
@@ -71,7 +79,8 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 					var layout = {
 					  title: serviceName+" "+country+"<br>"+info,
 					  height: 300,
-					  width: 400
+					  width: 500,
+					 
 					
 					  
 					};

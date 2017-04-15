@@ -52,8 +52,18 @@ public class AndmedDAO {
 		String jsonResult="";
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
+		String measure_type="measure_amt";
+		if(categ_metric.equals("DQKPI")){
+			measure_type="measure_amt";
 
-		String queryString="SELECT AVG(f.measure_amt) as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+
+		}else{
+
+			measure_type="measure_cnt";
+		}
+		
+		
+		String queryString="SELECT AVG(f."+measure_type+") as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='EE'"
 				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name";
@@ -153,7 +163,8 @@ public class AndmedDAO {
 				+"(f.Validation_Rule_Id = dim2.Validation_Rule_Id)"
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"WHERE f.country_shortname='"+country_shortname+"' AND dim2.quality_metric_type_name='"+metric_type+"'"
-				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  dim1.service_main_group_name='"+service_group_name+"' ORDER BY "+measure_type+" ASC"; 
+				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND "
+				+" dim1.service_main_group_name='"+service_group_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' ORDER BY "+measure_type+" ASC"; 
 
 
 		System.out.println(queryString);
