@@ -14,209 +14,211 @@ import com.swed.Models.QualityModel;
 
 
 public class AndmedDAO {
-		
+
 	public String getAndmed(){
-		
+
 		String andmed = "tere fail";
 		Connection conn = null;
-        
-        try {
-        	conn = DBConnection.getConnection();          
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from mesa.pl_measure_fact_prt where object_name = 'OBJECT_22065' and measure_fact_date = '2017-02-22' and measure_group_id = '49808'");
-            
-            rs.next();
-            andmed = rs.getString(2);
-      
-//            while (rs.next())
-//            {
-//                System.out.print("Column 1 returned ");
-//                System.out.println(rs.getString(1));
-//                
-//            }
-            rs.close();
-            st.close();
-        	
-        }catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+
+		try {
+			conn = DBConnection.getConnection();          
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("select * from mesa.pl_measure_fact_prt where object_name = 'OBJECT_22065' and measure_fact_date = '2017-02-22' and measure_group_id = '49808'");
+
+			rs.next();
+			andmed = rs.getString(2);
+
+			rs.close();
+			st.close();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			DBConnection.close(conn);
 		}
-        return andmed;
-    }
-	
-	
-	
-	 
-	 
-	 
-	 public String getKPIQuery1(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
-			ArrayList responseArray = new ArrayList();
-			 Connection conn = DBConnection.getConnection();
-		    	Statement stmt = null;
-		    	String jsonResult="";
-		    	stmt = conn.createStatement();
-		    	Gson gson = new GsonBuilder().create();
-		 	     
-		    String queryString="SELECT AVG(f.measure_amt) as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
-						  +"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
-						  +"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='EE'"
-						  +"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name";
-		    
-		     System.out.println("IS HERE");
-		     System.out.println(queryString);
-		 	ResultSet rs = stmt.executeQuery(queryString);
-		 	while(rs.next()) {
-		 	 
-		 	  
-		 		QualityModel model=new QualityModel();
-		 		model.setMeasureAmt(rs.getInt("average_amt"));
-		 		model.setServiceMainGroupName(rs.getString("service_main_group_name"));
-		 		model.setDate(rs.getString("measure_fact_date"));
-		 		model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
-		 		
-		 	
-		 		responseArray.add(model);
-		 	}
-		 	 jsonResult = gson.toJson(responseArray);
-		     rs.close();
-		     stmt.close();
-		     
-		     return jsonResult;
-			 
-		 }
-	 
-	 public String getKPIQueryForMap(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
-		 ArrayList responseArray = new ArrayList();
-		 Connection conn = DBConnection.getConnection();
-	    	Statement stmt = null;
-	    	String jsonResult="";
-	    	stmt = conn.createStatement();
-	    	Gson gson = new GsonBuilder().create();
-		 	     
-		    String queryString="SELECT AVG(f.measure_amt) as Average_amt,f.country_shortname,dim2.validation_rule_name,dim2.validation_rule_comment,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
-						  +"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
-						  +"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname IN ('EE','LT','LV')"
-						  +"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY f.country_shortname,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,dim2.validation_rule_comment ORDER BY dim2.validation_rule_comment";
-		    
-		     System.out.println("IS HERE");
-		     System.out.println(queryString);
-		 	ResultSet rs = stmt.executeQuery(queryString);
-		 	while(rs.next()) {
-		 	
-		 		QualityModel model=new QualityModel();
-		 		model.setMeasureAmt(rs.getInt("average_amt"));
-		 		model.setQualityMetricType(rs.getString("quality_metric_type_name"));
-		 		model.setServiceMainGroupName(rs.getString("service_main_group_name"));
-		 		model.setDate(rs.getString("measure_fact_date"));
-		 		String country=rs.getString("country_shortname");
-		 		if(country.equals("EE")){
-		 			country="EST";
-		 		}
-		 		if(country.equals("LV")){
-		 			country="LVA";
-		 		}
-		 		if(country.equals("LT")){
-		 		  country="LTU";
-		 		}
-		 	
-		 		model.setCountry(country);
-		 		model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
-		 		//jsonResult = gson.toJson(model);
-		 	 // }
-		 		responseArray.add(model);
-		 	}
-		 	 jsonResult = gson.toJson(responseArray);
-		     rs.close();
-		     stmt.close();
-		     
-		     return jsonResult;
-			 
-		 }
-	 
-	 
-	 public String getMetricsCountsOnDates(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
-		 
-		 ArrayList responseArray = new ArrayList();
-		 Connection conn = DBConnection.getConnection();
-	    	Statement stmt = null;
-	    	String jsonResult="";
-	    	stmt = conn.createStatement();
-	    	Gson gson = new GsonBuilder().create();
-	    	
-	    String queryString="SELECT DISTINCT f.measure_cnt,dim2.validation_rule_name,f.measure_fact_date,dim2.quality_metric_type_name,dim2.quality_metric_type_comment,"
-	    		+"dim2.quality_metric_categ_shortname,dim1.service_main_group_name FROM mesa.pl_measure_fact_prt"  
-	    		+" f  INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON"
-	 			+"(f.Validation_Rule_Id = dim2.Validation_Rule_Id)"
-	            +"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
-	            +"WHERE f.country_shortname='"+country_shortname+"' AND dim2.quality_metric_type_name='"+metric_type+"'"
-				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  dim1.service_main_group_name='"+service_group_name+"' ORDER BY f.measure_cnt ASC"; 
-	    
-	    
-	    System.out.println(queryString);
-	 	ResultSet rs = stmt.executeQuery(queryString);
-	 	while(rs.next()) {
-	 	 
-	 	 	
-	 		QualityModel model=new QualityModel();
-	 		model.setMeasureAmt(rs.getInt("measure_cnt"));
-	 		model.setServiceMainGroupName(rs.getString("service_main_group_name"));
-	 		model.setDate(rs.getString("measure_fact_date"));
-	 		model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
-	 		jsonResult = gson.toJson(model);
-	 	 // }
-	 		responseArray.add(model);
-	 	}
-		 jsonResult = gson.toJson(responseArray);
-	     rs.close();
-	     stmt.close();
-	     
-	     return jsonResult;
-		 
-	 }
- public String getHeatMap(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
-		 
-		 ArrayList responseArray = new ArrayList();
-		 Connection conn = DBConnection.getConnection();
-	    	Statement stmt = null;
-	    	String jsonResult="";
-	    	stmt = conn.createStatement();
-	    	Gson gson = new GsonBuilder().create();
-	    	
-	    String queryString="SELECT AVG(f.measure_amt) as Average_amt,dim2.validation_rule_name,f.measure_fact_date"
-	    		+ ", dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,"
-	    		+ "dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
-	    		+ "INNER JOIN mesa.PL_SERVICE_PRT dim1 "
-	    		+ "ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
-	    		+ "INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE "
-	    		+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' "
-	    		+ "Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name"; 
-	    
-	    
-	    System.out.println(queryString);
-	 	ResultSet rs = stmt.executeQuery(queryString);
-	 	while(rs.next()) {
-	 	 
-	 	 	
-	 		QualityModel model=new QualityModel();
-	 		model.setMeasureAmt(rs.getInt("Average_amt"));
-	 		model.setServiceMainGroupName(rs.getString("service_main_group_name"));
-	 		model.setDate(rs.getString("measure_fact_date"));
-	 		model.setQualityMetricType(rs.getString("quality_metric_type_name"));
-	 		model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
-	 		jsonResult = gson.toJson(model);
-	 	 // }
-	 		responseArray.add(model);
-	 	}
-		 jsonResult = gson.toJson(responseArray);
-		 System.out.println(jsonResult);
-	     rs.close();
-	     stmt.close();
-	     
-	     return jsonResult;
-		 
-	 }
-	 
+		return andmed;
+	}
+
+
+
+
+
+
+	public String getDonutData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
+		ArrayList responseArray = new ArrayList();
+		Connection conn = DBConnection.getConnection();
+		Statement stmt = null;
+		String jsonResult="";
+		stmt = conn.createStatement();
+		Gson gson = new GsonBuilder().create();
+
+		String queryString="SELECT AVG(f.measure_amt) as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
+				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='EE'"
+				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name";
+
+		System.out.println("IS HERE");
+		System.out.println(queryString);
+		ResultSet rs = stmt.executeQuery(queryString);
+		while(rs.next()) {
+
+
+			QualityModel model=new QualityModel();
+			model.setMeasureAmt(rs.getInt("average_amt"));
+			model.setServiceMainGroupName(rs.getString("service_main_group_name"));
+			model.setDate(rs.getString("measure_fact_date"));
+			model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
+
+
+			responseArray.add(model);
+		}
+		jsonResult = gson.toJson(responseArray);
+		rs.close();
+		stmt.close();
+
+		return jsonResult;
+
+	}
+
+	public String getMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
+		ArrayList responseArray = new ArrayList();
+		Connection conn = DBConnection.getConnection();
+		Statement stmt = null;
+		String jsonResult="";
+		stmt = conn.createStatement();
+		Gson gson = new GsonBuilder().create();
+
+		String queryString="SELECT AVG(f.measure_amt) as Average_amt,f.country_shortname,dim2.validation_rule_name,dim2.validation_rule_comment,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
+				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname IN ('EE','LT','LV')"
+				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY f.country_shortname,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,dim2.validation_rule_comment ORDER BY dim2.validation_rule_comment";
+
+		System.out.println("IS HERE");
+		System.out.println(queryString);
+		ResultSet rs = stmt.executeQuery(queryString);
+		while(rs.next()) {
+
+			QualityModel model=new QualityModel();
+			model.setMeasureAmt(rs.getInt("average_amt"));
+			model.setQualityMetricType(rs.getString("quality_metric_type_name"));
+			model.setServiceMainGroupName(rs.getString("service_main_group_name"));
+			model.setDate(rs.getString("measure_fact_date"));
+			String country=rs.getString("country_shortname");
+			if(country.equals("EE")){
+				country="EST";
+			}
+			if(country.equals("LV")){
+				country="LVA";
+			}
+			if(country.equals("LT")){
+				country="LTU";
+			}
+
+			model.setCountry(country);
+			model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
+			//jsonResult = gson.toJson(model);
+			// }
+			responseArray.add(model);
+		}
+		jsonResult = gson.toJson(responseArray);
+		rs.close();
+		stmt.close();
+
+		return jsonResult;
+
+	}
+
+
+	public String getBarData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
+
+		ArrayList responseArray = new ArrayList();
+		String measure_type="measure_amt";
+		Connection conn = DBConnection.getConnection();
+		Statement stmt = null;
+		String jsonResult="";
+		stmt = conn.createStatement();
+		Gson gson = new GsonBuilder().create();
+		if(categ_metric.equals("DQKPI")){
+			measure_type="measure_amt";
+
+
+		}else{
+
+			measure_type="measure_cnt";
+		}
+		String queryString="SELECT DISTINCT f."+measure_type+",dim2.validation_rule_name,f.measure_fact_date,dim2.quality_metric_type_name,dim2.quality_metric_type_comment,"
+				+"dim2.quality_metric_categ_shortname,dim1.service_main_group_name FROM mesa.pl_measure_fact_prt"  
+				+" f  INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON"
+				+"(f.Validation_Rule_Id = dim2.Validation_Rule_Id)"
+				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
+				+"WHERE f.country_shortname='"+country_shortname+"' AND dim2.quality_metric_type_name='"+metric_type+"'"
+				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  dim1.service_main_group_name='"+service_group_name+"' ORDER BY "+measure_type+" ASC"; 
+
+
+		System.out.println(queryString);
+		ResultSet rs = stmt.executeQuery(queryString);
+		while(rs.next()) {
+
+
+			QualityModel model=new QualityModel();
+			model.setMeasureAmt(rs.getInt(measure_type));
+			model.setServiceMainGroupName(rs.getString("service_main_group_name"));
+			model.setDate(rs.getString("measure_fact_date"));
+			model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
+			jsonResult = gson.toJson(model);
+			// }
+			responseArray.add(model);
+		}
+		jsonResult = gson.toJson(responseArray);
+		rs.close();
+		stmt.close();
+
+		return jsonResult;
+
+	}
+	public String getHeatMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
+
+		ArrayList responseArray = new ArrayList();
+		Connection conn = DBConnection.getConnection();
+		Statement stmt = null;
+		String jsonResult="";
+		stmt = conn.createStatement();
+		Gson gson = new GsonBuilder().create();
+
+		String queryString="SELECT AVG(f.measure_amt) as Average_amt,dim2.validation_rule_name,f.measure_fact_date"
+				+ ", dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,"
+				+ "dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+				+ "INNER JOIN mesa.PL_SERVICE_PRT dim1 "
+				+ "ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
+				+ "INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE "
+				+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' "
+				+ "Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name"; 
+
+
+		System.out.println(queryString);
+		ResultSet rs = stmt.executeQuery(queryString);
+		while(rs.next()) {
+
+
+			QualityModel model=new QualityModel();
+			model.setMeasureAmt(rs.getInt("Average_amt"));
+			model.setServiceMainGroupName(rs.getString("service_main_group_name"));
+			model.setDate(rs.getString("measure_fact_date"));
+			model.setQualityMetricType(rs.getString("quality_metric_type_name"));
+			model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
+			jsonResult = gson.toJson(model);
+			// }
+			responseArray.add(model);
+		}
+		jsonResult = gson.toJson(responseArray);
+		System.out.println(jsonResult);
+		rs.close();
+		stmt.close();
+
+		return jsonResult;
+
+	}
+
 }
 

@@ -29,7 +29,7 @@ public class AndmedResource {
 	@Path("getDonutData")
 	@GET
 	@Produces("text/plain")
-	public String getKPIQuery1(
+	public String getDonutData(
 	@QueryParam("metric_categ") @DefaultValue("") String metric_categ,
     @QueryParam("country") @DefaultValue("") String country,
     @QueryParam("metric_name") @DefaultValue("") String metric_name,
@@ -37,14 +37,14 @@ public class AndmedResource {
     @QueryParam("date2") @DefaultValue("") String date2,
     @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
 		
-			return dao.getKPIQuery1(metric_categ, service_group_name,country,metric_name,date1, date2);
+			return dao.getDonutData(metric_categ, service_group_name,country,metric_name,date1, date2);
 	}
 	
 	
 	@Path("getMapData")
 	@GET
 	@Produces("text/plain")
-	public String getKPIQueryForMap(
+	public String getMapData(
 	@QueryParam("metric_categ") @DefaultValue("") String metric_categ,
     @QueryParam("country") @DefaultValue("") String country,
     @QueryParam("metric_name") @DefaultValue("") String metric_name,
@@ -52,13 +52,13 @@ public class AndmedResource {
     @QueryParam("date2") @DefaultValue("") String date2,
     @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
 		
-			return dao.getKPIQueryForMap(metric_categ, service_group_name,country, metric_name, date1, date2);
+			return dao.getMapData(metric_categ, service_group_name,country, metric_name, date1, date2);
 	}
 	
 	@Path("getBarData")
 	@GET
 	@Produces("text/plain")
-	public String getMetricsCountsOnDates(
+	public String getBarData(
 	@QueryParam("metric_categ") @DefaultValue("") String metric_categ,
     @QueryParam("country") @DefaultValue("") String country,
     @QueryParam("metric_name") @DefaultValue("") String metric_name,
@@ -66,7 +66,7 @@ public class AndmedResource {
     @QueryParam("date2") @DefaultValue("") String date2,
     @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
 		
-			return dao.getMetricsCountsOnDates(metric_categ, service_group_name, country, metric_name, date1, date2);
+			return dao.getBarData(metric_categ, service_group_name, country, metric_name, date1, date2);
 	}
 
 	@Path("getHeatMapData")
@@ -80,7 +80,7 @@ public class AndmedResource {
     @QueryParam("date2") @DefaultValue("") String date2,
     @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
 		
-			return dao.getHeatMap(metric_categ, service_group_name, country, metric_name, date1, date2);
+			return dao.getHeatMapData(metric_categ, service_group_name, country, metric_name, date1, date2);
 	}
 	
 

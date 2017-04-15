@@ -1,472 +1,478 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="js/app-ajax.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script type="text/javascript" src="js/dashboardCharts.js"></script>
-  <script type="text/javascript" src="js/draggable.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
-  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <link rel="stylesheet" href="/css/loader.css">
-<!--http://blocks.org/mccannf/1629644-->
-	
-	<script>
-			<!-- Bar chart-->
-	         
-			$( function() {
-				 $( "#date1" ).datepicker({ dateFormat: "yy-mm-dd",timeFormat:"hh:mm:ss"});
-			 } );
-			
-			$( function() {
-			    $( "#date2" ).datepicker({ dateFormat: "yy-mm-dd",timeFormat:"hh:mm:ss"});
-			 } );
-			 
-			
-			
-			function updateGauges()
-			{
-				
-			}
-			
-		
 
-			
-			function type(d) {
-				  d.value = +d.value; // coerce to number
-				  return d;
-				}
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-			<!-- Init all charts-->
-			
-			function removeChart(divTag){
-			    $("#"+divTag).remove();
-				alert('Remove');
-			}
-			function initialize()
-			{
-			
-				setInterval(updateGauges, 5000);
-		
-				       
-			}
-			 
-			var app = angular.module('app', []);
 
-			app.directive("addDiv", function($compile){   
-			      return{
-			        restrict: 'AE',
-			        link: function(scope , element,attr){        
-			           element.bind("click", function(e){ 
-			           var e = document.getElementById("ChartSelect");
-			           var strUser = e.options[e.selectedIndex].text;	   
-			           
-			           var ecountry = document.getElementById("CountrySelect");
-			           var country = ecountry.options[ecountry.selectedIndex].text;
-			           if(country==="All"){
-			        	   country="GR";
-			           }
-			           var eMetricType = document.getElementById("MetricType");
-			           var MetricType =eMetricType.options[eMetricType.selectedIndex].text;
-			           
-			        
-			           var date1 = $("#date1").val();
-			           
-			       
-			           var date2 =$("#date2").val();
-			           
-			           var eserviceGroupName = document.getElementById("service_main_group_name");
-			           var serviceGroupName =eserviceGroupName.options[eserviceGroupName.selectedIndex].text;
-			       
-			           var qMetricType = document.getElementById("Quality_metric_type_name");
-			           var qualityMetricName=qMetricType.options[qMetricType.selectedIndex].text;
-			           
-			       
-			           
-			           var container;
-			           var childNode;
-			           
-			           <!--GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis -->
-			           
-			           if(strUser=="Map"){
-			        	   
-			        	   $.get('rest/andmed/getMapData', {
-				               metric_categ:MetricType,
-				               service_group_name:serviceGroupName,
-				               country:country,
-				               metric_name:qualityMetricName,
-				               date1:date1,
-				               date2:date2
-				        }, function(responseText) {
-			        	   
-				        	 var country=[];
-			                 var measures=[];
-							 var extraInfo=[];
-				        	 var count=0;
-							 var json = jQuery.parseJSON(responseText);
-				        	 if (json.length>0) {
-				       		
-				        		  for(var i = 0; i < json.length; i++) {
-									    var obj = json[i];
-									    
-									    if(count===3){
-									    	 var divTag = "divMap_" + new Date().getTime().toString();
-								        	   container =   angular.element(document.querySelector("#container"));
-									           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="'+divTag+'""></div></div>')(container);
-									           container.prepend(childNode);
-								        	   mapChart(divTag,country,measures,json[i-1].qualityMetricTypeComment,qualityMetricName);
-									    	  count=0;
-									    }
-									    measures.push(obj.measure_amt);
-										country.push(obj.country);
-										extraInfo.push(obj.qualityMetricTypeComment);
-									  	count++;
-										
-									   
-									  	 document.getElementById("demo").innerHTML =""; 
-				        		  }
-				        		 
-				        	 }else{
-				        		 document.getElementById("demo").innerHTML ="No result";
-				        	 }
-				        	
-			        	   
-				        });
-			        	   
-			        	   
-			           }
-			           if(strUser=="Bar"){
-			        	   
-			        	   $.get('rest/andmed/getBarData', {
-				               metric_categ:MetricType,
-				               service_group_name:serviceGroupName,
-				               country:country,
-				               metric_name:qualityMetricName,
-				               date1:date1,
-				               date2:date2
-				        }, function(responseText) {
-				        
-				                 //  var dd = JSON.parse(result);
-				                 var dataX=[];
-				                 var dataY=[];
-								 var extraInfo=[];
+        <!--Internal-->
+        <script type="text/javascript" src="js/dashboardCharts.js"></script>
+        <script type="text/javascript" src="js/draggable.js"></script>
 
-								 var json = jQuery.parseJSON(responseText);
-					        	 if (json.length>0) {
-		              
-							               for(var i = 0; i < json.length; i++) {
-												    var obj = json[i];
-													dataX.push(obj.measure_date);
-													dataY.push(obj.measure_amt);
-													extraInfo.push(obj.service_main_group_name);
-													
-													 
-													
-										  }
-							            
-							               var divTag = "divBar_" + new Date().getTime().toString();
-							        	   container =   angular.element(document.querySelector("#container"));
-								           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 25%;"><div id="'+divTag+'""></div></div>')(container);
-								           container.prepend(childNode);
-								       	   barChart(divTag,dataX,dataY,serviceGroupName,extraInfo,obj.qualityMetricTypeComment,country); 
-				        		   
-								       	 document.getElementById("demo").innerHTML ="";
-				        	 }else{
-				        		 
-				        		 document.getElementById("demo").innerHTML ="No result";
-				        	 }
-			        	   
-			           
-				        });
-			           }
- 						 if(strUser=="Line"){
-			        	   
-			        	   $.get('rest/andmed/getBarData', {
-				               metric_categ:MetricType,
-				               service_group_name:serviceGroupName,
-				               country:country,
-				               metric_name:qualityMetricName,
-				               date1:date1,
-				               date2:date2
-				        }, function(responseText) {
-				        
-				                 //  var dd = JSON.parse(result);
-				                 var dataX=[];
-				                 var dataY=[];
-								 var extraInfo=[];
+        <!--External-->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-								 var json = jQuery.parseJSON(responseText);
-					        	 if (json.length>0) {
-		              
-							               for(var i = 0; i < json.length; i++) {
-												    var obj = json[i];
-													dataX.push(obj.measure_date);
-													dataY.push(obj.measure_amt);
-													extraInfo.push(obj.service_main_group_name);
-													
-													 
-													
-										  }
-							            
-							               var divTag = "divBar_" + new Date().getTime().toString();
-							        	   container =   angular.element(document.querySelector("#container"));
-								           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="'+divTag+'""></div></div>')(container);
-								           container.prepend(childNode);
-								       	   lineChart(divTag,dataX,dataY);
-				        		   
-								       	 document.getElementById("demo").innerHTML ="";
-				        	 }else{
-				        		 
-				        		 document.getElementById("demo").innerHTML ="No result";
-				        	 }
-			        	   
-			           
-				        });
-			           }
- 						 if(strUser=="Heat map"){
- 				        	   
- 				        	   $.get('rest/andmed/getHeatMapData', {
- 					               metric_categ:MetricType,
- 					               service_group_name:serviceGroupName,
- 					               country:country,
- 					               metric_name:qualityMetricName,
- 					               date1:date1,
- 					               date2:date2
- 					        }, function(responseText) {
- 					        
- 					                 //  var dd = JSON.parse(result);
- 					                 var dataX=[];
- 					                 var dataY=[];
- 					               	 var dataZ=[];
- 					               	 var dataZFull=[];
- 									 var extraInfo=[];
+        <!--Internal-->
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <link rel="stylesheet" href="/css/loader.css">
 
- 									 var json = jQuery.parseJSON(responseText);
- 						        	 if (json.length>0) {
- 			              
- 								               for(var i = 0; i < json.length; i++) {
- 													    var obj = json[i];
- 														dataX.push(obj.qualityMetricTypeComment);
- 														dataZFull.push(dataZ.push(obj.measure_amt));
- 														dataY.push(obj.qualityMetricTypeName);
- 														extraInfo.push(obj.service_main_group_name);
- 													
- 														
- 														 
- 														
- 											  }
- 								               
- 								               var divTag = "divBar_" + new Date().getTime().toString();
- 								        	   container =   angular.element(document.querySelector("#container"));
- 									           childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><div id="'+divTag+'""></div></div>')(container);
- 									           container.prepend(childNode);
- 									       	   heatMap(divTag,dataX,dataY,dataZ,serviceGroupName);
- 					        		   
- 									       	 document.getElementById("demo").innerHTML ="";
- 					        	 }else{
- 					        		 
- 					        		 document.getElementById("demo").innerHTML ="No result";
- 					        	 }
- 				        	   
- 				           
- 					        });
- 				           }
-			           if(strUser=="Donut"){
-				        	   
-				        	 $.get('rest/andmed/getDonutData', {
-					               metric_categ:MetricType,
-					               service_group_name:serviceGroupName,
-					               country:country,
-					               metric_name:qualityMetricName,
-					               date1:date1,
-					               date2:date2
-					    		 }, function(responseText) {
-					        	 var json = jQuery.parseJSON(responseText);
-					        	
-					                 //  var dd = JSON.parse(result);
-					              if (json.length>0) {
-									//	gauges[key].redraw(obj.completness);
-									 for(var i = 0; i < json.length; i++) {
-									   var obj = json[i];
-							
-					        		   var divTag = "divDonut_" + new Date().getTime().toString();
-						        	   container =   angular.element(document.querySelector("#container"));
-							           childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><div id="'+divTag+'"" ></div></div>')(container);
-							           container.prepend(childNode);
-							           circleChart(divTag,obj.measure_amt,obj.service_main_group_name,country,qualityMetricName,obj.qualityMetricTypeComment,MetricType);   
-									}
-									 document.getElementById("demo").innerHTML ="";
-					              }else{
-					            	  document.getElementById("demo").innerHTML ="No result";
-					              }
-					        });
-				        	   
-			        	   
-			        	   
-			        	 
-			           }
-			           
-			        	
+        <!--External-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css" rel="stylesheet">
+        <!--http://blocks.org/mccannf/1629644-->
 
-			           });
-			        }
-			    };
-			   });
+        <script>
+        $(function () {
+            $("#date1").datepicker({
+                dateFormat: "yy-mm-dd",
+                timeFormat: "hh:mm:ss"
+            });
+        });
 
-			app.controller('firstCtrl', function($scope){
-			 
-			   
-			});
-		
-			</script>
-			<style>
-			.box {
-    border: 1px solid black;
-    height: 400px;
-    float:left;
-    width:400px;
-    
-}
-header img {
-    float: left;
-}
-header{
-    padding: 1em;
-    color: white;
-    background-color: black;
-    clear: left;
-    text-align: center;
-
-}
-body {
-    margin: 0;
-}
+        $(function () {
+            $("#date2").datepicker({
+                dateFormat: "yy-mm-dd",
+                timeFormat: "hh:mm:ss"
+            });
+        });
 
 
 
-.topnav {
-    background-color: #333;
-    overflow: hidden;
-}
+        function updateGauges() {
 
-/* Style the links inside the navigation bar */
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
+        }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
 
-/* Add a color to the active/current link */
-.topnav a.active {
-    background-color: #4CAF50;
-    color: white;
-}
 
-			</style>
-<body ng-app="app">
-  <header>
-      <h1><img src="https://www.swedbank.ee/stylebook/swedbank.png">DQ Dashboard</h1>
-    </header>
-	<div class="topnav" id="myTopnav">
-	 <a class="active" href="index.html">Charts Generation <span class="label label-danger" style="float:right;">0</span></a>
-	 <a href="homeDashboard.html">Home</a>
-	</div>
-  <div ng-controller="firstCtrl" style="padding:1px 16px;height:1000px;" >
-  
-  	<p>Date: <input type="text" id="date1" value="2016-11-01"></p>
-	<p>Between: <input type="text" id="date2" value="2017-11-01"></p>
-     Chart:  <select id="ChartSelect">
-			  <option value="ChartType">Bar</option>
-			  <option value="ChartType">Line</option>
-			  <option value="ChartType">Heat map</option>
-			  <option value="ChartType">Map</option>
-			  <option value="ChartType"  selected>Donut</option>
+
+        function type(d) {
+            d.value = +d.value; // coerce to number
+            return d;
+        }
+
+        <!-- Init all charts-->
+
+        function removeChart(divTag) {
+            $("#" + divTag).remove();
+            alert('Remove');
+        }
+
+        function initialize() {
+
+            setInterval(updateGauges, 5000);
+
+
+        }
+
+        var app = angular.module('app', []);
+
+        app.directive("addDiv", function ($compile) {
+            return {
+                restrict: 'AE',
+                link: function (scope, element, attr) {
+                    element.bind("click", function (e) {
+                        var e = document.getElementById("ChartSelect");
+                        var strUser = e.options[e.selectedIndex].text;
+
+                        var ecountry = document.getElementById("CountrySelect");
+                        var country = ecountry.options[ecountry.selectedIndex].text;
+                        if (country === "All") {
+                            country = "GR";
+                        }
+                        var eMetricType = document.getElementById("MetricType");
+                        var MetricType = eMetricType.options[eMetricType.selectedIndex].text;
+
+
+                        var date1 = $("#date1").val();
+
+
+                        var date2 = $("#date2").val();
+
+                        var eserviceGroupName = document.getElementById("service_main_group_name");
+                        var serviceGroupName = eserviceGroupName.options[eserviceGroupName.selectedIndex].text;
+
+                        var qMetricType = document.getElementById("Quality_metric_type_name");
+                        var qualityMetricName = qMetricType.options[qMetricType.selectedIndex].text;
+
+
+
+                        var container;
+                        var childNode;
+
+                        <!--GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis -->
+
+                        if (strUser == "Map") {
+
+                            $.get('rest/andmed/getMapData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                var country = [];
+                                var measures = [];
+                                var extraInfo = [];
+                                var count = 0;
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+
+                                        if (count === 3) {
+                                            var divTag = "divMap_" + new Date().getTime().toString();
+                                            container = angular.element(document.querySelector("#container"));
+                                            childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                            container.prepend(childNode);
+                                            mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName);
+                                            count = 0;
+                                        }
+                                        measures.push(obj.measure_amt);
+                                        country.push(obj.country);
+                                        extraInfo.push(obj.qualityMetricTypeComment);
+                                        count++;
+
+
+                                        document.getElementById("demo").innerHTML = "";
+                                    }
+
+                                } else {
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+
+
+                        }
+                        if (strUser == "Bar") {
+
+                            $.get('rest/andmed/getBarData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                //  var dd = JSON.parse(result);
+                                var dataX = [];
+                                var dataY = [];
+                                var extraInfo = [];
+
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+                                        dataX.push(obj.measure_date);
+                                        dataY.push(obj.measure_amt);
+                                        extraInfo.push(obj.service_main_group_name);
+
+
+
+                                    }
+
+                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 25%;"><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
+
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+                        }
+                        if (strUser == "Line") {
+
+                            $.get('rest/andmed/getBarData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                //  var dd = JSON.parse(result);
+                                var dataX = [];
+                                var dataY = [];
+                                var extraInfo = [];
+
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+                                        dataX.push(obj.measure_date);
+                                        dataY.push(obj.measure_amt);
+                                        extraInfo.push(obj.service_main_group_name);
+
+
+
+                                    }
+
+                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    lineChart(divTag, dataX, dataY);
+
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+                        }
+                        if (strUser == "Heat map") {
+
+                            $.get('rest/andmed/getHeatMapData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                //  var dd = JSON.parse(result);
+                                var dataX = [];
+                                var dataY = [];
+                                var dataZ = [];
+                                var dataZFull = [];
+                                var extraInfo = [];
+
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+                                        dataX.push(obj.qualityMetricTypeComment);
+                                        dataZFull.push(dataZ.push(obj.measure_amt));
+                                        dataY.push(obj.qualityMetricTypeName);
+                                        extraInfo.push(obj.service_main_group_name);
+
+
+
+
+                                    }
+
+                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    heatMap(divTag, dataX, dataY, dataZ, serviceGroupName);
+
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+                        }
+                        if (strUser == "Donut") {
+
+                            $.get('rest/andmed/getDonutData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+                                var json = jQuery.parseJSON(responseText);
+
+                                //  var dd = JSON.parse(result);
+                                if (json.length > 0) {
+                                    //	gauges[key].redraw(obj.completness);
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+
+                                        var divTag = "divDonut_" + new Date().getTime().toString();
+                                        container = angular.element(document.querySelector("#container"));
+                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><div id="' + divTag + '"" ></div></div>')(container);
+                                        container.prepend(childNode);
+                                        circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
+                                    }
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+                            });
+
+
+
+
+                        }
+
+
+
+                    });
+                }
+            };
+        });
+
+        app.controller('firstCtrl', function ($scope) {
+
+
+        });
+        </script>
+        <style>
+        .box {
+            border: 1px solid black;
+            height: 400px;
+            float: left;
+            width: 400px;
+        }
+
+        header img {
+            float: left;
+        }
+
+        header {
+            padding: 1em;
+            color: white;
+            background-color: black;
+            clear: left;
+            text-align: center;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .topnav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        /* Style the links inside the navigation bar */
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        /* Change the color of links on hover */
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        /* Add a color to the active/current link */
+
+        .topnav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        </style>
+
+        <body ng-app="app">
+            <header>
+                <h1>
+                    <img src="https://www.swedbank.ee/stylebook/swedbank.png">DQ Dashboard
+                </h1>
+            </header>
+            <div class="topnav" id="myTopnav">
+                <a class="active" href="index.html">Charts Generation <span
+			class="label label-danger" style="float: right;">0</span></a> <a href="homeDashboard.html">Home</a>
+            </div>
+            <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
+
+                <p>
+                    Date: <input type="text" id="date1" value="2016-11-01">
+                </p>
+                <p>
+                    Between: <input type="text" id="date2" value="2017-11-01">
+                </p>
+                Chart: <select id="ChartSelect">
+			<option value="ChartType">Bar</option>
+			<option value="ChartType">Line</option>
+			<option value="ChartType">Heat map</option>
+			<option value="ChartType">Map</option>
+			<option value="ChartType" selected>Donut</option>
+		</select> Country:<select id="CountrySelect">
+			<option value="CountryType" selected>EE</option>
+			<option value="CountryType">LT</option>
+			<option value="CountryType">LI</option>
+			<option value="CountryType">All</option>
+
+		</select> Service rule <select id="Quality_metric_type_name">
+			<option value="name">CLARITY</option>
+			<option value="name" selected>COMPLETENESS</option>
+			<option value="name">FORMAT CONFORMANCY</option>
+			<option value="name">UNIQUE IDENTIFIABILITY</option>
+			<option value="name">REFERENTIAL INTEGRITY</option>
+			<option value="name">CONSISTENCY</option>
+			<option value="name">ACCURACY TO SOURCE</option>
+			<option value="name">TIMELINESS</option>
+			<option value="name">UNKNOWN QUALITY METRIC</option>
+
+
+		</select> Service group name <select id="service_main_group_name">
+
+			<option value="Service">Regulatory Reporting</option>
+			<option value="Service">Supporting Service</option>
+			<option value="Service">Data in - Internal systems by AM
+				areas</option>
+			<option value="Service">Performance Management</option>
+			<option value="Service">Customer Management</option>
+			<option value="Service">Data in - External companies</option>
+			<option value="Service">DW Application</option>
+			<option value="Service" selected>BB Data Warehouse</option>
+			<option value="Service">BI Infrastructure</option>
+			<option value="Service">Data in - Manual preparation</option>
+			<option value="Service">BI Common Analytical Services</option>
+			<option value="Service">Business Line / Product System</option>
+			<option value="Service">Risk Management</option>
+			<option value="Service">Data Warehouse Service</option>
+			<option value="Service">Unknown quality metric</option>
+
+
+		</select> Metric type <select id="MetricType">
+			<option value="Rule" selected>DQKPI</option>
+			<option value="Rule">DQERR</option>
+			<option value="Rule">DQPRF</option>
+			<option value="Rule">NA</option>
+
+
 		</select>
-   	Country:<select id="CountrySelect">
-			  <option value="CountryType"  selected>EE</option>
-			  <option value="CountryType">LT</option>
-			  <option value="CountryType">LI</option>
-			  <option value="CountryType">All</option>
-	
-		</select>
-	Service rule
-	    <select id="Quality_metric_type_name">
-			  <option value="name">CLARITY</option>
-			  <option value="name"  selected>COMPLETENESS</option>
-			  <option value="name">FORMAT  CONFORMANCY</option>
-			  <option value="name">UNIQUE IDENTIFIABILITY</option>
-			  <option value="name">REFERENTIAL INTEGRITY</option>
-			  <option value="name">CONSISTENCY</option>
-			  <option value="name">ACCURACY TO SOURCE</option>
-			  <option value="name">TIMELINESS</option>
-			  <option value="name">UNKNOWN QUALITY METRIC</option>
-		
-	
-		</select>
-   Service group name
-	    <select id="service_main_group_name">
-	    
-			  <option value="Service">Regulatory Reporting </option>
-			  <option value="Service">Supporting Service</option>
-			  <option value="Service">Data in - Internal systems by AM areas</option>
-			  <option value="Service">Performance Management </option>
-			  <option value="Service">Customer Management</option>
-			  <option value="Service">Data in - External companies</option>
-			  <option value="Service">DW Application </option>
-			  <option value="Service"  selected>BB Data Warehouse</option>
-			  <option value="Service">BI Infrastructure</option>
-			  <option value="Service">Data in - Manual preparation </option>
-			  <option value="Service">BI Common Analytical Services</option>
-			  <option value="Service">Business Line / Product System</option>
-			  <option value="Service">Risk Management </option>
-			  <option value="Service">Data Warehouse Service</option>
-			  <option value="Service">Unknown quality metric</option>
+                <p id="demo"></p>
+                <button add-div>Generate</button>
+                <div class="loader"></div>
 
-	
-		</select>
-	Metric type
-	    <select id="MetricType">
-			  <option value="Rule"  selected>DQKPI</option>
-			  <option value="Rule">DQERR</option>
-			  <option value="Rule">DQPRF</option>
-			  <option value="Rule">NA</option>
-	
-	
-		</select>
-	<p id="demo"></p>
-    <button add-div>Click Me</button>
-    <div class="loader"></div>
-    
-  	   <div ng-app="test" ng-controller="testCtrl">
-        <div id="container"></div>
-        </div>
-      </div>
+                <div ng-app="test" ng-controller="testCtrl">
+                    <div id="container"></div>
+                </div>
+            </div>
 
 
 
-</body>
+        </body>
+
 </html>
