@@ -111,10 +111,15 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 			
 			function barChart(divTag,dataX,dataY,serviceName,extraInfo,info,country){
 				var trace1 = {
-						  x:dataX,
+						  x: dataX,
 						  y: dataY,
 						  marker:{
-						    color: ['rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)']
+						    color: [
+						    	'rgba(238,112,35,1)', 
+						    	'rgba(238,112,35,1)', 
+						    	'rgba(238,112,35,1)', 
+						    	'rgba(238,112,35,1)', 
+						    	'rgba(238,112,35,1)']
 						  },
 						  type: 'bar'
 						};
