@@ -42,7 +42,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 			
 
 
-			      Plotly.plot(divTag, data, layout, {showLink: false});
+			      Plotly.plot(divTag, data, layout, {showLink: false, displaylogo: false});
 				
 				
 			}
@@ -64,29 +64,43 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 			    
 			    
 				var data = [{
-					  values: [value],
+						values: [value],
 					  labels: [dqName],
-					  marker:{  colors:['rgb(122, 181, 87)']},
+					  marker:{  colors:['rgb(238,112,35)']},
 					  domain: {
 					    x: [0, .65]
 					  },
 					  name: categType,
 					  hoverinfo: 'label+percent+name+text',
-					  hole: .4,
+					  hole: .5,
 					  type: 'pie'
 					}];
 
 					var layout = {
-					  title: serviceName+" "+country+"<br>"+info,
-					  height: 300,
-					  width: 500,
-					 
+							autosize: true,
+							title: serviceName+" "+country+"<br>"+info,
+							height: 300,
+							width: 500,
+							margin: {
+								l: 50,
+								r: 0,
+								b: 0,
+								t: 110,
+								pad: 2
+							},
+							showlegend: true,
+							  legend:{
+								    xanchor:"center",
+								    yanchor:"top",
+								    y:0.9, // play with it
+								    x:0.8   // play with it
+								  }
 					
 					  
 					};
 					
 				
-						Plotly.newPlot(divTag, data, layout);
+						Plotly.newPlot(divTag, data, layout, {displaylogo: false});
 					
 				
 				
@@ -112,11 +126,11 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 						  
 						};
 		
-						Plotly.newPlot(divTag, data, layout);
+						Plotly.newPlot(divTag, data, layout, {displaylogo: false});
 				
 				
 			}
-			<!-- Line chart-->
+<!-- Line chart-->
 			function lineChart(divTag,dataX,dataY){		
 				var data = [
 					  {
@@ -125,10 +139,10 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 					    type: 'scatter'
 					  }
 					];
-				Plotly.newPlot(divTag,data);
+				Plotly.newPlot(divTag,data, null,{displaylogo: false});
 			}
 			
-			<!-- Heatmap chart-->
+<!-- Heatmap chart-->
 			function heatMap(divTag,xValues,yValues,zValues,serviceGroupName){
 				
 				var xValues =xValues;
@@ -207,7 +221,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 				  
 				}
 
-				Plotly.newPlot(divTag, data, layout);
+				Plotly.newPlot(divTag, data, layout, {displaylogo: false});
 			}
 			
 			
