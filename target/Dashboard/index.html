@@ -1,442 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="Dashboard">
-<meta name="keyword"
-	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-<title>Swedbank Data Quality Visualization</title>
-
-<!-- Bootstrap core CSS -->
-<link href="assets/css/bootstrap.css" rel="stylesheet">
-<!--external css-->
-<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css"
-	href="assets/css/zabuto_calendar.css">
-<link rel="stylesheet" type="text/css"
-	href="assets/js/gritter/css/jquery.gritter.css" />
-<link rel="stylesheet" type="text/css" href="assets/lineicons/style.css">
-
-<!-- Custom styles for this template -->
-<link href="assets/css/style.css" rel="stylesheet">
-<link href="assets/css/style-responsive.css" rel="stylesheet">
-
-<script src="assets/js/chart-master/Chart.js"></script>
-<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
-<script src="assets/js/andmed.js"></script>
-
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-</head>
+        <!--Internal-->
+        <script type="text/javascript" src="js/dashboardCharts.js"></script>
+        <script type="text/javascript" src="js/draggable.js"></script>
 
-<body>
+        <!--External-->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<section id="container">
+        <!--Internal-->
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <link rel="stylesheet" href="/css/loader.css">
 
-
-		<!-- **********************************************************************************************************************************************************
-      MAIN SIDEBAR MENU
-      *********************************************************************************************************************************************************** -->
-		<!--sidebar start-->
-		<aside>
-			<div id="sidebar" class="nav-collapse ">
-				<!-- sidebar menu start-->
-				<ul class="sidebar-menu" id="nav-accordion">
-					<li class="mt"><a class="active" href="index.html"> <i
-							class="fa fa-dashboard"></i> <span>Dashboard</span>
-					</a></li>
-
-					<li class="sub-menu"><a href="javascript:;"> <i
-							class="fa fa-desktop"></i> <span>UI Elements</span>
-					</a>
-						<ul class="sub">
-							<li><a href="general.html">General</a></li>
-							<li><a href="buttons.html">Buttons</a></li>
-							<li><a href="panels.html">Panels</a></li>
-						</ul></li>
-
-					<li class="sub-menu"><a href="javascript:;"> <i
-							class="fa fa-cogs"></i> <span>Components</span>
-					</a>
-						<ul class="sub">
-							<li><a href="calendar.html">Calendar</a></li>
-							<li><a href="gallery.html">Gallery</a></li>
-							<li><a href="todo_list.html">Todo List</a></li>
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"> <i
-							class="fa fa-book"></i> <span>Extra Pages</span>
-					</a>
-						<ul class="sub">
-							<li><a href="blank.html">Blank Page</a></li>
-							<li><a href="login.html">Login</a></li>
-							<li><a href="lock_screen.html">Lock Screen</a></li>
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"> <i
-							class="fa fa-tasks"></i> <span>Forms</span>
-					</a>
-						<ul class="sub">
-							<li><a href="form_component.html">Form Components</a></li>
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"> <i
-							class="fa fa-th"></i> <span>Data Tables</span>
-					</a>
-						<ul class="sub">
-							<li><a href="basic_table.html">Basic Table</a></li>
-							<li><a href="responsive_table.html">Responsive Table</a></li>
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"> <i
-							class=" fa fa-bar-chart-o"></i> <span>Charts</span>
-					</a>
-						<ul class="sub">
-							<li><a href="morris.html">Morris</a></li>
-							<li><a href="chartjs.html">Chartjs</a></li>
-						</ul></li>
-
-				</ul>
-				<!-- sidebar menu end-->
-			</div>
-		</aside>
-		<!--sidebar end-->
-
-		<!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-		<!--main content start-->
-		<section id="main-content">
-			<section class="wrapper">
-
-				<select>
-					<option value="estonia">Estonia</option>
-					<option value="latvia">Latvia</option>
-					<option value="lithuania">Lithuania</option>
-				</select>
-
-
-
-				<script>
-// siin toimub võlukunst------------------------------------------
-					var xhReq = new XMLHttpRequest();
-					xhReq.open("GET", "rest/andmed/getKPI", false);
-					xhReq.send(null);
-					var jsonObject = JSON.parse(xhReq.responseText);
-//----------------------------------------------------------------
-				</script>
-				<div class="row mt">
-					<!-- SERVER STATUS PANELS -->
-					<div class="col-md-4 col-sm-4 mb">
-						<div class="white-panel pn donut-chart">
-							<div class="white-header">
-								<h5 id = "kpiTitle">Server load</h5>
-							</div>
-							<div class="row">
-								<div class="col-sm-6 col-xs-6">
-									<p id="kpiPercent">
-										<i class="fa fa-database"></i> 70%
-									</p>
-								</div>
-							</div>
-							<canvas id="serverstatus01" height="120" width="120"></canvas>
-
-							<script>
-//json objektist võtab kpi väärtuse
-								document.getElementById("kpiPercent").innerHTML = JSON.stringify(jsonObject.kpi)+ "%";
-//json objektist võtab servicename väärtuse
-                              document.getElementById("kpiTitle").innerHTML = JSON.stringify(jsonObject.serviceName);
-                        
-								var doughnutData = [ {
-                                    //paneb jsonobjekti kpi key väärtuse sõõriku valueks
-									value : parseInt(jsonObject.kpi),
-									color : "#68dff0"
-								}, {
-									value : 100 - parseInt(jsonObject.kpi),
-									color : "#fdfdfd"
-								} ];
-								var myDoughnut = new Chart(document
-										.getElementById("serverstatus01")
-										.getContext("2d"))
-										.Doughnut(doughnutData);
-							</script>
-						</div>
-						<! --/grey-panel -->
-					</div>
-					<!-- /col-md-4-->
-
-
-					<div class="col-md-4 col-sm-4 mb">
-						<div class="white-panel pn">
-							<div class="white-header">
-								<h5>REFERENTIAL INTEGRITY</h5>
-							</div>
-							<div class="row">
-								<div class="col-sm-6 col-xs-6">
-									<p>
-										<i class="fa fa-database"></i> 90%
-									</p>
-								</div>
-							</div>
-							<canvas id="serverstatus03" height="120" width="120"></canvas>
-							<script>
-								var doughnutData = [ {
-									value : 90,
-									color : "#68dff0"
-								}, {
-									value : 10,
-									color : "#fdfdfd"
-								} ];
-								var myDoughnut = new Chart(document
-										.getElementById("serverstatus03")
-										.getContext("2d"))
-										.Doughnut(doughnutData);
-							</script>
-						</div>
-					</div>
-					<!-- /col-md-4 -->
-
-					<div class="col-md-4 col-sm-4 mb">
-						<div class="white-panel pn">
-							<div class="white-header">
-								<h5>COMPLETNESS</h5>
-							</div>
-							<div class="row">
-								<div class="col-sm-6 col-xs-6">
-									<p>
-										<i class="fa fa-database"></i> 97%
-									</p>
-								</div>
-							</div>
-							<canvas id="serverstatus04" height="120" width="120"></canvas>
-							<script>
-								var doughnutData = [ {
-									value : 97,
-									color : "#68dff0"
-								}, {
-									value : 3,
-									color : "#444c57"
-								} ];
-								var myDoughnut = new Chart(document
-										.getElementById("serverstatus04")
-										.getContext("2d"))
-										.Doughnut(doughnutData);
-							</script>
-						</div>
-					</div>
-				</div>
-				<!-- /col-md-4 -->
-
-
-
-				</div>
-				<!-- /row -->
-
-
-				<div class="row">
-					<!-- TWITTER PANEL -->
-					<div class="col-md-4 mb">
-						<div class="darkblue-panel pn">
-							<div class="darkblue-header">
-								<h5>CONSISTENCY</h5>
-							</div>
-							<div class="row">
-								<div class="col-sm-6 col-xs-6"></div>
-								<p>
-									<i class="fa fa-database"></i> 95%
-								</p>
-							</div>
-							<canvas id="serverstatus02" height="120" width="120"></canvas>
-							<script>
-								var doughnutData = [ {
-									value : 95,
-									color : "#68dff0"
-								}, {
-									value : 5,
-									color : "#444c57"
-								} ];
-								var myDoughnut = new Chart(document
-										.getElementById("serverstatus02")
-										.getContext("2d"))
-										.Doughnut(doughnutData);
-							</script>
-							<p>April 3, 2017</p>
-						</div>
-						<! -- /darkblue panel -->
-					</div>
-					<!-- /col-md-4 -->
-
-
-					<div class="col-md-4 col-sm-4 mb">
-						<!-- REVENUE PANEL -->
-						<div class="darkblue-panel pn">
-							<div class="darkblue-header">
-								<h5>CONFORMANCE</h5>
-							</div>
-							<div class="row">
-								<div class="col-sm-6 col-xs-6"></div>
-								<p>
-									<i class="fa fa-database"></i> 89%
-								</p>
-							</div>
-							<canvas id="serverstatus05" height="120" width="120"></canvas>
-							<script>
-								var doughnutData = [ {
-									value : 89,
-									color : "#68dff0"
-								}, {
-									value : 11,
-									color : "#444c57"
-								} ];
-								var myDoughnut = new Chart(document
-										.getElementById("serverstatus05")
-										.getContext("2d"))
-										.Doughnut(doughnutData);
-							</script>
-						</div>
-					</div>
-					<!-- /col-md-4 -->
-
-					<div class="col-md-4 col-sm-4 mb">
-						<!-- REVENUE PANEL -->
-						<div class="darkblue-panel pn">
-							<div class="darkblue-header">
-								<h5>UNIQUENESS</h5>
-							</div>
-							<div class="row">
-								<div class="col-sm-6 col-xs-6"></div>
-								<p>
-									<i class="fa fa-database"></i> 99%
-								</p>
-							</div>
-							<canvas id="serverstatus06" height="120" width="120"></canvas>
-							<script>
-								var doughnutData = [ {
-									value : 99,
-									color : "#68dff0"
-								}, {
-									value : 1,
-									color : "#444c57"
-								} ];
-								var myDoughnut = new Chart(document
-										.getElementById("serverstatus06")
-										.getContext("2d"))
-										.Doughnut(doughnutData);
-							</script>
-
-						</div>
-					</div>
-					<!-- /col-md-4 -->
-
-				</div>
-				<!-- /row -->
-
-				<div class="row mt">
-					<!--CUSTOM CHART START -->
-					<div class="border-head">
-						<h3>TIMELINE</h3>
-					</div>
-					<div class="custom-bar-chart">
-						<ul class="y-axis">
-							<li><span>10.000</span></li>
-							<li><span>8.000</span></li>
-							<li><span>6.000</span></li>
-							<li><span>4.000</span></li>
-							<li><span>2.000</span></li>
-							<li><span>0</span></li>
-						</ul>
-
-
-						<div class="chart mt">
-							<div class="sparkline" data-type="line" data-resize="true"
-								data-height="75" data-width="90%" data-line-width="1"
-								data-line-color="#000" data-spot-color="#fff" data-fill-color=""
-								data-highlight-line-color="#fff" data-spot-radius="4"
-								data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
-						</div>
-
-
-					</div>
-					<!--custom chart end-->
-				</div>
-				<!-- /row -->
-
-				</div>
-				<!-- /col-lg-9 END SECTION MIDDLE -->
-
-
-
-
-				<!--main content end-->
-			</section>
-
-			<!-- js placed at the end of the document so the pages load faster -->
-			<script src="assets/js/jquery.js"></script>
-			<script src="assets/js/jquery-1.8.3.min.js"></script>
-			<script src="assets/js/bootstrap.min.js"></script>
-			<script class="include" type="text/javascript"
-				src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-			<script src="assets/js/jquery.scrollTo.min.js"></script>
-			<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-			<script src="assets/js/jquery.sparkline.js"></script>
-
-
-			<!--common script for all pages-->
-			<script src="assets/js/common-scripts.js"></script>
-
-			<script type="text/javascript"
-				src="assets/js/gritter/js/jquery.gritter.js"></script>
-			<script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-
-			<!--script for this page-->
-			<script src="assets/js/sparkline-chart.js"></script>
-			<script src="assets/js/zabuto_calendar.js"></script>
-
-
-
-
-			<script type="application/javascript">
-				
-				
-        $(document).ready(function () {
-            $("#date-popover").popover({html: true, trigger: "manual"});
-            $("#date-popover").hide();
-            $("#date-popover").click(function (e) {
-                $(this).hide();
-            });
+        <!--External-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css" rel="stylesheet">
+        <!--http://blocks.org/mccannf/1629644-->
         
-            $("#my-calendar").zabuto_calendar({
-                action: function () {
-                    return myDateFunction(this.id, false);
-                },
-                action_nav: function () {
-                    return myNavFunction(this.id);
-                },
-                ajax: {
-                    url: "show_data.php?action=1",
-                    modal: true
-                },
-                legend: [
-                    {type: "text", label: "Special event", badge: "00"},
-                    {type: "block", label: "Regular event", }
-                ]
+        <!-- Bootstrap Date-Picker Plugin kalendri jaoks -->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+		<!-- muuda siin -->
+        <script>
+        $(function () {
+            $("#date1").datepicker({
+                dateFormat: "yy-mm-dd",
+                timeFormat: "hh:mm:ss"
             });
+ 			//Alguskuupäevaks pakub 3 kuud enne tänast
+            $("#date1").datepicker("setDate", "c-3m", new Date());
+            $("#date1").datepicker({ dateFormat: 'yy-mm-dd' });
         });
-        
-        
-        function myNavFunction(id) {
-            $("#date-popover").hide();
-            var nav = $("#" + id).data("navigation");
-            var to = $("#" + id).data("to");
-            console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+
+        $( function() {
+        	  $( "#date2" ).datepicker({
+        	    dateFormat: "yy-mm-dd",
+        	    timeFormat: "hh:mm:ss"
+        	  });
+
+ 			//Lõppkuupäevaks pakub tänast
+              $("#date2").datepicker("setDate", new Date());
+              $("#date2").datepicker({ dateFormat: 'yy-mm-dd' });
+        	});
+
+
+
+        function updateGauges() {
+
         }
-    
-			
-			</script>
-</body>
+
+
+
+
+        function type(d) {
+            d.value = +d.value; // coerce to number
+            return d;
+        }
+
+        <!-- Init all charts-->
+
+        function removeChart(divTag) {
+            $("#" + divTag).remove();
+            alert('Remove');
+        }
+
+        function initialize() {
+
+            setInterval(updateGauges, 5000);
+
+
+        }
+
+        var app = angular.module('app', []);
+
+        app.directive("addDiv", function ($compile) {
+            return {
+                restrict: 'AE',
+                link: function (scope, element, attr) {
+                    element.bind("click", function (e) {
+                        var e = document.getElementById("ChartSelect");
+                        var strUser = e.options[e.selectedIndex].text;
+
+                        var ecountry = document.getElementById("CountrySelect");
+                        var country = ecountry.options[ecountry.selectedIndex].text;
+                        if (country === "All") {
+                            country = "GR";
+                        }
+                        var eMetricType = document.getElementById("MetricType");
+                        var MetricType = eMetricType.options[eMetricType.selectedIndex].text;
+
+
+                        var date1 = $("#date1").val();
+
+
+                        var date2 = $("#date2").val();
+
+                        var eserviceGroupName = document.getElementById("service_main_group_name");
+                        var serviceGroupName = eserviceGroupName.options[eserviceGroupName.selectedIndex].text;
+
+                        var qMetricType = document.getElementById("Quality_metric_type_name");
+                        var qualityMetricName = qMetricType.options[qMetricType.selectedIndex].text;
+
+
+
+                        var container;
+                        var childNode;
+
+                        <!--GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis -->
+
+                        if (strUser == "Map") {
+
+                            $.get('rest/andmed/getMapData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                var country = [];
+                                var measures = [];
+                                var extraInfo = [];
+                                var count = 0;
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+
+                                        if (count === 3) {
+                                            var divTag = "divMap_" + new Date().getTime().toString();
+                                            container = angular.element(document.querySelector("#container"));
+                                            childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                            container.prepend(childNode);
+                                            mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName);
+                                            count = 0;
+                                        }
+                                        measures.push(obj.measure_amt);
+                                        country.push(obj.country);
+                                        extraInfo.push(obj.qualityMetricTypeComment);
+                                        count++;
+
+
+                                        document.getElementById("demo").innerHTML = "";
+                                    }
+
+                                } else {
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+
+
+                        }
+                        if (strUser == "Bar") {
+
+                            $.get('rest/andmed/getBarData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                //  var dd = JSON.parse(result);
+                                var dataX = [];
+                                var dataY = [];
+                                var extraInfo = [];
+
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+                                        dataX.push(obj.measure_date);
+                                        dataY.push(obj.measure_amt);
+                                        extraInfo.push(obj.service_main_group_name);
+
+
+
+                                    }
+
+                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
+
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+                        }
+                        if (strUser == "Line") {
+
+                            $.get('rest/andmed/getBarData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                //  var dd = JSON.parse(result);
+                                var dataX = [];
+                                var dataY = [];
+                                var extraInfo = [];
+
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+                                        dataX.push(obj.measure_date);
+                                        dataY.push(obj.measure_amt);
+                                        extraInfo.push(obj.service_main_group_name);
+
+
+
+                                    }
+
+                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    lineChart(divTag, dataX, dataY);
+
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+                        }
+                        if (strUser == "Heat map") {
+
+                            $.get('rest/andmed/getHeatMapData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+
+                                //  var dd = JSON.parse(result);
+                                var dataX = [];
+                                var dataY = [];
+                                var dataZ = [];
+                                var dataZFull = [];
+                                var extraInfo = [];
+
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+                                        dataX.push(obj.qualityMetricTypeComment);
+                                        dataZFull.push(dataZ.push(obj.measure_amt));
+                                        dataY.push(obj.qualityMetricTypeName);
+                                        extraInfo.push(obj.service_main_group_name);
+
+
+
+
+                                    }
+
+                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    heatMap(divTag, dataX, dataY, dataZ, serviceGroupName);
+
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+
+
+                            });
+                        }
+                        if (strUser == "Donut") {
+
+                            $.get('rest/andmed/getDonutData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2
+                            }, function (responseText) {
+                                var json = jQuery.parseJSON(responseText);
+
+                                //  var dd = JSON.parse(result);
+                                if (json.length > 0) {
+                                    //	gauges[key].redraw(obj.completness);
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+
+                                        var divTag = "divDonut_" + new Date().getTime().toString();
+                                        container = angular.element(document.querySelector("#container"));
+                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><div id="' + divTag + '"" ></div></div>')(container);
+                                        container.prepend(childNode);
+                                        circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
+                                    }
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+                                    document.getElementById("demo").innerHTML = "No result";
+                                }
+                            });
+
+
+
+
+                        }
+
+
+
+                    });
+                }
+            };
+        });
+
+        app.controller('firstCtrl', function ($scope) {
+
+
+        });
+        </script>
+        <style>
+        .box {
+            border: 1px solid black;
+            height: 400px;
+            float: left;
+            width: 400px;
+        }
+
+        header img {
+            float: left;
+        }
+
+        header {
+            padding: 1em;
+            color: white;
+            background-color: black;
+            clear: left;
+            text-align: center;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .topnav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        /* Style the links inside the navigation bar */
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        /* Change the color of links on hover */
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        /* Add a color to the active/current link */
+
+        .topnav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        </style>
+
+        <body ng-app="app">
+            <header>
+                <h1>
+                    <img src="https://www.swedbank.ee/stylebook/swedbank.png">DQ Dashboard
+                </h1>
+            </header>
+            <div class="topnav" id="myTopnav">
+                <a class="active" href="index.html">Charts Generation <span
+			class="label label-danger" style="float: right;">0</span></a> <a href="homeDashboard.html">Home</a>
+            </div>
+            <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
+				<p> Show data between following dates:
+                <p>
+                    From <input name="date1" type="text" id="date1" value="2016-11-01">
+                </p>
+                <p>
+                    To <input name="date2" type="text" id="date2" value="2017-11-01">
+                </p>
+                Chart: <select id="ChartSelect">
+			<option value="ChartType">Bar</option>
+			<option value="ChartType">Line</option>
+			<option value="ChartType">Heat map</option>
+			<option value="ChartType">Map</option>
+			<option value="ChartType" selected>Donut</option>
+		</select> Country:<select id="CountrySelect">
+			<option value="CountryType" selected>EE</option>
+			<option value="CountryType">LT</option>
+			<option value="CountryType">LI</option>
+			<option value="CountryType">All</option>
+
+		</select> Service rule <select id="Quality_metric_type_name">
+			<option value="name">CLARITY</option>
+			<option value="name" selected>COMPLETENESS</option>
+			<option value="name">FORMAT CONFORMANCY</option>
+			<option value="name">UNIQUE IDENTIFIABILITY</option>
+			<option value="name">REFERENTIAL INTEGRITY</option>
+			<option value="name">CONSISTENCY</option>
+			<option value="name">ACCURACY TO SOURCE</option>
+			<option value="name">TIMELINESS</option>
+			<option value="name">UNKNOWN QUALITY METRIC</option>
+
+
+		</select> Service group name <select id="service_main_group_name">
+
+			<option value="Service">Regulatory Reporting</option>
+			<option value="Service">Supporting Service</option>
+			<option value="Service">Data in - Internal systems by AM
+				areas</option>
+			<option value="Service">Performance Management</option>
+			<option value="Service">Customer Management</option>
+			<option value="Service">Data in - External companies</option>
+			<option value="Service">DW Application</option>
+			<option value="Service" selected>BB Data Warehouse</option>
+			<option value="Service">BI Infrastructure</option>
+			<option value="Service">Data in - Manual preparation</option>
+			<option value="Service">BI Common Analytical Services</option>
+			<option value="Service">Business Line / Product System</option>
+			<option value="Service">Risk Management</option>
+			<option value="Service">Data Warehouse Service</option>
+			<option value="Service">Unknown quality metric</option>
+
+
+		</select> Metric type <select id="MetricType">
+			<option value="Rule" selected>DQKPI</option>
+			<option value="Rule">DQERR</option>
+			<option value="Rule">DQPRF</option>
+			<option value="Rule">NA</option>
+
+
+		</select>
+                <p id="demo"></p>
+                <button add-div>Generate</button>
+                <div class="loader"></div>
+
+                <div ng-app="test" ng-controller="testCtrl">
+                    <div id="container"></div>
+                </div>
+            </div>
+
+
+
+        </body>
+
 </html>
