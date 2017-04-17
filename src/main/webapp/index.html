@@ -160,7 +160,7 @@
                                     }
 
                                 } else {
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -206,7 +206,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -250,7 +250,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -298,7 +298,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -330,7 +330,7 @@
                                     }
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
                             });
 
@@ -437,6 +437,11 @@
             background-color: #FF7F50;
             color: grey;
         }
+        
+        #noResult {
+            font-size:  25px;
+            color: red;
+        }
 
 
         </style>
@@ -532,6 +537,7 @@
                         </br>
 
                         <p id="demo"></p>
+                        <p id="noResult"></p>
                         <button class="button" add-div>Generate</button>
                         <div class="loader"></div>
 
