@@ -28,21 +28,33 @@
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css" rel="stylesheet">
         <!--http://blocks.org/mccannf/1629644-->
-
+        
+        <!-- Bootstrap Date-Picker Plugin kalendri jaoks -->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+		<!-- muuda siin -->
         <script>
         $(function () {
             $("#date1").datepicker({
                 dateFormat: "yy-mm-dd",
                 timeFormat: "hh:mm:ss"
             });
+ 			//Alguskuupäevaks pakub 3 kuud enne tänast
+            $("#date1").datepicker("setDate", "c-3m", new Date());
+            $("#date1").datepicker({ dateFormat: 'yy-mm-dd' });
         });
 
-        $(function () {
-            $("#date2").datepicker({
-                dateFormat: "yy-mm-dd",
-                timeFormat: "hh:mm:ss"
-            });
-        });
+        $( function() {
+        	  $( "#date2" ).datepicker({
+        	    dateFormat: "yy-mm-dd",
+        	    timeFormat: "hh:mm:ss"
+        	  });
+
+ 			//Lõppkuupäevaks pakub tänast
+              $("#date2").datepicker("setDate", new Date());
+              $("#date2").datepicker({ dateFormat: 'yy-mm-dd' });
+        	});
 
 
 
@@ -438,10 +450,85 @@
             </header>
 
             <div class="topnav" id="myTopnav">
+<<<<<<< HEAD
                 <a class="active" href="index.html">Charts Generation
                     <span class="label label-danger" style="float: right;">0</span></a> 
                     <a href="homeDashboard.html">Home</a>
             </div>
+=======
+                <a class="active" href="index.html">Charts Generation <span
+			class="label label-danger" style="float: right;">0</span></a> <a href="homeDashboard.html">Home</a>
+            </div>
+            <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
+				<p> Show data between following dates:
+                <p>
+                    From <input name="date1" type="text" id="date1" value="2016-11-01">
+                </p>
+                <p>
+                    To <input name="date2" type="text" id="date2" value="2017-11-01">
+                </p>
+                Chart: <select id="ChartSelect">
+			<option value="ChartType">Bar</option>
+			<option value="ChartType">Line</option>
+			<option value="ChartType">Heat map</option>
+			<option value="ChartType">Map</option>
+			<option value="ChartType" selected>Donut</option>
+		</select> Country:<select id="CountrySelect">
+			<option value="CountryType" selected>EE</option>
+			<option value="CountryType">LT</option>
+			<option value="CountryType">LI</option>
+			<option value="CountryType">All</option>
+
+		</select> Service rule <select id="Quality_metric_type_name">
+			<option value="name">CLARITY</option>
+			<option value="name" selected>COMPLETENESS</option>
+			<option value="name">FORMAT CONFORMANCY</option>
+			<option value="name">UNIQUE IDENTIFIABILITY</option>
+			<option value="name">REFERENTIAL INTEGRITY</option>
+			<option value="name">CONSISTENCY</option>
+			<option value="name">ACCURACY TO SOURCE</option>
+			<option value="name">TIMELINESS</option>
+			<option value="name">UNKNOWN QUALITY METRIC</option>
+
+
+		</select> Service group name <select id="service_main_group_name">
+
+			<option value="Service">Regulatory Reporting</option>
+			<option value="Service">Supporting Service</option>
+			<option value="Service">Data in - Internal systems by AM
+				areas</option>
+			<option value="Service">Performance Management</option>
+			<option value="Service">Customer Management</option>
+			<option value="Service">Data in - External companies</option>
+			<option value="Service">DW Application</option>
+			<option value="Service" selected>BB Data Warehouse</option>
+			<option value="Service">BI Infrastructure</option>
+			<option value="Service">Data in - Manual preparation</option>
+			<option value="Service">BI Common Analytical Services</option>
+			<option value="Service">Business Line / Product System</option>
+			<option value="Service">Risk Management</option>
+			<option value="Service">Data Warehouse Service</option>
+			<option value="Service">Unknown quality metric</option>
+
+
+		</select> Metric type <select id="MetricType">
+			<option value="Rule" selected>DQKPI</option>
+			<option value="Rule">DQERR</option>
+			<option value="Rule">DQPRF</option>
+			<option value="Rule">NA</option>
+
+
+		</select>
+                <p id="demo"></p>
+                <button add-div>Generate</button>
+                <div class="loader"></div>
+
+                <div ng-app="test" ng-controller="testCtrl">
+                    <div id="container"></div>
+                </div>
+            </div>
+
+>>>>>>> 93a1a87c7c514cb0130e0399a66e4df677f528a2
 
             <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
 
