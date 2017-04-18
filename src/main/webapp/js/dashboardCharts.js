@@ -77,7 +77,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 					}];
 
 					var layout = {
-							autosize: true,
+							autosize: false,
 							title: serviceName+" "+country+"<br>"+info,
 							height: 300,
 							width: 500,
@@ -88,8 +88,6 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 								t: 110,
 								pad: 2
 							},
-							  paper_bgcolor: 'rgba(238,112,35,0.05)',
-							  plot_bgcolor: 'rgba(254, 247, 234,0.05)',
 							showlegend: true,
 							  legend:{
 								    xanchor:"center",
