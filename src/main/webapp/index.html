@@ -147,7 +147,7 @@
                                         if (count === 3) {
                                             var divTag = "divMap_" + new Date().getTime().toString();
                                             container = angular.element(document.querySelector("#container"));
-                                            childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 25%;"><div id="' + divTag + '""></div></div>')(container);
+                                            childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
                                             container.prepend(childNode);
                                             mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName);
                                             count = 0;
