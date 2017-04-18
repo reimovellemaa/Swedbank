@@ -162,7 +162,7 @@
                                     }
 
                                 } else {
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -208,7 +208,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -252,7 +252,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -300,7 +300,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -332,7 +332,7 @@
                                     }
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
                             });
 
@@ -442,25 +442,26 @@
             background-color: #FF7F50;
             color: grey;
         }
+        
+        #noResult {
+            font-size:  25px;
+            color: red;
+        }
 
 
         </style>
+        <link rel="shortcut icon" type="image/png" href="https://www.swedbank.com/idc/fragments/wcm_fr_head/images/favicon.ico"/>
 
         <body ng-app="app">
-
-            <header>
-                <h1>
-                    <img src="https://www.swedbank.ee/stylebook/swedbank.png">DQ Dashboard
-                </h1>
-            </header>
-
+        <div style="background-color:#100C08">
+            <img style="margin:0px auto;display:block" src="assets/img/24_swedbank_og.png"/>
             <div class="topnav" id="myTopnav">
 
-                <a class="active" href="index.html">Charts Generation
-                    <span class="label label-danger" style="float: right;">0</span></a> 
+                <a class="active" href="index.html">Charts Generation 
+                <span class="label label-danger" style="float: right;">2</span></a> 
                     <a href="homeDashboard.html">Home</a>
             </div>
-
+</div>
             <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
 
                 <form id="form">
@@ -505,6 +506,7 @@
                         </br>
 
                         <p id="demo"></p>
+                        <p id="noResult"></p>
                         <button class="button" add-div>Generate</button>
                         <div class="loader"></div>
 

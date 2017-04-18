@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>Bootstrap Example</title>
+        <title>DQ Dashboard</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,8 +19,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--Internal-->
-        <link rel="stylesheet" href="/resources/demos/style.css">
-        <link rel="stylesheet" href="/css/loader.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="css/loader.css">
 
         <!--External-->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -119,7 +119,7 @@
                         var container;
                         var childNode;
 
-                        <!--GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis -->
+                        // GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis
 
                         if (strUser == "Map") {
 
@@ -402,89 +402,146 @@
             background-color: #4CAF50;
             color: white;
         }
+
+        .input {
+        	padding: 10px 20px;
+        	margin: 7.5px 0;
+        }
+
+        #form {
+            margin:  50px;
+        }
+
+        .form-wrapper {
+            margin: 20px 0;
+        }
+
+        select {
+            margin: 10px 20px;
+            font-size: 18px;
+        }
+
+        .button {
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            background-color: #ff7043;
+            color: white;
+            border-radius: 3.5px;
+        }
+
+        .button:hover {
+            transition: all 0.4s ease-in-out;
+            transform-origin: left;
+            background-color: #FF7F50;
+            color: grey;
+        }
+
+
         </style>
 
         <body ng-app="app">
+
             <header>
                 <h1>
                     <img src="https://www.swedbank.ee/stylebook/swedbank.png">DQ Dashboard
                 </h1>
             </header>
+
             <div class="topnav" id="myTopnav">
-                <a class="active" href="index.html">Charts Generation <span
-			class="label label-danger" style="float: right;">0</span></a> <a href="homeDashboard.html">Home</a>
+
+                <a class="active" href="index.html">Charts Generation
+                    <span class="label label-danger" style="float: right;">0</span></a> 
+                    <a href="homeDashboard.html">Home</a>
             </div>
+
             <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
-				<p> Show data between following dates:
-                <p>
-                    From <input name="date1" type="text" id="date1" value="2016-11-01">
-                </p>
-                <p>
-                    To <input name="date2" type="text" id="date2" value="2017-11-01">
-                </p>
-                Chart: <select id="ChartSelect">
-			<option value="ChartType">Bar</option>
-			<option value="ChartType">Line</option>
-			<option value="ChartType">Heat map</option>
-			<option value="ChartType">Map</option>
-			<option value="ChartType" selected>Donut</option>
-		</select> Country:<select id="CountrySelect">
-			<option value="CountryType" selected>EE</option>
-			<option value="CountryType">LT</option>
-			<option value="CountryType">LI</option>
-			<option value="CountryType">All</option>
 
-		</select> Service rule <select id="Quality_metric_type_name">
-			<option value="name">CLARITY</option>
-			<option value="name" selected>COMPLETENESS</option>
-			<option value="name">FORMAT CONFORMANCY</option>
-			<option value="name">UNIQUE IDENTIFIABILITY</option>
-			<option value="name">REFERENTIAL INTEGRITY</option>
-			<option value="name">CONSISTENCY</option>
-			<option value="name">ACCURACY TO SOURCE</option>
-			<option value="name">TIMELINESS</option>
-			<option value="name">UNKNOWN QUALITY METRIC</option>
+                <form id="form">
+                    <label>Date</label>
+                    <input type="text" id="date1" class="input" value="2016-11-01">
 
+                    <label>Between</label>
+                    <input type="text" id="date2" class="input" value="2017-11-01">
 
-		</select> Service group name <select id="service_main_group_name">
+                    <div class="form-wrapper">
+                         <label>Chart</label>
+                         <select id="ChartSelect">
+                            <option value="ChartType">Bar</option>
+                            <option value="ChartType">Line</option>
+                            <option value="ChartType">Heat map</option>
+                            <option value="ChartType">Map</option>
+                            <option value="ChartType" selected>Donut</option>
+                         </select>
+                        <br />
 
-			<option value="Service">Regulatory Reporting</option>
-			<option value="Service">Supporting Service</option>
-			<option value="Service">Data in - Internal systems by AM
-				areas</option>
-			<option value="Service">Performance Management</option>
-			<option value="Service">Customer Management</option>
-			<option value="Service">Data in - External companies</option>
-			<option value="Service">DW Application</option>
-			<option value="Service" selected>BB Data Warehouse</option>
-			<option value="Service">BI Infrastructure</option>
-			<option value="Service">Data in - Manual preparation</option>
-			<option value="Service">BI Common Analytical Services</option>
-			<option value="Service">Business Line / Product System</option>
-			<option value="Service">Risk Management</option>
-			<option value="Service">Data Warehouse Service</option>
-			<option value="Service">Unknown quality metric</option>
+                        <label>Country</label>
+                        <select id="CountrySelect">
+                            <option value="CountryType" selected>EE</option>
+                            <option value="CountryType">LT</option>
+                            <option value="CountryType">LI</option>
+                            <option value="CountryType">All</option>
+                        </select>
+                        <br />
 
+                         <label>Service rule</label>
+                         <select id="Quality_metric_type_name">
+                            <option value="name">CLARITY</option>
+                            <option value="name" selected>COMPLETENESS</option>
+                            <option value="name">FORMAT CONFORMANCY</option>
+                            <option value="name">UNIQUE IDENTIFIABILITY</option>
+                            <option value="name">REFERENTIAL INTEGRITY</option>
+                            <option value="name">CONSISTENCY</option>
+                            <option value="name">ACCURACY TO SOURCE</option>
+                            <option value="name">TIMELINESS</option>
+                            <option value="name">UNKNOWN QUALITY METRIC</option>
+                        </select>
 
-		</select> Metric type <select id="MetricType">
-			<option value="Rule" selected>DQKPI</option>
-			<option value="Rule">DQERR</option>
-			<option value="Rule">DQPRF</option>
-			<option value="Rule">NA</option>
+                        <br />
 
+                        <label>Service group name</label>
+                        <select id="service_main_group_name">
+                            <option value="Service">Regulatory Reporting</option>
+                            <option value="Service">Supporting Service</option>
+                            <option value="Service">Data in - Internal systems by AM
+                                areas</option>
+                            <option value="Service">Performance Management</option>
+                            <option value="Service">Customer Management</option>
+                            <option value="Service">Data in - External companies</option>
+                            <option value="Service">DW Application</option>
+                            <option value="Service" selected>BB Data Warehouse</option>
+                            <option value="Service">BI Infrastructure</option>
+                            <option value="Service">Data in - Manual preparation</option>
+                            <option value="Service">BI Common Analytical Services</option>
+                            <option value="Service">Business Line / Product System</option>
+                            <option value="Service">Risk Management</option>
+                            <option value="Service">Data Warehouse Service</option>
+                            <option value="Service">Unknown quality metric</option>
+                        </select>
+                        </br >
 
-		</select>
-                <p id="demo"></p>
-                <button add-div>Generate</button>
-                <div class="loader"></div>
+                        <label>Metric type</label>
+                        <select id="MetricType">
+                            <option value="Rule" selected>DQKPI</option>
+                            <option value="Rule">DQERR</option>
+                            <option value="Rule">DQPRF</option>
+                            <option value="Rule">NA</option>
+                        </select>
 
-                <div ng-app="test" ng-controller="testCtrl">
-                    <div id="container"></div>
-                </div>
+                        </br>
+
+                        <p id="demo"></p>
+                        <button class="button" add-div>Generate</button>
+                        <div class="loader"></div>
+
+                         <div ng-app="test" ng-controller="testCtrl">
+                            <div id="container"></div>
+                        </div> 
+
+                    </div>
+                </form>
             </div>
-
-
-
         </body>
 
 </html>
