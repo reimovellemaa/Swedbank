@@ -10,6 +10,7 @@
         <!--Internal-->
         <script type="text/javascript" src="js/dashboardCharts.js"></script>
         <script type="text/javascript" src="js/draggable.js"></script>
+        <script type="text/javascript" src="js/filtersData.js"></script>
 
         <!--External-->
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -81,7 +82,8 @@
 
             setInterval(updateGauges, 5000);
 
-
+         
+            
         }
 
         var app = angular.module('app', []);
@@ -160,7 +162,7 @@
                                     }
 
                                 } else {
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -206,7 +208,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -250,7 +252,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -298,7 +300,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
 
 
@@ -330,7 +332,7 @@
                                     }
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
-                                    document.getElementById("demo").innerHTML = "No result";
+                                    document.getElementById("noResult").innerHTML = "No result";
                                 }
                             });
 
@@ -347,8 +349,11 @@
         });
 
         app.controller('firstCtrl', function ($scope) {
-
-
+		
+        	 optionsForCountryFilter('CountrySelect');
+        	 optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
+        	 optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
+          	 optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
         });
         </script>
         <style>
@@ -437,25 +442,26 @@
             background-color: #FF7F50;
             color: grey;
         }
+        
+        #noResult {
+            font-size:  25px;
+            color: red;
+        }
 
 
         </style>
+        <link rel="shortcut icon" type="image/png" href="https://www.swedbank.com/idc/fragments/wcm_fr_head/images/favicon.ico"/>
 
         <body ng-app="app">
-
-            <header>
-                <h1>
-                    <img src="https://www.swedbank.ee/stylebook/swedbank.png">DQ Dashboard
-                </h1>
-            </header>
-
+        <div style="background-color:#100C08">
+            <img style="margin:0px auto;display:block" src="assets/img/24_swedbank_og.png"/>
             <div class="topnav" id="myTopnav">
 
-                <a class="active" href="index.html">Charts Generation
-                    <span class="label label-danger" style="float: right;">0</span></a> 
+                <a class="active" href="index.html">Charts Generation 
+                <span class="label label-danger" style="float: right;">2</span></a> 
                     <a href="homeDashboard.html">Home</a>
             </div>
-
+</div>
             <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
 
                 <form id="form">
@@ -478,60 +484,29 @@
 
                         <label>Country</label>
                         <select id="CountrySelect">
-                            <option value="CountryType" selected>EE</option>
-                            <option value="CountryType">LT</option>
-                            <option value="CountryType">LI</option>
-                            <option value="CountryType">All</option>
+              
                         </select>
                         <br />
 
                          <label>Service rule</label>
                          <select id="Quality_metric_type_name">
-                            <option value="name">CLARITY</option>
-                            <option value="name" selected>COMPLETENESS</option>
-                            <option value="name">FORMAT CONFORMANCY</option>
-                            <option value="name">UNIQUE IDENTIFIABILITY</option>
-                            <option value="name">REFERENTIAL INTEGRITY</option>
-                            <option value="name">CONSISTENCY</option>
-                            <option value="name">ACCURACY TO SOURCE</option>
-                            <option value="name">TIMELINESS</option>
-                            <option value="name">UNKNOWN QUALITY METRIC</option>
                         </select>
 
                         <br />
 
                         <label>Service group name</label>
                         <select id="service_main_group_name">
-                            <option value="Service">Regulatory Reporting</option>
-                            <option value="Service">Supporting Service</option>
-                            <option value="Service">Data in - Internal systems by AM
-                                areas</option>
-                            <option value="Service">Performance Management</option>
-                            <option value="Service">Customer Management</option>
-                            <option value="Service">Data in - External companies</option>
-                            <option value="Service">DW Application</option>
-                            <option value="Service" selected>BB Data Warehouse</option>
-                            <option value="Service">BI Infrastructure</option>
-                            <option value="Service">Data in - Manual preparation</option>
-                            <option value="Service">BI Common Analytical Services</option>
-                            <option value="Service">Business Line / Product System</option>
-                            <option value="Service">Risk Management</option>
-                            <option value="Service">Data Warehouse Service</option>
-                            <option value="Service">Unknown quality metric</option>
                         </select>
                         </br >
 
                         <label>Metric type</label>
                         <select id="MetricType">
-                            <option value="Rule" selected>DQKPI</option>
-                            <option value="Rule">DQERR</option>
-                            <option value="Rule">DQPRF</option>
-                            <option value="Rule">NA</option>
                         </select>
 
                         </br>
 
                         <p id="demo"></p>
+                        <p id="noResult"></p>
                         <button class="button" add-div>Generate</button>
                         <div class="loader"></div>
 
