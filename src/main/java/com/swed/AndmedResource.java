@@ -14,18 +14,8 @@ public class AndmedResource {
 
 	AndmedDAO dao = new AndmedDAO();
 	
-	@GET
-	@Produces("text/plain")
-	public String getStrink() {
-		return dao.getAndmed();
-	}
 	
-	
-	//Meetodeid saab callida 
-	//localhost:8080/Dashboard/rest/andmed/getAllMeasureCnt
-	//localhost:8080/Dashboard/rest/andmed/getCompletness
-	//localhost:8080/Dashboard/rest/andmed/getKPI
-	
+		
 	@Path("getDonutData")
 	@GET
 	@Produces("text/plain")
@@ -114,5 +104,37 @@ public class AndmedResource {
 	public String getDistinctCategMetricType() throws SQLException{
 		
 			return dao.getDistinctCategMetricType();
+	}
+	
+	@Path("getCompleteness")
+	@GET
+	@Produces("text/plain")
+	public String getCompleteness(){
+		
+			return dao.getCompleteness();
+	}
+	
+	@Path("getAccuracy")
+	@GET
+	@Produces("text/plain")
+	public String getAccuracy(){
+		
+			return dao.getAccuracy();
+	}
+	
+	@Path("getConformancy")
+	@GET
+	@Produces("text/plain")
+	public String getConformancy(){
+		
+			return dao.getConformancy();
+	}
+	
+	@Path("getConsistency")
+	@GET
+	@Produces("text/plain")
+	public String getConsistency(){
+		
+			return dao.getConsistency();
 	}
 }
