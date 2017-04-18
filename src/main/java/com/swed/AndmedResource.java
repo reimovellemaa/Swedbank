@@ -83,6 +83,36 @@ public class AndmedResource {
 			return dao.getHeatMapData(metric_categ, service_group_name, country, metric_name, date1, date2);
 	}
 	
-
-
+	
+	@Path("getDistinctCountrys")
+	@GET
+	@Produces("text/plain")
+	public String getHeatMapData() throws SQLException{
+		
+			return dao.getDistinctCountrys();
+	}
+	
+	@Path("getDisticntQualityMetricTypeName")
+	@GET
+	@Produces("text/plain")
+	public String getDistinctQualityMetricTypeNames() throws SQLException{
+		
+			return dao.getDistinctQualityMetricTypeNames();
+	}
+	
+	@Path("getDisticntQualityServiceName")
+	@GET
+	@Produces("text/plain")
+	public String getDistinctQualityServiceName() throws SQLException{
+		
+			return dao.getDistinctQualityServiceNames();
+	}
+	
+	@Path("getDistinctCategMetricType")
+	@GET
+	@Produces("text/plain")
+	public String getDistinctCategMetricType() throws SQLException{
+		
+			return dao.getDistinctCategMetricType();
+	}
 }
