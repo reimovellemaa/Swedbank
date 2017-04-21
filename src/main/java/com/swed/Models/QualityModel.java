@@ -10,6 +10,33 @@ public class QualityModel {
 		private String quality_metric_categ;
 		private String qualityMetricTypeComment;
 		private String country;
+		private int fact_row;
+		private int fact_col;
+		
+		
+	public void setFactCol(int value){
+			
+			this.fact_col=value;
+		}
+		
+		public int getFactCol(){
+			
+			return this.fact_col;
+		}
+		
+		
+		
+		
+		public void setFactRow(int value){
+			
+			this.fact_row=value;
+		}
+		
+		public int getFactRow(){
+			
+			return this.fact_row;
+		}
+		
 		 public void setCountry(String value){
 				
 				this.country=value;

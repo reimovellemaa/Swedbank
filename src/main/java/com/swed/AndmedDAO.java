@@ -42,6 +42,9 @@ public class AndmedDAO {
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='"+country_shortname+"'"
 				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name";
 
+		String queryTest="SELECT AVG(f.measure_amt) as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='EE'AND dim2.quality_metric_categ_shortname='DQKPI' AND dim1.service_main_group_name='BB Data Warehouse' AND dim2.quality_metric_type_name='FORMAT  CONFORMANCY' AND f.measure_fact_date BETWEEN '2017-01-21' and'2017-04-21' Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name";
+
+		
 		System.out.println("IS HERE");
 		System.out.println(queryString);
 		ResultSet rs = stmt.executeQuery(queryString);
@@ -58,6 +61,7 @@ public class AndmedDAO {
 			responseArray.add(model);
 		}
 		jsonResult = gson.toJson(responseArray);
+		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
 
@@ -261,6 +265,10 @@ public class AndmedDAO {
 			FilterModel model=new FilterModel();
 			model.setValue(rs.getString("quality_metric_type_name"));
 		
+			
+	
+			
+			
 		
 			jsonResult = gson.toJson(model);
 			// }
@@ -449,6 +457,61 @@ public class AndmedDAO {
 			DBConnection.close(conn);
 		}
 		return andmed;
+	}
+
+	public String getDetailData(String metric_categ, String service_group_name, String country, String metric_name,
+			String date1, String date2)throws SQLException {
+		// TODO Auto-generated method stub
+		ArrayList responseArray = new ArrayList();
+		Connection conn = DBConnection.getConnection();
+		Statement stmt = null;
+		String jsonResult="";
+		stmt = conn.createStatement();
+		Gson gson = new GsonBuilder().create();
+		String measure_type="measure_amt";
+		if(metric_categ.equals("DQKPI")){
+			measure_type="measure_amt";
+
+
+		}else{
+
+			measure_type="measure_cnt";
+		}
+		
+		
+		String queryString="SELECT DISTINCT f.country_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
+				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f."+measure_type+"<=99 AND f.country_shortname='"+country+"'"
+				+"AND dim2.quality_metric_categ_shortname='"+metric_categ+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
+
+		String queryTestString="SELECT DISTINCT f.fact_row_no,f.fact_col_no,f.country_shortname,f.measure_amt as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.measure_amt<=99 AND dim2.quality_metric_type_name='FORMAT  CONFORMANCY' AND f.country_shortname='EE'AND dim2.quality_metric_categ_shortname='DQKPI' AND dim1.service_main_group_name='BB Data Warehouse'  AND f.measure_fact_date BETWEEN '2017-01-21' and'2017-04-21'";
+		
+		System.out.println("IS HERE");
+		System.out.println(queryString);
+		ResultSet rs = stmt.executeQuery(queryString);
+		while(rs.next()) {
+
+
+			QualityModel model=new QualityModel();
+			model.setMeasureAmt(rs.getInt("average_amt"));
+			model.setServiceMainGroupName(rs.getString("service_main_group_name"));
+			model.setDate(rs.getString("measure_fact_date"));
+			model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
+            model.setFactCol(rs.getInt("fact_col_no"));
+            model.setFactRow(rs.getInt("fact_row_no"));
+            model.setCountry(rs.getString("country_shortname"));
+
+			responseArray.add(model);
+		}
+		jsonResult = gson.toJson(responseArray);
+		System.out.println(jsonResult);
+		rs.close();
+		stmt.close();
+
+		return jsonResult;
+		
+		
+	
 	}
 }
 

@@ -50,23 +50,28 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 		
 			
 			function circleChart(divTag,value,serviceName,country,dqName,info,categType){
-				
+				var value2=0;
 			    if(country==="GR"){
 		        	   country="All";
 		        }
 				if(categType==="DQERR"){
 					if(value>0){
-						value=value-100;
+						value2=100-value;
+				
 					}else{
 						value=100;
 					}					
+				}else{
+					
+					value2=100-value;
+					
 				}
 			    
 			    
 				var data = [{
-						values: [value],
+						values: [value,value2],
 					  labels: [dqName],
-					  marker:{  colors:['rgb(238,112,35)']},
+					  marker:{  colors:['rgb(238,112,35)','rgb(255,255,255)']},
 					  domain: {
 					    x: [0, .65]
 					  },
