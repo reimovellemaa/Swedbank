@@ -39,13 +39,27 @@
 	{
 	}
 	
+	
+	function getUrlVars()
+	{
+	    var vars = [], hash;
+	    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	    for(var i = 0; i < hashes.length; i++)
+	    {
+	        hash = hashes[i].split('=');
+	        vars.push(hash[0]);
+	        vars[hash[0]] = hash[1];
+	    }
+	    return vars;
+	}
+	
 	function initialize(){
 
 			  
 			   
-		
-		var myData = localStorage['objectToPass'];
-		localStorage.removeItem( 'objectToPass' ); // Clear the localStorage
+		var me = getUrlVars()["store"];
+		var myData = localStorage[me];
+		localStorage.removeItem( me); // Clear the localStorage
 		var firstData = jQuery.parseJSON(myData);
 	
 		alert('firstData: ' + myData);

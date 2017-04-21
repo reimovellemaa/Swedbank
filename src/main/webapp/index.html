@@ -323,7 +323,7 @@
                                        
                                         var divTag = "divDonut_" + new Date().getTime().toString();
                                         container = angular.element(document.querySelector("#container"));
-                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><a href="advancedQuery.html">Advanced</a><div id="' + divTag + '"" ></div></div>')(container);
+                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '"" ></div></div>')(container);
                                         container.prepend(childNode);
                                         circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
                                     
@@ -335,7 +335,7 @@
                                                    'date1': date1,
                                                    'date2': date2
                                               };
-                                        localStorage.setItem( 'objectToPass', JSON.stringify(data) );
+                                        localStorage.setItem(divTag, JSON.stringify(data) );
                                     }
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
