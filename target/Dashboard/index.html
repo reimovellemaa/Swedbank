@@ -96,13 +96,7 @@
                         var e = document.getElementById("ChartSelect");
                         var strUser = e.options[e.selectedIndex].text;
 
-                        var ecountry = document.getElementById("CountrySelect");
-                        var country = ecountry.options[ecountry.selectedIndex].text;
-                        if (country === "All") {
-                            country = "GR";
-                        }
-                        var eMetricType = document.getElementById("MetricType");
-                        var MetricType = eMetricType.options[eMetricType.selectedIndex].text;
+             
 
 
                         var date1 = $("#date1").val();
@@ -110,12 +104,14 @@
 
                         var date2 = $("#date2").val();
 
-                        var eserviceGroupName = document.getElementById("service_main_group_name");
-                        var serviceGroupName = eserviceGroupName.options[eserviceGroupName.selectedIndex].text;
-
-                        var qMetricType = document.getElementById("Quality_metric_type_name");
-                        var qualityMetricName = qMetricType.options[qMetricType.selectedIndex].text;
-
+                   
+                         var serviceGroupName =$('select[name=service_main_group_name]').val();
+						 var MetricType=  $('select[name=MetricType]').val();
+                         var country =  $('select[name=CountrySelect]').val();
+                         if (country === "All") {
+                             country = "GR";
+                         }
+				    	var qualityMetricName = $('select[name=Quality_metric_type_name]').val();
 
 
                         var container;
@@ -323,12 +319,23 @@
                                     //	gauges[key].redraw(obj.completness);
                                     for (var i = 0; i < json.length; i++) {
                                         var obj = json[i];
-
+                                   
+                                       
                                         var divTag = "divDonut_" + new Date().getTime().toString();
                                         container = angular.element(document.querySelector("#container"));
-                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><div id="' + divTag + '"" ></div></div>')(container);
+                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '"" ></div></div>')(container);
                                         container.prepend(childNode);
                                         circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
+                                    
+                                        var data={
+                                              	 'metric_categ': MetricType,
+                                                   'service_group_name': serviceGroupName,
+                                                   'country': country,
+                                                   'metric_name': qualityMetricName,
+                                                   'date1': date1,
+                                                   'date2': date2
+                                              };
+                                        localStorage.setItem(divTag, JSON.stringify(data) );
                                     }
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
@@ -336,12 +343,7 @@
                                 }
                             });
 
-
-
-
                         }
-
-
 
                     });
                 }
@@ -357,6 +359,16 @@
         });
         </script>
         <style>
+        
+        a.button {
+			    -webkit-appearance: button;
+			    -moz-appearance: button;
+			    appearance: button;
+			
+			    text-decoration: none;
+			    color: initial;
+			}
+        
         .box {
             border: 1px solid black;
             height: 400px;
@@ -378,6 +390,7 @@
 
         body {
             margin: 0;
+            min-width:1200px; 
         }
 
         .topnav {
@@ -473,7 +486,7 @@
 
                     <div class="form-wrapper">
                          <label>Chart</label>
-                         <select id="ChartSelect">
+                         <select  id="ChartSelect">
                             <option value="ChartType">Bar</option>
                             <option value="ChartType">Line</option>
                             <option value="ChartType">Heat map</option>
@@ -483,24 +496,24 @@
                         <br />
 
                         <label>Country</label>
-                        <select id="CountrySelect">
+                        <select name="CountrySelect" id="CountrySelect">
               
                         </select>
                         <br />
 
                          <label>Service rule</label>
-                         <select id="Quality_metric_type_name">
+                         <select name="Quality_metric_type_name" id="Quality_metric_type_name">
                         </select>
 
                         <br />
 
                         <label>Service group name</label>
-                        <select id="service_main_group_name">
+                        <select name="service_main_group_name" id="service_main_group_name">
                         </select>
                         </br >
 
                         <label>Metric type</label>
-                        <select id="MetricType">
+                        <select name="MetricType" id="MetricType">
                         </select>
 
                         </br>
