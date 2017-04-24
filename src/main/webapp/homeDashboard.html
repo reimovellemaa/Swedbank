@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" ng-app='home'>
 <head>
-  <title>Bootstrap Example</title>
+  <title>DQ Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css" rel="stylesheet">
+  <!-- favicon -->
+  <link rel="shortcut icon" type="image/png" href="https://www.swedbank.com/idc/fragments/wcm_fr_head/images/favicon.ico"/>
   
   <script type="text/javascript" src="js/raphael-2.1.4.min.js"></script>
   <script type="text/javascript" src="js/justgage.js"></script>
@@ -159,15 +161,15 @@ body {
 	
 	}
 			</style>
+			
 <body onload="initialize()">
-  <header>
-      <h1><img src="https://www.swedbank.ee/stylebook/swedbank.png">DQ Dashboard</h1> 
-     </header>
+<div style="background-color:#100C08">
+  <img style="margin:0px auto;display:block" src="assets/img/24_swedbank_og.png"/>
 	<div class="topnav" id="myTopnav">
 	 <a href="index.html">Charts Generation <span class="label label-danger" style="float:right;">0</span></a>
 	  <a class="active" href="homeDashboard.html">Home</a>
 	</div>
- 
+ </div>
   
   	  <div ng-controller="secondCtrl" style="padding:1px 16px;height:1000px;" >
   	   <div ng-app="test" ng-controller="testCtrl">
