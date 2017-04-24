@@ -21,9 +21,12 @@ public class AndmedDAO {
 	
 	public String getDonutData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+        conn = DBConnection.getConnection();
+		Statement stmt = null;
+
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 		String measure_type="measure_amt";
@@ -64,16 +67,24 @@ public class AndmedDAO {
 		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
 
 	public String getMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+	    conn = DBConnection.getConnection();
+		Statement stmt = null;
+	
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 
@@ -112,7 +123,12 @@ public class AndmedDAO {
 		jsonResult = gson.toJson(responseArray);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
@@ -121,10 +137,13 @@ public class AndmedDAO {
 	public String getBarData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
-		String measure_type="measure_amt";
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+		String measure_type="measure_amt";
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+		
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 		if(categ_metric.equals("DQKPI")){
@@ -162,16 +181,24 @@ public class AndmedDAO {
 		jsonResult = gson.toJson(responseArray);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
 	public String getHeatMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 
@@ -204,16 +231,24 @@ public class AndmedDAO {
 		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
 	public String getDistinctCountrys() throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+		
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 
@@ -237,7 +272,12 @@ public class AndmedDAO {
 		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
@@ -245,9 +285,12 @@ public class AndmedDAO {
 	public String getDistinctQualityMetricTypeNames() throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+	
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 
@@ -278,7 +321,12 @@ public class AndmedDAO {
 		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
@@ -286,9 +334,13 @@ public class AndmedDAO {
 	public String getDistinctQualityServiceNames() throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
+		
 		String jsonResult="";
+		Connection conn = null;
+		try {
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+	
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 
@@ -315,7 +367,12 @@ public class AndmedDAO {
 		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
@@ -323,9 +380,12 @@ public class AndmedDAO {
 	public String getDistinctCategMetricType() throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+	
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 
@@ -352,7 +412,12 @@ public class AndmedDAO {
 		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 
 	}
@@ -463,9 +528,12 @@ public class AndmedDAO {
 			String date1, String date2)throws SQLException {
 		// TODO Auto-generated method stub
 		ArrayList responseArray = new ArrayList();
-		Connection conn = DBConnection.getConnection();
-		Statement stmt = null;
 		String jsonResult="";
+		Connection conn = null;
+		try {
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+		
 		stmt = conn.createStatement();
 		Gson gson = new GsonBuilder().create();
 		String measure_type="measure_amt";
@@ -507,7 +575,12 @@ public class AndmedDAO {
 		System.out.println(jsonResult);
 		rs.close();
 		stmt.close();
-
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
 		return jsonResult;
 		
 		
