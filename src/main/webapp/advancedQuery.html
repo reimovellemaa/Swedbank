@@ -58,19 +58,29 @@
 			  
 			   
 		var me = getUrlVars()["store"];
+		var me2 = getUrlVars()["result"];
+	
 		var myData = localStorage[me];
 		localStorage.removeItem( me); // Clear the localStorage
 		var firstData = jQuery.parseJSON(myData);
-	
-		alert('firstData: ' + myData);
+		var rest='';
+	    if(me2=="1"){
+	    	alert("Correct");
+	    	rest='rest/andmed/getDetailCorrectData';
+	    }else{
+	    	alert("Not Correct");
+	    	rest='rest/andmed/getDetailFailedData';
+	    }
+		//alert('firstData: ' +  myData);
 		
-		   $.get('rest/andmed/getDetailData', {
+		   $.get(rest, {
                metric_categ:firstData.metric_categ,
                service_group_name:firstData.service_group_name,
                country: firstData.country,
                metric_name: firstData.metric_name,
                date1: firstData.date1,
-               date2: firstData.date2
+               date2: firstData.date2,
+               comment:firstData.comment
            }, function (responseText) {
                var json = jQuery.parseJSON(responseText);
            

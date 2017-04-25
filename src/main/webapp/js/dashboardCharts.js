@@ -107,7 +107,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 				
 						Plotly.newPlot(divTag, data, layout, {displaylogo: false});
 					
-				
+						
 				
 				
 			}
