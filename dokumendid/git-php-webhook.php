@@ -1,3 +1,5 @@
+/** POLE KASUTUSEL KUNA FAILID ON .war KUJUL SERVERIS **/
+
 <?php
 /** 
   * This script is for easily deploying updates to Github repos to your local server. It will automatically git clone or 
