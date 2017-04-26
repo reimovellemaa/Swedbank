@@ -214,7 +214,7 @@
                         }
                         if (strUser == "Line") {
 
-                            $.get('rest/andmed/getBarData', {
+                            $.get('rest/andmed/getLineData', {
                                 metric_categ: MetricType,
                                 service_group_name: serviceGroupName,
                                 country: country,
@@ -245,7 +245,7 @@
                                     container = angular.element(document.querySelector("#container"));
                                     childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
-                                    lineChart(divTag, dataX, dataY);
+                                    lineChart(divTag, dataX, dataY,country,serviceGroupName);
 
                                     document.getElementById("demo").innerHTML = "";
                                 } else {

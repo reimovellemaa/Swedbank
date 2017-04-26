@@ -141,7 +141,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 				
 			}
 <!-- Line chart-->
-			function lineChart(divTag,dataX,dataY){		
+			function lineChart(divTag,dataX,dataY,country,serviceName){		
 				var data = [
 					  {
 					    x: dataX,
@@ -149,7 +149,12 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 					    type: 'scatter'
 					  }
 					];
-				Plotly.newPlot(divTag,data, null,{displaylogo: false});
+				
+				var layout = {
+						  title:country+" "+serviceName
+						  
+						};
+				Plotly.newPlot(divTag,data,layout,{displaylogo: false});
 			}
 			
 <!-- Heatmap chart-->

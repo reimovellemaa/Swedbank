@@ -589,6 +589,70 @@ public class AndmedDAO {
 	
 	}
 
+	public String getLineData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
+
+		ArrayList responseArray = new ArrayList();
+		String jsonResult="";
+		Connection conn = null;
+		try {
+		String measure_type="measure_amt";
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+		
+		stmt = conn.createStatement();
+		Gson gson = new GsonBuilder().create();
+		if(categ_metric.equals("DQKPI")){
+			measure_type="measure_amt";
+
+
+		}else{
+
+			measure_type="measure_cnt";
+		}
+		String queryString="select avg(t."+measure_type+"), t.measure_fact_date from (SELECT f."+measure_type+", f.measure_fact_date"
+			+" FROM mesa.PL_MEASURE_FACT_PRT f "
+			+"INNER JOIN mesa.PL_SERVICE_PRT dim1 "
+			+"ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
+			+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 "
+			+"ON (f.Validation_Rule_Id  = dim2.Validation_Rule_Id) "
+			+"WHERE f.measure_fact_date between '2017-02-01' and '2017-02-05'"
+			+"AND f.measure_amt        IS NOT NULL "
+			+"AND f.measure_amt         <101 "
+			+"AND f.measure_amt         >1 "
+			+"AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' "
+			+"AND f.country_shortname='"+country_shortname+"' "
+		    +"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' "
+			+"group by f."+measure_type+", f.measure_fact_date order by f.measure_fact_date asc) t group by t.measure_fact_date;"; 
+
+
+		System.out.println(queryString);
+		ResultSet rs = stmt.executeQuery(queryString);
+		while(rs.next()) {
+
+
+			QualityModel model=new QualityModel();
+			model.setMeasureAmt(rs.getInt("avg"));
+			
+			model.setDate(rs.getString("measure_fact_date"));
+
+			jsonResult = gson.toJson(model);
+			// }
+			responseArray.add(model);
+		}
+		jsonResult = gson.toJson(responseArray);
+		rs.close();
+		stmt.close();
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
+		return jsonResult;
+
+	}
+	
+	
 	public String getDetailCorrectData(String metric_categ, String service_group_name, String country,
 			String metric_name, String date1, String date2,String comment) {
 		ArrayList responseArray = new ArrayList();
