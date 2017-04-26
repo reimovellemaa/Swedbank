@@ -615,12 +615,11 @@ public class AndmedDAO {
 			+"ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 			+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 "
 			+"ON (f.Validation_Rule_Id  = dim2.Validation_Rule_Id) "
-			+"WHERE f.measure_fact_date between '2017-02-01' and '2017-02-05'"
+			+" WHERE f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' "
 			+"AND f.measure_amt        IS NOT NULL "
 			+"AND f.measure_amt         <101 "
 			+"AND f.measure_amt         >1 "
-			+"AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' "
-			+"AND f.country_shortname='"+country_shortname+"' "
+			+" AND f.country_shortname='"+country_shortname+"' "
 		    +"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' "
 			+"group by f."+measure_type+", f.measure_fact_date order by f.measure_fact_date asc) t group by t.measure_fact_date;"; 
 
