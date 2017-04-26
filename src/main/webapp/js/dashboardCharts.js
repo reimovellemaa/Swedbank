@@ -83,7 +83,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 
 					var layout = {
 							autosize: false,
-							title: serviceName+" "+country+"<br>"+info,
+							title: serviceName+" "+country+"<br>",
 							height: 300,
 							width: 500,
 							margin: {

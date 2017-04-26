@@ -324,11 +324,12 @@
                                    
                                        
                                         var divTag = "divDonut_" + new Date().getTime().toString();
+                                   
                                         container = angular.element(document.querySelector("#container"));
                                         childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '"" ></div></div>')(container);
                                         container.prepend(childNode);
                                         circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
-                                        
+                                        console.log(obj.qualityMetricTypeComment);
                                         var data={
                                              	 'metric_categ': MetricType,
                                                   'service_group_name': serviceGroupName,
@@ -336,11 +337,11 @@
                                                   'metric_name': qualityMetricName,
                                                   'date1': date1,
                                                   'date2': date2,
-                                                  'comment':obj.qualityMetricTypeComment
+                                                  'comment': obj.qualityMetricTypeComment
                                              };
                                        localStorage.setItem(divTag, JSON.stringify(data) );
                                         
-                                        var myPlot = document.getElementById(divTag);
+                                       var myPlot = document.getElementById(divTag);
                                         
                                         
                                         

@@ -60,15 +60,17 @@
 		var me = getUrlVars()["store"];
 		var me2 = getUrlVars()["result"];
 	
+
 		var myData = localStorage[me];
 		localStorage.removeItem( me); // Clear the localStorage
 		var firstData = jQuery.parseJSON(myData);
 		var rest='';
 	    if(me2=="1"){
-	    	alert("Correct");
+	    	alert("Correct"+firstData.comment);
 	    	rest='rest/andmed/getDetailCorrectData';
 	    }else{
-	    	alert("Not Correct");
+
+	    	alert("Not Correct"+firstData.comment);
 	    	rest='rest/andmed/getDetailFailedData';
 	    }
 		//alert('firstData: ' +  myData);
@@ -90,7 +92,7 @@
                        var obj = json[i];
                   
                       
-                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'fact_col':obj.fact_col,'fact_row':obj.fact_row,'qualityMetricTypeComment':obj.qualityMetricTypeComment});
+                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'fact_col':obj.fact_col,'fact_row':obj.fact_row,'qualityMetricTypeComment':obj.qualityMetricTypeComment,'measure_date':obj.measure_date});
             		
                    }
                    
@@ -101,7 +103,8 @@
 			        { "data": "measure_amt","name": "Measure Result"},
 			        { "data": "fact_col","name": "Col nr"},
 			        { "data": "fact_row","name": "Row nr"},
-			        { "data": "qualityMetricTypeComment","name": "Comment"}
+			        { "data": "qualityMetricTypeComment","name": "Comment"},
+			        { "data": "measure_date","name": "measure date"}
 			    ],
 			    "columnDefs": [
 			        { "name": "engine",   "targets": 0 },
@@ -205,6 +208,7 @@ body {
                 <th>Col nr</th>
                 <th>Row nr</th>
                 <th>Comment</th>
+                <th>Measure date</th>
             </tr>
         </thead>
         <tfoot>
@@ -215,6 +219,7 @@ body {
                 <th>Col nr</th>
                 <th>Row nr</th>
                 <th>Comment</th>
+                <th>Measure date</th>
             </tr>
         </tfoot>
  </table>
