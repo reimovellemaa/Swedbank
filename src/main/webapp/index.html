@@ -245,7 +245,7 @@
                                     container = angular.element(document.querySelector("#container"));
                                     childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
-                                    lineChart(divTag, dataX, dataY,country,serviceGroupName);
+                                    lineChart(divTag, dataX, dataY,country,serviceGroupName,MetricType,qualityMetricName);
 
                                     document.getElementById("demo").innerHTML = "";
                                 } else {

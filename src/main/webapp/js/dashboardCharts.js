@@ -141,7 +141,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 				
 			}
 <!-- Line chart-->
-			function lineChart(divTag,dataX,dataY,country,serviceName){		
+			function lineChart(divTag,dataX,dataY,country,serviceName,info,info2){		
 				var data = [
 					  {
 					    x: dataX,
@@ -151,7 +151,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 					];
 				
 				var layout = {
-						  title:country+" "+serviceName
+						  title:country+" "+serviceName+" "+info2 +"<br>"+info
 						  
 						};
 				Plotly.newPlot(divTag,data,layout,{displaylogo: false});
