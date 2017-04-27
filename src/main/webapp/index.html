@@ -118,7 +118,7 @@
                         var childNode;
 
                         // GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis
-
+						var NoResTimer = 3000; //set time how long "no r
                         if (strUser == "Map") {
 
                             $.get('rest/andmed/getMapData', {
@@ -207,6 +207,7 @@
 
                                 } else {
                                     document.getElementById("noResult").innerHTML = "No result";
+                                    setTimeout(function(){document.getElementById("noResult").innerHTML = ""},NoResTimer);
                                 }
 								
                               
@@ -257,8 +258,8 @@
                                     
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
-
                                     document.getElementById("noResult").innerHTML = "No result";
+                                    setTimeout(function(){document.getElementById("noResult").innerHTML = ""},NoResTimer);
                                 }
 
 
@@ -301,8 +302,8 @@
 
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
-
                                     document.getElementById("noResult").innerHTML = "No result";
+                                    setTimeout(function(){document.getElementById("noResult").innerHTML = ""},NoResTimer);
                                 }
 
 
@@ -351,6 +352,7 @@
                                 } else {
 
                                     document.getElementById("noResult").innerHTML = "No result";
+                                    setTimeout(function(){document.getElementById("noResult").innerHTML = ""},NoResTimer);
                                 }
 
 
@@ -378,7 +380,7 @@
                                         var divTag = "divDonut_" + new Date().getTime().toString();
                                    
                                         container = angular.element(document.querySelector("#container"));
-                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><div id="' + divTag + '"" ></div></div>')(container);
+                                        childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 550px; margin:5px;"><!--a href="advancedQuery.html?store=' + divTag + '">Advanced</a--><div class="panel-body" id="' + divTag + '"" ></div></div>')(container);
                                         container.prepend(childNode);
                                         circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
                                         console.log(obj.qualityMetricTypeComment);
@@ -419,6 +421,7 @@
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
                                     document.getElementById("noResult").innerHTML = "No result";
+                                    setTimeout(function(){document.getElementById("noResult").innerHTML = ""},NoResTimer);
                                 }
                             });
 
@@ -557,45 +560,60 @@
             <div ng-controller="firstCtrl" style="padding: 1px 16px; height: 1000px;">
 
                 <form id="form">
-                    <label>Date</label>
-                    <input type="text" id="date1" class="input" value="2016-11-01">
-
-                    <label>Between</label>
-                    <input type="text" id="date2" class="input" value="2017-11-01">
-
-                    <div class="form-wrapper">
-                         <label>Chart</label>
-                         <select  id="ChartSelect">
-                            <option value="ChartType">Bar</option>
-                            <option value="ChartType">Line</option>
-                            <option value="ChartType">Heat map</option>
-                            <option value="ChartType">Map</option>
-                            <option value="ChartType" selected>Donut</option>
-                         </select>
-                        <br />
-
-                        <label>Country</label>
-                        <select name="CountrySelect" id="CountrySelect">
-              
-                        </select>
-                        <br />
-
-                         <label>Service rule</label>
-                         <select name="Quality_metric_type_name" id="Quality_metric_type_name">
-                        </select>
-
-                        <br />
-
-                        <label>Service group name</label>
-                        <select name="service_main_group_name" id="service_main_group_name">
-                        </select>
-                        </br >
-
-                        <label>Metric type</label>
-                        <select name="MetricType" id="MetricType">
-                        </select>
-
-                        </br>
+                    <div class="container">
+					    <div class="row">
+					        <div class="col-xs-6" style = "float:left">
+					                      
+					            <div class="form-wrapper">
+	                				  
+			
+			                        <label>Service group name</label>
+			                        <select name="service_main_group_name" id="service_main_group_name">
+			                        </select>
+			                        
+			                        <br />
+			                        
+			                        <label>Service rule</label>
+			                         <select name="Quality_metric_type_name" id="Quality_metric_type_name">
+			                        </select>
+			                        
+			                        <br>
+									<label>Date between</label>
+	                    			<input type="text" id="date1" class="input" value="2016-11-01">
+	                    			
+	                    			<label>to</label>
+	                    			<input type="text" id="date2" class="input" value="2017-11-01">
+	                    			
+			                       
+	                			</div>
+					        </div>
+					        <div class="col-xs-6" style = "float:left">
+					            
+					            <div class="form-wrapper">
+                    				 <label>Metric type</label>
+			                        <select name="MetricType" id="MetricType">
+			                        </select>
+			                        <br>
+			
+			                        <label>Country</label>
+			                        <select name="CountrySelect" id="CountrySelect">
+			                        </select>
+			                        <br>
+			                        
+			                        <label>Chart</label>
+			                         <select  id="ChartSelect">
+			                            <option value="ChartType">Bar</option>
+			                            <option value="ChartType">Line</option>
+			                            <option value="ChartType">Heat map</option>
+			                            <option value="ChartType">Map</option>
+			                            <option value="ChartType" selected>Donut</option>
+			                         </select>
+			                        
+			                        
+                    			</div>
+					        </div>
+					    </div>
+					</div>
 
                         <p id="demo"></p>
                         <p id="noResult"></p>
