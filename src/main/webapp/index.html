@@ -172,7 +172,7 @@
                                     }
                                 
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName);
                                     count = 0;
@@ -378,7 +378,7 @@
                                         var divTag = "divDonut_" + new Date().getTime().toString();
                                    
                                         container = angular.element(document.querySelector("#container"));
-                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '"" ></div></div>')(container);
+                                        childNode = $compile('<div class="box"  style = "float:left; width: 50%;"><div id="' + divTag + '"" ></div></div>')(container);
                                         container.prepend(childNode);
                                         circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
                                         console.log(obj.qualityMetricTypeComment);
