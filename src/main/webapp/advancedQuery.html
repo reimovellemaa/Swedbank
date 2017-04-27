@@ -59,19 +59,28 @@
 			   
 		var me = getUrlVars()["store"];
 		var me2 = getUrlVars()["result"];
-	
+		var country=getUrlVars()["country"];
 
 		var myData = localStorage[me];
+		alert("Here"+me);
 		localStorage.removeItem( me); // Clear the localStorage
 		var firstData = jQuery.parseJSON(myData);
+		
 		var rest='';
 	    if(me2=="1"){
 	    	alert("Correct"+firstData.comment);
 	    	rest='rest/andmed/getDetailCorrectData';
-	    }else{
+	    }
+	    if(me2=="2"){
+	    	alert("Not Correct"+country);
+	    	rest='rest/andmed/getDetailData';
+	    }
+	    if(me2=="0"){
+	    	
 
 	    	alert("Not Correct"+firstData.comment);
 	    	rest='rest/andmed/getDetailFailedData';
+	    	
 	    }
 		//alert('firstData: ' +  myData);
 		

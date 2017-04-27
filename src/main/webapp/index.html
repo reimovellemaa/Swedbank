@@ -135,33 +135,85 @@
                                 var extraInfo = [];
                                 var count = 0;
                                 var json = jQuery.parseJSON(responseText);
+                                var divTag = "divMap_" + new Date().getTime().toString();
                                 if (json.length > 0) {
 
                                     for (var i = 0; i < json.length; i++) {
                                         var obj = json[i];
-
-                                        if (count === 3) {
-                                            var divTag = "divMap_" + new Date().getTime().toString();
-                                            container = angular.element(document.querySelector("#container"));
-                                            childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
-                                            container.prepend(childNode);
-                                            mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName);
-                                            count = 0;
-                                        }
+										var parsedCountry;
+                                       
                                         measures.push(obj.measure_amt);
                                         country.push(obj.country);
                                         extraInfo.push(obj.qualityMetricTypeComment);
-                                        count++;
-
+                                        
+                                        if(obj.country==="EST"){
+                            				parsedCountry="EE";
+                            			}
+                            			if(obj.country==="LVA "){
+                            				parsedCountry="LV";
+                            			}
+                            			if(obj.country==="LTU"){
+                            				parsedCountry="LT";
+                            			}
+                                        var data={
+                                            	 'metric_categ': MetricType,
+                                                 'service_group_name': serviceGroupName,
+                                                 'country': parsedCountry,
+                                                 'metric_name': qualityMetricName,
+                                                 'date1': date1,
+                                                 'date2': date2,
+                                                 'comment': obj.qualityMetricTypeComment
+                                            };
+                                        
+                                       
+                                        localStorage.setItem(divTag.concat(parsedCountry), JSON.stringify(data) );
 
                                         document.getElementById("demo").innerHTML = "";
                                     }
+                                
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName);
+                                    count = 0;
+                                    
+                                    var mapPlot = document.getElementById(divTag);
+                                    
+                                    
+                                    
+                                    mapPlot.on('plotly_click', function(d) {
+                                    	//alert("Suka bljat"+JSON.stringify(d));
+                                    	//var obj=JSON.parse(d);
+                                    	alert(JSON.stringify(d.points[0].location));
+                                    
+                                    	if(d.points[0].location===55.28){
+                                    		
+                                    		window.location.href ="advancedQuery.html?store=" + divTag.concat('LT') + "&result=2&country=LT";
+                                    		
+                                    	}else if(d.points[0].location===56.81){
+                                    		
+                                    		window.location.href ="advancedQuery.html?store=" + divTag.concat('LV') + "&result=2&country=LV";
+                                    	
+                                    	}else{
+                                    		window.location.href ="advancedQuery.html?store=" + divTag.concat('EE') + "&result=2&country=EE";
+                                    		
+                                    	}
+                                    	
+                                    	
+                                    	
+                                    });
+                                    
+                                    
 
                                 } else {
                                     document.getElementById("noResult").innerHTML = "No result";
                                 }
-
-
+								
+                              
+                                	
+                                	
+                                	
+                              
                             });
 
 

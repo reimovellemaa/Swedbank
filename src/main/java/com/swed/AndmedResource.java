@@ -28,7 +28,8 @@ public class AndmedResource {
 			return dao.getLineData(metric_categ, service_group_name, country, metric_name, date1, date2);
 	}
 
-	@Path("getDetailFailedData")
+	
+	@Path("getDetailData")
 	@GET
 	@Produces("text/plain")
 	public String getDetailData(
@@ -40,8 +41,27 @@ public class AndmedResource {
     @QueryParam("comment") @DefaultValue("") String comment,
     @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
 			System.out.println("Data ask-"+metric_categ+""+metric_name);
+			return dao.getDetailData(metric_categ, service_group_name,country,metric_name,date1, date2,comment);
+	}
+	
+	
+	@Path("getDetailFailedData")
+	@GET
+	@Produces("text/plain")
+	public String getDetailFailedData(
+	@QueryParam("metric_categ") @DefaultValue("") String metric_categ,
+    @QueryParam("country") @DefaultValue("") String country,
+    @QueryParam("metric_name") @DefaultValue("") String metric_name,
+    @QueryParam("date1") @DefaultValue("") String date1,
+    @QueryParam("date2") @DefaultValue("") String date2,
+    @QueryParam("comment") @DefaultValue("") String comment,
+    @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
+			System.out.println("Data ask-"+metric_categ+""+metric_name);
 			return dao.getDetailFailedData(metric_categ, service_group_name,country,metric_name,date1, date2,comment);
 	}
+	
+	
+	
 	
 	@Path("getDetailCorrectData")
 	@GET

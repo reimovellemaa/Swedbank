@@ -1,4 +1,4 @@
-function mapChart(divTag,country,measures,extrainfo,metricTypeName){
+function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupName){
 				
 			
 				var data = [{
@@ -29,7 +29,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName){
 				}];
 
 				var layout = {
-				    	title:extrainfo,
+				    	title:extrainfo+" "+serviceGroupName,
 						'geo': {
 				        'scope': 'europe',
 				        'resolution': 1000,
