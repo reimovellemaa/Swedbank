@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class DBConnection {
    
-	private static DBConnection instance;
+	//private static DBConnection instance;
 	private String url;
 	
 	private DBConnection()
@@ -26,9 +26,9 @@ public class DBConnection {
 	}
 	
 	public static Connection getConnection() throws SQLException {
-		if (instance == null) {
-			instance = new DBConnection();
-		}
+		//if (instance == null) {
+		DBConnection 	instance = new DBConnection();
+	//}
 		try {
 	         Properties parameters = new Properties();
 	         parameters.put("user", "postgres");

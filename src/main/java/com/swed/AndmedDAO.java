@@ -763,6 +763,7 @@ public class AndmedDAO {
 		e.printStackTrace();
 		throw new RuntimeException(e);
 	} finally {
+	
 		DBConnection.close(conn);
 	}
 		return jsonResult;
