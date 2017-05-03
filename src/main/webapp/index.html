@@ -103,8 +103,8 @@
 
 
                         var date2 = $("#date2").val();
-
-                   
+                       
+                         var service =  $('select[name=ServiceSelect]').val();
                          var serviceGroupName =$('select[name=service_main_group_name]').val();
 						 var MetricType=  $('select[name=MetricType]').val();
                          var country =  $('select[name=CountrySelect]').val();
@@ -127,7 +127,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 var country = [];
@@ -227,7 +228,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -273,7 +275,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -317,7 +320,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -366,7 +370,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
                                 var json = jQuery.parseJSON(responseText);
 
@@ -376,7 +381,15 @@
                                     for (var i = 0; i < json.length; i++) {
                                         var obj = json[i];
                                    
-                                       
+                                     /*  if(obj.measure_amt<80){
+                                    	  
+                                    	   $.post( "rest/andmed/sendEmailNotification", function( data ) {
+                                    		 	
+                                    		 });
+                                    
+                                    	   
+                                    	   
+                                       }*/
                                         var divTag = "divDonut_" + new Date().getTime().toString();
                                    
                                         container = angular.element(document.querySelector("#container"));
@@ -433,8 +446,9 @@
         });
 
         app.controller('firstCtrl', function ($scope) {
-		
+        	
         	 optionsForCountryFilter('CountrySelect');
+         	 optionsForFilter('ServiceSelect','rest/andmed/getDisticntServices');
         	 optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
         	 optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
           	 optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
@@ -575,6 +589,7 @@
 			                        
 			                        <label>Service rule</label>
 			                         <select name="Quality_metric_type_name" id="Quality_metric_type_name">
+			                         
 			                        </select>
 			                        
 			                        <br>
@@ -594,7 +609,12 @@
 			                        <select name="MetricType" id="MetricType">
 			                        </select>
 			                        <br>
-			
+									<label>Service</label>
+			                        <select name="ServiceSelect" id="ServiceSelect">
+			                         <option value="None">None</option>
+			                        </select>
+			                        <br>
+			                        
 			                        <label>Country</label>
 			                        <select name="CountrySelect" id="CountrySelect">
 			                        </select>

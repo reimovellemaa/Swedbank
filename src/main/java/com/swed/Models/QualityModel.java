@@ -10,6 +10,7 @@ public class QualityModel {
 		private String quality_metric_categ;
 		private String qualityMetricTypeComment;
 		private String country;
+		private String service;
 		private int fact_row;
 		private int fact_col;
 		
@@ -23,9 +24,15 @@ public class QualityModel {
 			
 			return this.fact_col;
 		}
+		public String getService(){
+			
+			return this.service;
+		}
 		
-		
-		
+		public void setService(String serv){
+			
+			this.service=serv;
+		}
 		
 		public void setFactRow(int value){
 			
