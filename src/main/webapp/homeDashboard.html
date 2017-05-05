@@ -120,6 +120,7 @@ body {
 .topnav {
     background-color: #333;
     overflow: hidden;
+    margin-bottom: 50px;
 }
 
 /* Style the links inside the navigation bar */
@@ -147,7 +148,6 @@ body {
 
 
 	.box {
-    border: 1px solid black;
     height: 200px;
     float:left;
     width:200px;
@@ -160,6 +160,10 @@ body {
     margin-right:200px; /* Positions 200px to the left of center */
 	
 	}
+	.page-header {
+	  text-align: center;
+	  margin: 25p 0;
+	}
 			</style>
 			
 <body onload="initialize()">
@@ -171,8 +175,9 @@ body {
 	</div>
  </div>
   
-  	  <div ng-controller="secondCtrl" style="padding:1px 16px;height:1000px;" >
+  	  <div ng-controller="secondCtrl" >
   	   <div ng-app="test" ng-controller="testCtrl">
+  	   <h1 class="page-header"">Data Quality</h1>
   	   
         <div id="container"></div>
   		<div class="box"  style = "float:left; width:25%;"><div id="completeness" ></div></div>

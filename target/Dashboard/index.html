@@ -143,7 +143,7 @@
                                         if (count === 3) {
                                             var divTag = "divMap_" + new Date().getTime().toString();
                                             container = angular.element(document.querySelector("#container"));
-                                            childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                            childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                             container.prepend(childNode);
                                             mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName);
                                             count = 0;
@@ -197,7 +197,7 @@
 
                                     var divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
 
@@ -241,7 +241,7 @@
 
                                     var divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     lineChart(divTag, dataX, dataY);
 
@@ -289,7 +289,7 @@
 
                                     var divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     heatMap(divTag, dataX, dataY, dataZ, serviceGroupName);
 
