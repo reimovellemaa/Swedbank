@@ -36,6 +36,9 @@
         
 		<!-- muuda siin -->
         <script>
+        
+     
+        
         $(function () {
             $("#date1").datepicker({
                 dateFormat: "yy-mm-dd",
@@ -103,8 +106,8 @@
 
 
                         var date2 = $("#date2").val();
-
-                   
+                       
+                         var service =  $('select[name=ServiceSelect]').val();
                          var serviceGroupName =$('select[name=service_main_group_name]').val();
 						 var MetricType=  $('select[name=MetricType]').val();
                          var country =  $('select[name=CountrySelect]').val();
@@ -127,7 +130,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 var country = [];
@@ -227,7 +231,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -237,24 +242,47 @@
 
                                 var json = jQuery.parseJSON(responseText);
                                 if (json.length > 0) {
-
+                                    var divTag = "divBar_" + new Date().getTime().toString();
                                     for (var i = 0; i < json.length; i++) {
                                         var obj = json[i];
                                         dataX.push(obj.measure_date);
                                         dataY.push(obj.measure_amt);
                                         extraInfo.push(obj.service_main_group_name);
 
-
+                                        var data={
+                                           	 'metric_categ': MetricType,
+                                                'service_group_name': serviceGroupName,
+                                                'country': country,
+                                                'metric_name': qualityMetricName,
+                                                'date1': obj.measure_date,
+                                                'date2': obj.measure_date,
+                                                'comment': obj.qualityMetricTypeComment
+                                           };
+                                        localStorage.setItem(divTag.concat(obj.measure_date), JSON.stringify(data) );
 
                                     }
-
-                                    var divTag = "divBar_" + new Date().getTime().toString();
+                               
+                         
                                     container = angular.element(document.querySelector("#container"));
                                     childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
                                    
-                                 
+ 									var barPlot = document.getElementById(divTag);
+                                    
+                                    
+                                    
+                                    barPlot.on('plotly_click', function(d) {
+                                    	//alert("Suka bljat"+JSON.stringify(d));
+                                    	//var obj=JSON.parse(d);
+                                    	//alert(JSON.stringify(d.points[0]));
+                                    	console.log(d);
+                                     console.log(d.points[0].x);
+                                     window.location.href ="advancedQuery.html?store=" + divTag.concat(d.points[0].x) + "&result=2&country="+country+"";
+                                    	
+                                    	
+                                    	
+                                    });
                                     
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
@@ -273,7 +301,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -317,7 +346,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -366,7 +396,8 @@
                                 country: country,
                                 metric_name: qualityMetricName,
                                 date1: date1,
-                                date2: date2
+                                date2: date2,
+                                service:service
                             }, function (responseText) {
                                 var json = jQuery.parseJSON(responseText);
 
@@ -376,7 +407,15 @@
                                     for (var i = 0; i < json.length; i++) {
                                         var obj = json[i];
                                    
-                                       
+                                     /*  if(obj.measure_amt<80){
+                                    	  
+                                    	   $.post( "rest/andmed/sendEmailNotification", function( data ) {
+                                    		 	
+                                    		 });
+                                    
+                                    	   
+                                    	   
+                                       }*/
                                         var divTag = "divDonut_" + new Date().getTime().toString();
                                    
                                         container = angular.element(document.querySelector("#container"));
@@ -413,9 +452,9 @@
                                         	}
                                         	
                                         	
-                                        	
+                                       
                                         });
-                                      
+                                  
                                     }
                                 
                                     document.getElementById("demo").innerHTML = "";
@@ -433,11 +472,14 @@
         });
 
         app.controller('firstCtrl', function ($scope) {
-		
+        	
         	 optionsForCountryFilter('CountrySelect');
+         	 optionsForFilter('ServiceSelect','rest/andmed/getDisticntServices');
         	 optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
         	 optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
           	 optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
+          	 
+          
         });
         </script>
         <style>
@@ -585,6 +627,7 @@
 			                        
 			                        <label>Service rule</label>
 			                         <select name="Quality_metric_type_name" id="Quality_metric_type_name">
+			                         
 			                        </select>
 			                        
 			                        <br>
@@ -604,7 +647,12 @@
 			                        <select name="MetricType" id="MetricType">
 			                        </select>
 			                        <br>
-			
+									<label>Service</label>
+			                        <select name="ServiceSelect" id="ServiceSelect">
+			                         <option value="None">None</option>
+			                        </select>
+			                        <br>
+			                        
 			                        <label>Country</label>
 			                        <select name="CountrySelect" id="CountrySelect">
 			                        </select>

@@ -101,12 +101,13 @@
                        var obj = json[i];
                   
                       
-                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'fact_col':obj.fact_col,'fact_row':obj.fact_row,'qualityMetricTypeComment':obj.qualityMetricTypeComment,'measure_date':obj.measure_date});
+                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'fact_col':obj.fact_col,'fact_row':obj.fact_row,'qualityMetricTypeComment':obj.qualityMetricTypeComment,'measure_date':obj.measure_date,'Service_nr':obj.service});
             		
                    }
                    
                $('#myTable').DataTable({ "data":listOfData,
 			    "columns": [
+			    	{ "data": "Service_nr","name": "Service_nr" },
 			        { "data": "Service","name": "Service" },
 			        { "data": "Country","name": "Country" },
 			        { "data": "measure_amt","name": "Measure Result"},
@@ -120,7 +121,8 @@
 			        { "name": "browser",  "targets": 1 },
 			        { "name": "platform", "targets": 2 },
 			        { "name": "version",  "targets": 3 },
-			        { "name": "grade",    "targets": 4 }
+			        { "name": "grade",    "targets": 4 },
+			        { "name": "grade",    "targets": 5 }
 			      ]});
           
                
@@ -211,6 +213,7 @@ body {
  
   <table id="myTable" class="display" cellspacing="0" width="100%">  <thead>
             <tr>
+                <th>Service nr</th>
                 <th>Service</th>
                 <th>Country</th>
                 <th>Measure result</th>
@@ -222,6 +225,7 @@ body {
         </thead>
         <tfoot>
             <tr>
+                <th>Service nr</th>
                 <th>Service</th>
                 <th>Country</th>
                 <th>Measure result</th>

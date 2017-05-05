@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -13,7 +14,15 @@ import javax.ws.rs.QueryParam;
 public class AndmedResource {
 
 	AndmedDAO dao = new AndmedDAO();
-
+	EMailNotificationManager mailNotification = new EMailNotificationManager();
+	@Path("sendEmailNotification")
+	@POST
+	@Produces("text/plain")
+	public void sendEmailNotification() throws SQLException{
+		
+			mailNotification.sendEmailWithAttachement("Test","Test");
+	}
+	
 	@Path("getLineData")
 	@GET
 	@Produces("text/plain")
@@ -90,9 +99,10 @@ public class AndmedResource {
     @QueryParam("metric_name") @DefaultValue("") String metric_name,
     @QueryParam("date1") @DefaultValue("") String date1,
     @QueryParam("date2") @DefaultValue("") String date2,
-    @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
+    @QueryParam("service_group_name") @DefaultValue("") String service_group_name,
+    @QueryParam("service") @DefaultValue("") String service) throws SQLException{
 		
-			return dao.getDonutData(metric_categ, service_group_name,country,metric_name,date1, date2);
+			return dao.getDonutData(metric_categ, service_group_name,country,metric_name,date1, date2,service);
 	}
 	
 	
@@ -105,9 +115,10 @@ public class AndmedResource {
     @QueryParam("metric_name") @DefaultValue("") String metric_name,
     @QueryParam("date1") @DefaultValue("") String date1,
     @QueryParam("date2") @DefaultValue("") String date2,
-    @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
+    @QueryParam("service_group_name") @DefaultValue("") String service_group_name,
+    @QueryParam("service") @DefaultValue("") String service) throws SQLException{
 		
-			return dao.getMapData(metric_categ, service_group_name,country, metric_name, date1, date2);
+			return dao.getMapData(metric_categ, service_group_name,country, metric_name, date1, date2,service);
 	}
 	
 	@Path("getBarData")
@@ -119,9 +130,10 @@ public class AndmedResource {
     @QueryParam("metric_name") @DefaultValue("") String metric_name,
     @QueryParam("date1") @DefaultValue("") String date1,
     @QueryParam("date2") @DefaultValue("") String date2,
-    @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
+    @QueryParam("service_group_name") @DefaultValue("") String service_group_name,
+    @QueryParam("service") @DefaultValue("") String service) throws SQLException{
 		
-			return dao.getBarData(metric_categ, service_group_name, country, metric_name, date1, date2);
+			return dao.getBarData(metric_categ, service_group_name, country, metric_name, date1, date2,service);
 	}
 
 	@Path("getHeatMapData")
@@ -133,9 +145,10 @@ public class AndmedResource {
     @QueryParam("metric_name") @DefaultValue("") String metric_name,
     @QueryParam("date1") @DefaultValue("") String date1,
     @QueryParam("date2") @DefaultValue("") String date2,
-    @QueryParam("service_group_name") @DefaultValue("") String service_group_name) throws SQLException{
+    @QueryParam("service_group_name") @DefaultValue("") String service_group_name,
+    @QueryParam("service") @DefaultValue("") String service) throws SQLException{
 		
-			return dao.getHeatMapData(metric_categ, service_group_name, country, metric_name, date1, date2);
+			return dao.getHeatMapData(metric_categ, service_group_name, country, metric_name, date1, date2,service);
 	}
 	
 	
@@ -146,6 +159,17 @@ public class AndmedResource {
 		
 			return dao.getDistinctCountrys();
 	}
+	
+	
+	
+	@Path("getDisticntServices")
+	@GET
+	@Produces("text/plain")
+	public String getDistinctServices() throws SQLException{
+		
+			return dao.getDistinctServices();
+	}
+	
 	
 	@Path("getDisticntQualityMetricTypeName")
 	@GET
