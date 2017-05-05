@@ -454,7 +454,7 @@
                                         	
                                        
                                         });
-                                  
+                                        //localStorage.setItem('Charts', $('#form').html());
                                     }
                                 
                                     document.getElementById("demo").innerHTML = "";
@@ -478,7 +478,11 @@
         	 optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
         	 optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
           	 optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
-          	 
+          	/*if(localStorage.getItem('Charts')) {
+          		$('#form').html(localStorage.getItem('Charts'));
+          		alert("Got some");
+          	}*/
+          	 localStorage.clear();
           
         });
         </script>
