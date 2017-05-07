@@ -188,7 +188,7 @@
                                     mapPlot.on('plotly_click', function(d) {
                                     	//alert("Suka bljat"+JSON.stringify(d));
                                     	//var obj=JSON.parse(d);
-                                    	alert(JSON.stringify(d.points[0].location));
+                                    	console.log(JSON.stringify(d.points[0].location));
                                     
                                     	if(d.points[0].location===55.28){
                                     		
@@ -441,7 +441,7 @@
                                         myPlot.on('plotly_click', function(d) {
                                         	//alert("Suka bljat"+JSON.stringify(d));
                                         	//var obj=JSON.parse(d);
-                                        	alert(JSON.stringify(d.points[0].label));
+                                        	console.log(JSON.stringify(d.points[0].label));
                                         	var labelName=JSON.stringify(d.points[0].label);
                                         	if(d.points[0].label===qualityMetricName){
                                         		
@@ -454,7 +454,7 @@
                                         	
                                        
                                         });
-                                  
+                                        //localStorage.setItem('Charts', $('#form').html());
                                     }
                                 
                                     document.getElementById("demo").innerHTML = "";
@@ -478,7 +478,11 @@
         	 optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
         	 optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
           	 optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
-          	 
+          	/*if(localStorage.getItem('Charts')) {
+          		$('#form').html(localStorage.getItem('Charts'));
+          		alert("Got some");
+          	}*/
+          	 localStorage.clear();
           
         });
         </script>
@@ -609,7 +613,7 @@
 		</div>
             <div ng-controller="firstCtrl"">
             
-            	<h1 class="page-header">Data genereating charts</h1>
+            	<h1 class="page-header">Data generating charts</h1>
 
                 <form id="form">
                     <div class="container">
