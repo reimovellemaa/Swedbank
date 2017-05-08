@@ -30,9 +30,11 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 
 				var layout = {
 				    	title:extrainfo+" "+serviceGroupName,
+				    	height: 400,
+						width: 500,
 						'geo': {
 				        'scope': 'europe',
-				        'resolution': 1000,
+				        'resolution': 500,
 				         projection: {
 				              type: 'robinson'
 				          }

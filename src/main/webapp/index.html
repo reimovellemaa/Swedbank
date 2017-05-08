@@ -176,7 +176,7 @@
                                     }
                                 
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName);
                                     count = 0;
@@ -374,7 +374,7 @@
 
                                     var divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%; "><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     heatMap(divTag, dataX, dataY, dataZ, serviceGroupName);
 
