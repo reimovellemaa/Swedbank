@@ -596,7 +596,7 @@
 		  text-align: center;
 		  margin: 25p 0;
 		}
-
+		
 
         </style>
         <link rel="shortcut icon" type="image/png" href="https://www.swedbank.com/idc/fragments/wcm_fr_head/images/favicon.ico"/>
@@ -610,7 +610,7 @@
                 <span class="label label-danger" style="float: right;">2</span></a> 
                     <a href="homeDashboard.html">Home</a>
             </div>
-</div>
+		</div>
             <div ng-controller="firstCtrl"">
             
             	<h1 class="page-header">Data generating charts</h1>
@@ -622,24 +622,28 @@
 					                      
 					            <div class="form-wrapper">
 	                				  
-			
+									<label>Service shortname</label>
+			                        <select name="ServiceSelect" id="ServiceSelect">
+			                         <option value="None">None</option>
+			                        </select>
+			                        <br>
+			                        
 			                        <label>Service group name</label>
 			                        <select name="service_main_group_name" id="service_main_group_name">
 			                        </select>
+			                        <br>
+			                       
 			                        
-			                        <br />
-			                        
-			                        <label>Service rule</label>
+			                        <label>Data quality metric</label>
 			                         <select name="Quality_metric_type_name" id="Quality_metric_type_name">
 			                         
 			                        </select>
-			                        
 			                        <br>
-									<label>Date between</label>
-	                    			<input type="text" id="date1" class="input" value="2016-11-01">
-	                    			
-	                    			<label>to</label>
-	                    			<input type="text" id="date2" class="input" value="2017-11-01">
+			                        
+			                        <label>Country</label>
+			                        <select name="CountrySelect" id="CountrySelect">
+			                        </select>
+			                        <br>
 	                    			
 			                       
 	                			</div>
@@ -651,26 +655,24 @@
 			                        <select name="MetricType" id="MetricType">
 			                        </select>
 			                        <br>
-									<label>Service</label>
-			                        <select name="ServiceSelect" id="ServiceSelect">
-			                         <option value="None">None</option>
-			                        </select>
+									
+									<label>Date between</label>
+	                    			<input type="text" id="date1" class="input" value="2016-11-01">
+	                    			
+	                    			<label>to</label>
+	                    			<input type="text" id="date2" class="input" value="2017-11-01">
 			                        <br>
-			                        
-			                        <label>Country</label>
-			                        <select name="CountrySelect" id="CountrySelect">
-			                        </select>
-			                        <br>
-			                        
-			                        <label>Chart</label>
-			                         <select  id="ChartSelect">
-			                            <option value="ChartType">Bar</option>
-			                            <option value="ChartType">Line</option>
-			                            <option value="ChartType">Heat map</option>
-			                            <option value="ChartType">Map</option>
-			                            <option value="ChartType" selected>Donut</option>
-			                         </select>
-			                        
+			                       
+			                        <div class="chart-select">
+				                        <label>Chart</label>
+				                         <select  id="ChartSelect">
+				                            <option value="ChartType">Bar</option>
+				                            <option value="ChartType">Line</option>
+				                            <option value="ChartType">Heat map</option>
+				                            <option value="ChartType">Map</option>
+				                            <option value="ChartType" selected>Donut</option>
+			                         	</select>
+			                        </div>
 			                        
                     			</div>
 					        </div>
@@ -679,7 +681,7 @@
 
                         <p id="demo"></p>
                         <p id="noResult"></p>
-                        <button class="button" add-div>Generate</button>
+                        <div id="button-chart"><button class="button" add-div>Generate</button></div>
                         <div class="loader"></div>
 
                          <div ng-app="test" ng-controller="testCtrl">
