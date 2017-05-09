@@ -7,32 +7,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+        <!--External-->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
         <!--Internal-->
         <script type="text/javascript" src="js/dashboardCharts.js"></script>
         <script type="text/javascript" src="js/draggable.js"></script>
         <script type="text/javascript" src="js/filtersData.js"></script>
         <script type="text/javascript" src="js/createChartsFromCache.js"></script>
-        <!--External-->
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/chartSelector.js"></script>
 
         <!--Internal-->
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="css/loader.css">
-
+        
         <!--External-->
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-        <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!--http://blocks.org/mccannf/1629644-->
         
-        <!-- Bootstrap Date-Picker Plugin kalendri jaoks -->
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
         
 		<!-- muuda siin -->
         <script>
@@ -855,7 +855,23 @@
 
                         <p id="demo"></p>
                         <p id="noResult"></p>
-                        <div id="button-chart"><button class="button" add-div>Generate</button></div>
+			<div ng-controller="dropDownCtrl">
+				<!-- Split button -->
+				<div class="btn-group dropdown" uib-dropdown="" style="">
+					<button id="split-button" type="button" class="btn btn-danger">{{selectedItem
+						|| 'Choose Item'}}</button>
+					<button type="button" class="btn btn-danger dropdown-toggle"
+						uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
+						<span class="caret"></span>
+					</button>
+					<ul uib-dropdown-menu="" role="menu" aria-labelledby="split-button"
+						class="dropdown-menu">
+						<li role="menuitem" ng-repeat="item in items"
+							ng-click="selectItem(item)"><a href>{{item}}</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="button-chart"><button class="button" add-div>Generate</button></div>
                         <div class="loader"></div>
 					
 					</form>
