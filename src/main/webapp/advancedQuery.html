@@ -53,6 +53,20 @@
 	    return vars;
 	}
 	
+	function setMeasureTypeHeader(firstData){
+		
+		 if(firstData.metric_categ){
+			   if(firstData.metric_categ==="DQKPI"){
+			var headers = document.getElementsByTagName("th"); 
+			for (var i = 0; i < headers.length; i++) {
+				
+			  headers[i].innerHTML = headers[i].innerHTML.replace("Measure result as count", "Measure result as %");
+			                         
+			}
+		   }
+		   }
+	}
+	
 	function initialize(){
 
 			  
@@ -65,6 +79,10 @@
 		
 		localStorage.removeItem( me); // Clear the localStorage
 		var firstData = jQuery.parseJSON(myData);
+		
+		setMeasureTypeHeader(firstData);
+		
+		
 		
 		var rest='';
 	    if(me2=="1"){
@@ -83,7 +101,7 @@
 	    	
 	    }
 		
-		
+		   
 		   $.get(rest, {
                metric_categ:firstData.metric_categ,
                service_group_name:firstData.service_group_name,
@@ -95,16 +113,18 @@
                validation:firstData.validation
            }, function (responseText) {
                var json = jQuery.parseJSON(responseText);
-           
+           		  
                    //	gauges[key].redraw(obj.completness);
                    var listOfData=[];
                    for (var i = 0; i < json.length; i++) {
                        var obj = json[i];
                   
                       
-                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'fact_col':obj.fact_col,'fact_row':obj.fact_row,'qualityMetricTypeComment':obj.qualityMetricTypeComment,'measure_date':obj.measure_date,'Service_nr':obj.service});
+                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'qualityMetricTypeComment':obj.qualityMetricTypeComment,'measure_date':obj.measure_date,'Service_nr':obj.service});
             		
                    }
+                   
+                   document.getElementsById('Count of records').innerHTML = "text"
                    
                $('#myTable').DataTable({ "data":listOfData,
 			    "columns": [
@@ -112,8 +132,6 @@
 			        { "data": "Service","name": "Service" },
 			        { "data": "Country","name": "Country" },
 			        { "data": "measure_amt","name": "Measure Result"},
-			        { "data": "fact_col","name": "Col nr"},
-			        { "data": "fact_row","name": "Row nr"},
 			        { "data": "qualityMetricTypeComment","name": "Comment"},
 			        { "data": "measure_date","name": "measure date"}
 			    ],
@@ -211,15 +229,13 @@ body {
 	  <a  href="homeDashboard.html">Home</a>
 	   <a class="active" href="advancedQuery.html">Advanced</a>
 	</div>
- 
+    
   <table id="myTable" class="display" cellspacing="0" width="100%">  <thead>
             <tr>
                 <th>Service nr</th>
                 <th>Service</th>
                 <th>Country</th>
-                <th>Measure result</th>
-                <th>Col nr</th>
-                <th>Row nr</th>
+                <th>Measure result as count</th>
                 <th>Comment</th>
                 <th>Measure date</th>
             </tr>
@@ -229,9 +245,7 @@ body {
                 <th>Service nr</th>
                 <th>Service</th>
                 <th>Country</th>
-                <th>Measure result</th>
-                <th>Col nr</th>
-                <th>Row nr</th>
+                <th>Measure result as count</th>
                 <th>Comment</th>
                 <th>Measure date</th>
             </tr>
