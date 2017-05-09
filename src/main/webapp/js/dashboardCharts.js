@@ -1,4 +1,61 @@
-function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupName){
+function bubbleChart(divTag,xValues,yValues,zValues,serviceGroupName,dataDate,country){
+	
+	
+	var xValues =xValues;
+
+	var yValues =yValues;
+
+	var zValues = zValues;
+	var colorscaleValue = [
+	  [0, '#3D9970'],
+	  [1, '#001f3f']
+	];
+
+	var textArr=[];	
+	for ( var i = 0; i < yValues.length; i++ ) {
+		if(yValues.length!=i){
+			
+			var	date=dataDate[i];
+			var text=yValues[i];
+			var data=text.concat(text+" date:"+xValues[i]+" result:"+zValues[i] +",");
+			
+		}else{
+			var	size=dataDate[i];
+			var text=yValues[i];
+			var data=text.concat(text+" date:"+xValues[i]+" result:"+zValues[i]);
+		}
+		textArr.push(data)
+	}
+	var trace1 = {
+			  x: zValues,
+			  y: dataDate,
+			  text:textArr,
+			  mode: 'markers',
+			  marker: {
+				cmin: 0,
+			    cmax: 100,
+				colorscale: [['0','rgb(244,66,66)'],['0.5','rgb(220,30,30)'], ['1',' rgb(3,178,12)']],
+				color:zValues,
+			    size: zValues
+			  }
+			};
+
+			var data = [trace1];
+
+			var layout = {
+			  title: serviceGroupName+" "+country,
+			  showlegend: false,
+			  height: 400,
+			  width: 500
+			};
+
+	Plotly.newPlot(divTag, data, layout);
+	
+	
+}
+
+
+function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupName,date){
 				
 			
 				var data = [{
@@ -29,7 +86,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 				}];
 
 				var layout = {
-				    	title:extrainfo+" "+serviceGroupName,
+				    	title:extrainfo+" "+serviceGroupName+"<br>"+date,
 				    	height: 400,
 						width: 500,
 						'geo': {
@@ -51,7 +108,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 			
 		
 			
-			function circleChart(divTag,value,serviceName,country,dqName,info,categType){
+			function circleChart(divTag,value,serviceName,country,dqName,info,categType,date){
 				var value2=0;
 			    if(country==="GR"){
 		        	   country="All";
@@ -85,7 +142,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 
 					var layout = {
 							autosize: false,
-							title: serviceName+" "+country+"<br>",
+							title: serviceName+" "+country+"<br>"+date,
 							height: 300,
 							width: 500,
 							margin: {

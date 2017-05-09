@@ -19,7 +19,7 @@ public class AndmedDAO {
 
 	
 	
-	public String getDonutData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service) throws SQLException{
+	public String getDonutData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service,String validation) throws SQLException{
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
 		Connection conn = null;
@@ -32,7 +32,7 @@ public class AndmedDAO {
 		String measure_type="measure_amt";
 		if(categ_metric.equals("DQKPI")){
 			measure_type="measure_amt";
-
+			
 
 		}else{
 
@@ -45,6 +45,8 @@ public class AndmedDAO {
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='"+country_shortname+"'"
 				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name";
 */      
+
+
 		String queryString;
 		if(service.equals("None")){
 		queryString="SELECT AVG(f."+measure_type+") as average_amt FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"
@@ -57,9 +59,16 @@ public class AndmedDAO {
 					+ "AND dim1.service_component_shortname='"+service+"'";
 			
 		}
+		System.out.println(validation);
+		if(validation.equals("None")){
+		
+			System.out.println("EI OLE");
+		}else{
+			queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+			
+		}
 		
 		
-		System.out.println("IS HERE");
 		System.out.println(queryString);
 		ResultSet rs = stmt.executeQuery(queryString);
 		while(rs.next()) {
@@ -88,7 +97,7 @@ public class AndmedDAO {
 
 	}
 
-	public String getMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service) throws SQLException{
+	public String getMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service,String validation) throws SQLException{
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
 		Connection conn = null;
@@ -104,17 +113,26 @@ public class AndmedDAO {
 		queryString="SELECT AVG(f.measure_amt) as Average_amt,f.country_shortname FROM mesa.PL_MEASURE_FACT_PRT f "
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname IN ('EE','LT','LV')"
-				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' Group BY f.country_shortname";
+				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
 		}else{
 			
 			queryString="SELECT AVG(f.measure_amt) as Average_amt,f.country_shortname FROM mesa.PL_MEASURE_FACT_PRT f "
 					+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 					+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname IN ('EE','LT','LV')"
 					+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' "
-				    + "AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.service_component_shortname='"+service+"' Group BY f.country_shortname";
+				    + "AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.service_component_shortname='"+service+"' ";
 			
 		}
 		
+		if(validation.equals("None")){
+			
+			System.out.println("EI OLE");
+		}else{
+			queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+			
+		}
+		queryString=queryString.concat(" Group BY f.country_shortname");
+	
 		
 		System.out.println("IS HERE");
 		System.out.println(queryString);
@@ -157,7 +175,7 @@ public class AndmedDAO {
 	}
 
 
-	public String getBarData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service) throws SQLException{
+	public String getBarData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service,String validation) throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
@@ -187,7 +205,7 @@ public class AndmedDAO {
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"WHERE f.country_shortname='"+country_shortname+"' AND dim2.quality_metric_type_name='"+metric_type+"'"
 				+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND "
-				+" dim1.service_main_group_name='"+service_group_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' ORDER BY "+measure_type+" ASC"; 
+				+" dim1.service_main_group_name='"+service_group_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' "; 
 		}else{
 			queryString="SELECT DISTINCT f."+measure_type+",dim2.validation_rule_name,f.measure_fact_date,dim2.quality_metric_type_name,dim2.quality_metric_type_comment,"
 					+"dim2.quality_metric_categ_shortname,dim1.service_main_group_name FROM mesa.pl_measure_fact_prt"  
@@ -196,10 +214,19 @@ public class AndmedDAO {
 					+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 					+"WHERE f.country_shortname='"+country_shortname+"' AND dim2.quality_metric_type_name='"+metric_type+"'"
 					+"AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND "
-					+" dim1.service_main_group_name='"+service_group_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.serivce_component_shortname='"+service+"' ORDER BY "+measure_type+" ASC"; 
+					+" dim1.service_main_group_name='"+service_group_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.serivce_component_shortname='"+service+"' "; 
 			
 		}
 
+		if(validation.equals("None")){
+			
+			System.out.println("EI OLE");
+		}else{
+			queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+			
+		}
+		queryString=queryString.concat("ORDER BY "+measure_type+" ASC");
+		
 		System.out.println(queryString);
 		ResultSet rs = stmt.executeQuery(queryString);
 		while(rs.next()) {
@@ -226,7 +253,7 @@ public class AndmedDAO {
 		return jsonResult;
 
 	}
-	public String getHeatMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service) throws SQLException{
+	public String getHeatMapData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2,String service,String validation) throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
@@ -245,8 +272,8 @@ public class AndmedDAO {
 					+ "INNER JOIN mesa.PL_SERVICE_PRT dim1 "
 					+ "ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 					+ "INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE "
-					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' "
-					+ "Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name"; 
+					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' ";
+
 
 		}else{
 			
@@ -256,13 +283,22 @@ public class AndmedDAO {
 					+ "INNER JOIN mesa.PL_SERVICE_PRT dim1 "
 					+ "ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 					+ "INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE "
-					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.service_component_shortname='"+service+"' "
-					+ "Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name"; 
+					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.service_component_shortname='"+service+"' ";
+
 
 			
 			
 		}
 	
+	   if(validation.equals("None")){
+			
+			System.out.println("EI OLE");
+		}else{
+			queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+			
+		}
+		queryString=queryString.concat(" Group BY dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name,f.measure_fact_date,dim2.validation_rule_name");
+		
 
 		System.out.println(queryString);
 		ResultSet rs = stmt.executeQuery(queryString);
@@ -409,6 +445,52 @@ public class AndmedDAO {
 
 			FilterModel model=new FilterModel();
 			model.setValue(rs.getString("service_main_group_name"));
+		
+		
+			jsonResult = gson.toJson(model);
+			// }
+			responseArray.add(model);
+		}
+		jsonResult = gson.toJson(responseArray);
+		System.out.println(jsonResult);
+		rs.close();
+		stmt.close();
+	}catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException(e);
+	} finally {
+		DBConnection.close(conn);
+	}
+		return jsonResult;
+
+	}
+	
+	public String getDistinctValidationShortName() throws SQLException{
+
+		ArrayList responseArray = new ArrayList();
+		
+		String jsonResult="";
+		Connection conn = null;
+		try {
+		conn = DBConnection.getConnection();
+		Statement stmt = null;
+	
+		stmt = conn.createStatement();
+		Gson gson = new GsonBuilder().create();
+
+		String queryString="SELECT DISTINCT f.validation_shortname FROM mesa.pl_measure_fact_prt "
+				+"f  INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON"
+				+"(f.Validation_Rule_Id = dim2.Validation_Rule_Id)"
+				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"; 
+
+
+		System.out.println(queryString);
+		ResultSet rs = stmt.executeQuery(queryString);
+		while(rs.next()) {
+
+
+			FilterModel model=new FilterModel();
+			model.setValue(rs.getString("validation_shortname"));
 		
 		
 			jsonResult = gson.toJson(model);
@@ -623,7 +705,7 @@ public class AndmedDAO {
 	}
 
 	public String getDetailFailedData(String metric_categ, String service_group_name, String country, String metric_name,
-			String date1, String date2,String comment)throws SQLException {
+			String date1, String date2,String comment,String validation)throws SQLException {
 		// TODO Auto-generated method stub
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
@@ -650,7 +732,13 @@ public class AndmedDAO {
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f."+measure_type+"<=99 AND f.country_shortname='"+country+"'"
 				+"AND dim2.quality_metric_categ_shortname='"+metric_categ+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
 
-	
+		if(validation.equals("None")){
+			
+			
+		}else{
+			queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+			
+	}
 		System.out.println("IS HERE");
 		System.out.println(queryString);
 		ResultSet rs = stmt.executeQuery(queryString);
@@ -685,7 +773,7 @@ public class AndmedDAO {
 	
 	}
 
-	public String getLineData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2) throws SQLException{
+	public String getLineData(String categ_metric,String service_group_name,String country_shortname,String metric_type,String date1, String date2, String validation) throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
@@ -716,10 +804,17 @@ public class AndmedDAO {
 			+"AND f.measure_amt         <101 "
 			+"AND f.measure_amt         >1 "
 			+" AND f.country_shortname='"+country_shortname+"' "
-		    +"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' "
-			+"group by f."+measure_type+", f.measure_fact_date order by f.measure_fact_date asc) t group by t.measure_fact_date;"; 
-
-
+		    +"AND dim2.quality_metric_categ_shortname='"+categ_metric+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' ";
+		
+	
+		if(validation.equals("None")){
+			
+			
+		}else{
+			queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+			
+		}
+		queryString=queryString.concat("group by f."+measure_type+", f.measure_fact_date order by f.measure_fact_date asc) t group by t.measure_fact_date;");
 		System.out.println(queryString);
 		ResultSet rs = stmt.executeQuery(queryString);
 		while(rs.next()) {
@@ -749,7 +844,7 @@ public class AndmedDAO {
 	
 	
 	public String getDetailCorrectData(String metric_categ, String service_group_name, String country,
-			String metric_name, String date1, String date2,String comment) {
+			String metric_name, String date1, String date2,String comment, String validation) {
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
 		Connection conn = null;
@@ -770,11 +865,20 @@ public class AndmedDAO {
 		}
 		
 		
+		
 		String queryString="SELECT DISTINCT f.country_shortname,dim1.service_component_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f."+measure_type+">=100 AND f.country_shortname='"+country+"'"
 				+"AND dim2.quality_metric_categ_shortname='"+metric_categ+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
-
+		
+		if(validation.equals("None")){
+				
+				
+			}else{
+				queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+				
+		}
+		
 		
 		System.out.println("IS HERE");
 		System.out.println(queryString);
@@ -808,7 +912,7 @@ public class AndmedDAO {
 	}
 	
 	public String getDetailData(String metric_categ, String service_group_name, String country,
-			String metric_name, String date1, String date2,String comment) {
+			String metric_name, String date1, String date2,String comment, String validation) {
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
 		Connection conn = null;
@@ -834,7 +938,13 @@ public class AndmedDAO {
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='"+country+"' "
 				+"AND dim2.quality_metric_categ_shortname='"+metric_categ+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
 
-		
+		if(validation.equals("None")){
+			
+			
+		}else{
+			queryString=queryString.concat(" AND f.validation_shortname='"+validation+"'");
+			
+	}
 		System.out.println("IS HERE");
 		System.out.println(queryString);
 		ResultSet rs = stmt.executeQuery(queryString);

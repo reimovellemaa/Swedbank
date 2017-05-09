@@ -106,7 +106,8 @@
 
 
                         var date2 = $("#date2").val();
-                       
+                         var validation= $('select[name=valName]').val();
+                         console.log(validation);
                          var service =  $('select[name=ServiceSelect]').val();
                          var serviceGroupName =$('select[name=service_main_group_name]').val();
 						 var MetricType=  $('select[name=MetricType]').val();
@@ -131,7 +132,8 @@
                                 metric_name: qualityMetricName,
                                 date1: date1,
                                 date2: date2,
-                                service:service
+                                service:service,
+                                validation:validation
                             }, function (responseText) {
 
                                 var country = [];
@@ -166,7 +168,8 @@
                                                  'metric_name': qualityMetricName,
                                                  'date1': date1,
                                                  'date2': date2,
-                                                 'comment': obj.qualityMetricTypeComment
+                                                 'comment': obj.qualityMetricTypeComment,
+                                                 'validation':validation
                                             };
                                         
                                        
@@ -178,7 +181,7 @@
                                     container = angular.element(document.querySelector("#container"));
                                     childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
-                                    mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName);
+                                    mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName,date1.concat(" - "+date2));
                                     count = 0;
                                     
                                     var mapPlot = document.getElementById(divTag);
@@ -232,7 +235,8 @@
                                 metric_name: qualityMetricName,
                                 date1: date1,
                                 date2: date2,
-                                service:service
+                                service:service,
+                                validation:validation
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -256,7 +260,8 @@
                                                 'metric_name': qualityMetricName,
                                                 'date1': obj.measure_date,
                                                 'date2': obj.measure_date,
-                                                'comment': obj.qualityMetricTypeComment
+                                                'comment': obj.qualityMetricTypeComment,
+                                                'validation':validation
                                            };
                                         localStorage.setItem(divTag.concat(obj.measure_date), JSON.stringify(data) );
 
@@ -302,7 +307,8 @@
                                 metric_name: qualityMetricName,
                                 date1: date1,
                                 date2: date2,
-                                service:service
+                                service:service,
+                                validation:validation
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -347,7 +353,8 @@
                                 metric_name: qualityMetricName,
                                 date1: date1,
                                 date2: date2,
-                                service:service
+                                service:service,
+                                validation:validation
                             }, function (responseText) {
 
                                 //  var dd = JSON.parse(result);
@@ -388,6 +395,82 @@
 
                             });
                         }
+                        if (strUser == "Bubble") {
+
+                            $.get('rest/andmed/getHeatMapData', {
+                                metric_categ: MetricType,
+                                service_group_name: serviceGroupName,
+                                country: country,
+                                metric_name: qualityMetricName,
+                                date1: date1,
+                                date2: date2,
+                                service:service,
+                                validation:validation
+                            }, function (responseText) {
+
+                                //  var dd = JSON.parse(result);
+                                var dataX = [];
+                                var dataY = [];
+                                var dataZ = [];
+                                var dataDate = [];
+                                var dataZFull = [];
+                                var extraInfo = [];
+
+                                var json = jQuery.parseJSON(responseText);
+                                if (json.length > 0) {
+                                	 var divTag = "divBubble_" + new Date().getTime().toString();
+                                    for (var i = 0; i < json.length; i++) {
+                                        var obj = json[i];
+                                        dataX.push(obj.qualityMetricTypeComment);
+                                        dataZFull.push(dataZ.push(obj.measure_amt));
+                                        dataY.push(obj.qualityMetricTypeName);
+                                        extraInfo.push(obj.service_main_group_name);
+										dataDate.push(obj.measure_date)
+
+										  var data={
+                                        	 'metric_categ':MetricType,
+                                             'service_group_name':obj.service_main_group_name,
+                                             'country': country,
+                                             'metric_name':obj.qualityMetricTypeName,
+                                             'date1': date1,
+                                             'date2': date2,
+                                             'comment': obj.qualityMetricTypeComment,
+                                             'validation':validation
+                                        };
+										   localStorage.setItem(divTag.concat(obj.measure_date), JSON.stringify(data) );
+										  
+										
+                                    }
+
+                                   
+                                    container = angular.element(document.querySelector("#container"));
+                                    childNode = $compile('<div class="box"  ng-draggable="dragOptions"  style = "float:left; width: 100%; "><a href="advancedQuery.html?store=' + divTag + '">Advanced</a><div id="' + divTag + '""></div></div>')(container);
+                                    container.prepend(childNode);
+                                    bubbleChart(divTag, dataX, dataY, dataZ, serviceGroupName,dataDate,country);
+                                   
+                                    
+                                    var myPlot = document.getElementById(divTag);
+                                    myPlot.on('plotly_click', function(d) {
+                                    	//alert("Suka bljat"+JSON.stringify(d));
+                                    	//var obj=JSON.parse(d);
+                                     	console.log(d);
+                                        console.log(d.points[0].x);
+                                        window.location.href ="advancedQuery.html?store=" + divTag.concat(d.points[0].x) + "&result=2&country="+country+"";
+                                    	
+                                    	
+                                   
+                                    });
+                                    
+                                    document.getElementById("demo").innerHTML = "";
+                                } else {
+
+                                    document.getElementById("noResult").innerHTML = "No result";
+                                    setTimeout(function(){document.getElementById("noResult").innerHTML = ""},NoResTimer);
+                                }
+
+
+                            });
+                        }
                         if (strUser == "Donut") {
 
                             $.get('rest/andmed/getDonutData', {
@@ -397,7 +480,8 @@
                                 metric_name: qualityMetricName,
                                 date1: date1,
                                 date2: date2,
-                                service:service
+                                service:service,
+                                validation:validation
                             }, function (responseText) {
                                 var json = jQuery.parseJSON(responseText);
 
@@ -421,7 +505,7 @@
                                         container = angular.element(document.querySelector("#container"));
                                         childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><!--a href="advancedQuery.html?store=' + divTag + '">Advanced</a--><div class="panel-body" id="' + divTag + '"" ></div></div>')(container);
                                         container.prepend(childNode);
-                                        circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType);
+                                        circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType, date1.concat(" - "+date2));
                                         console.log(obj.qualityMetricTypeComment);
                                         var data={
                                              	 'metric_categ': MetricType,
@@ -430,7 +514,8 @@
                                                   'metric_name': qualityMetricName,
                                                   'date1': date1,
                                                   'date2': date2,
-                                                  'comment': obj.qualityMetricTypeComment
+                                                  'comment': obj.qualityMetricTypeComment,
+                                                  'validation':validation
                                              };
                                        localStorage.setItem(divTag, JSON.stringify(data) );
                                         
@@ -478,12 +563,13 @@
         	 optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
         	 optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
           	 optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
+          	optionsForFilter('valName','rest/andmed/getDistinctValidationShortName');
           	/*if(localStorage.getItem('Charts')) {
           		$('#form').html(localStorage.getItem('Charts'));
           		alert("Got some");
           	}*/
           	 localStorage.clear();
-          
+         
         });
         </script>
         <style>
@@ -643,6 +729,11 @@
 			                        <label>Country</label>
 			                        <select name="CountrySelect" id="CountrySelect">
 			                        </select>
+			                        
+			                         <label>Validation shortname</label>
+			                        <select name="valName" id="valName">
+			                        <option value="None">None</option>
+			                        </select>
 			                        <br>
 	                    			
 			                       
@@ -670,6 +761,7 @@
 				                            <option value="ChartType">Line</option>
 				                            <option value="ChartType">Heat map</option>
 				                            <option value="ChartType">Map</option>
+				                            <option value="ChartType">Bubble</option>
 				                            <option value="ChartType" selected>Donut</option>
 			                         	</select>
 			                        </div>
