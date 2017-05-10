@@ -4,6 +4,7 @@
   <title>DQ Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/img/favicon.png"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -217,16 +218,16 @@
 			
 	<body onload="initialize()">
 		<div style="background-color:#100C08">
-		  <img style="margin:0px auto;display:block" src="assets/img/24_swedbank_og.png"/>
+		  <!-- img style="margin:0px auto;display:block" src="assets/img/24_swedbank_og.png"/-->
 			<div class="topnav" id="myTopnav">
-			 <a href="index.html">Charts Generation <span class="label label-danger" style="float:right;">0</span></a>
-			  <a class="active" href="homeDashboard.html">Home</a>
+			  <a class="active" href="homeDashboard.html">Overview <span class="label label-danger" style="float:right;">2</span></a>
+			 <a href="index.html">Chart generation</a>
 		</div>
 	 </div>
   
   	  <div ng-controller="secondCtrl" >
   	   <div ng-app="test" ng-controller="testCtrl">
-  	   <h1 class="page-header"">Data Quality</h1>
+  	   <h1 class="page-header"">Data quality overview</h1>
   	   
         <div id="container"></div>
         
