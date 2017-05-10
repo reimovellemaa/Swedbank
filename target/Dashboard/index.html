@@ -5,34 +5,39 @@
         <title>DQ Dashboard</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="assets/img/favicon.png"/>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
+  		 <script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
+   		 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 
-
-        <!--External-->
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        
         <!--Internal-->
         <script type="text/javascript" src="js/dashboardCharts.js"></script>
         <script type="text/javascript" src="js/draggable.js"></script>
         <script type="text/javascript" src="js/filtersData.js"></script>
         <script type="text/javascript" src="js/createChartsFromCache.js"></script>
+        <!--External-->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--Internal-->
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="css/loader.css">
-        
+
         <!--External-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css" rel="stylesheet">
         <!--http://blocks.org/mccannf/1629644-->
         
+        <!-- Bootstrap Date-Picker Plugin kalendri jaoks -->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+		<!-- muuda siin -->
         <script>
         
     
@@ -88,18 +93,29 @@
             
         }
         var cachedData=[];
-        var app = angular.module('app', []);
+        var app = angular.module('app', ['ui.bootstrap']);
+    	var selectedChart;
+    
+        function dropDownCtrl($scope) {
 
+         $scope.items = ['Bar','Bubble','Donut','Heat map','Line','Map'];
+          
+        $scope.selectItem = function(item) {
+          $scope.selectedItem = item;
+          selectedChart=item;
+        }
+        }
+        
         app.directive("addDiv", function ($compile) {
             return {
                 restrict: 'AE',
                 link: function (scope, element, attr) {
                     element.bind("click", function (e) {
                     	
-                        var e = document.getElementById("ChartSelect");
-                        var strUser = e.options[e.selectedIndex].text;
-
-             
+                        var e = document.getElementById("split-button");
+                       // var strUser = e.options[e.selectedIndex].text;
+						var strUser=selectedChart;
+             			
 					
 
                         var date1 = $("#date1").val();
@@ -572,7 +588,8 @@
                 }
             };
         });
-
+	
+        
         app.controller('firstCtrl', function ($scope) {
         	
         	 optionsForCountryFilter('CountrySelect');
@@ -586,7 +603,7 @@
           		alert("Got some");
           	}*/
     
-          	if(localStorage.getItem('cache')) {
+          /*	if(localStorage.getItem('cache')) {
           	var localCache=JSON.parse(localStorage.getItem('cache'));
           	console.log(JSON.stringify(localCache));
           	for (i = 0; i < localCache.length; i++) {
@@ -597,7 +614,7 @@
           	}
           	
           	
-          	}
+          	}*/
           	 localStorage.clear();
          
         });
@@ -750,16 +767,15 @@
 		
 
         </style>
-        <link rel="shortcut icon" type="image/png" href="https://www.swedbank.com/idc/fragments/wcm_fr_head/images/favicon.ico"/>
+
 
         <body ng-app="app">
         <div style="background-color:#100C08">
             
             <div class="topnav" id="myTopnav">
 
-                <a class="active" href="index.html">Charts Generation 
-                <span class="label label-danger" style="float: right;">2</span></a> 
-                    <a href="homeDashboard.html">Home</a>
+                    <a href="homeDashboard.html">Overview <span class="label label-danger" style="float:right;">2</span></a>
+                <a class="active" href="index.html">Chart generation</a> 
             </div>
 		</div>
             <div ng-controller="firstCtrl"">
@@ -782,7 +798,7 @@
 					            <tbody>
 					            	<tr class="fiter_data">
 					            		<td><label for="ServiceSelect">Service</label></td>
-					            		<td><select class="form-control" name="ServiceSelect" id="ServiceSelect"><option value="None">None</option></select></td>
+					            		<td><select class="form-control" name="ServiceSelect" id="ServiceSelect"><option value="None">All services</option></select></td>
 					            	</tr>
 					            	<tr class="fiter_data">
 					            		<td><label for="service_main_group_name">Service group name</label></td>
@@ -793,14 +809,15 @@
 					            		<td><select class="form-control" name="Quality_metric_type_name" id="Quality_metric_type_name"></select></td>
 					            	</tr>
 									<tr class="fiter_data">
-										<td><label>Validation shortname</label></td>
+										<td><label for="valName">Validation shortname</label></td>
 										<td><select class="form-control" name="valName"
-											id="valName"><option value="None">None</option></select></td>
+											id="valName"><option value="None">All validations</option></select></td>
 									</tr>
 									<tr class="fiter_data">
 					            		<td><label for="CountrySelect">Country</label></td>
 					            		<td><select class="form-control" name="CountrySelect" id="CountrySelect"></select></td>
 					            	</tr>
+					            	
 					            </tbody>
 					            	
 					            </table>            
@@ -823,28 +840,39 @@
 						        		</tr>
 						        		<tr class="fiter_data">
 						        			<td><label for="date1">Start date</label></td>
-						        			<td><input class="form-control" type="text" id="date1"  value="2016-11-01" style="margin-left:20px;"></td>
+
+						        			<td><input class="form-control"  id="date1"  value="2016-11-01" style="margin-left:20px;"></td>
 						        		</tr>
 						        		<tr class="fiter_data">
 						        			<td><label for="date2">End date</label></td>
-						        			<td><input class="form-control" type="text" id="date2"  value="2017-11-01" style="margin-left:20px;"></td>
+						        			<td><input class="form-control" id="date2"  value="2017-11-01" style="margin-left:20px;"></td>
 						        		</tr>
+						        		<tr><td colspan="2"> </td></tr>
+						        		<tr><td colspan="2"> </td></tr>
+						        		<tr><td colspan="2"> </td></tr>
+				
+						        		
+						        		<tr >
+						        			<td colspan="2" >
+											<div ng-controller="dropDownCtrl">
+												<div class="btn-group dropdown" uib-dropdown="" style="">
+													<button id="split-button" type="button"
+														class="btn btn-danger" add-div>Generate</button>
 
-						        		<tr class="fiter_data">
-						        			<td><label for="ChartSelect">Chart</label></td>
-						        			<td>
-						        			<div class="chart-select">
-						        				<select class="form-control" id="ChartSelect">
-					                            <option value="ChartType">Bar</option>
-					                            <option value="ChartType">Bubble</option>
-					                            <option value="ChartType" selected>Donut</option>
-					                            <option value="ChartType">Heat map</option>
-					                            <option value="ChartType">Line</option>
-					                            <option value="ChartType">Map</option>
-				                         	</select>
-				                         	</div>
-						        			</td>
-						        		</tr>
+
+													<button id="split-button" type="button"
+														class="btn btn-danger dropdown-toggle">{{selectedItem || '... Chart'}} &#9660;</button>
+													<ul uib-dropdown-menu="" role="menu"
+														aria-labelledby="split-button" class="dropdown-menu">
+														<li role="menuitem" ng-repeat="item in items"
+															ng-click="selectItem(item)"><a href>{{item}}</a></li>
+													</ul>
+												</div>
+											</div>
+										</td>
+						        			
+						        		</tr >
+						        		
 					        		</tbody>
 					        	</table>
 
@@ -855,12 +883,21 @@
 
                         <p id="demo"></p>
                         <p id="noResult"></p>
-
-			<div id="button-chart"><button class="button" add-div>Generate</button></div>
+                     
+                        
+                        
                         <div class="loader"></div>
 					
 					</form>
 				</div>
+				
+                <div ng-app="test" ng-controller="testCtrl">
+                   <div id="container" style="width: 90%; margin:auto;"></div>
+               </div> 
+
+                    
+                
+            
         </body>
 
 </html>
