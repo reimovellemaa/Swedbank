@@ -130,7 +130,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 				var data = [{
 						values: [value,value2],
 					  labels: [dqName],
-					  marker:{  colors:['rgb(238,112,35)','rgb(255,255,255)']},
+					  marker:{  colors:['rgb(238,112,35)','rgb(194,63,56)']},
 					  domain: {
 					    x: [0, .65]
 					  },
