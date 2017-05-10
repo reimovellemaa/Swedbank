@@ -773,9 +773,8 @@
             
             <div class="topnav" id="myTopnav">
 
-                <a class="active" href="index.html">Charts Generation 
-                <span class="label label-danger" style="float: right;">2</span></a> 
-                    <a href="homeDashboard.html">Home</a>
+                    <a href="homeDashboard.html">Overview <span class="label label-danger" style="float:right;">2</span></a>
+                <a class="active" href="index.html">Chart generation</a> 
             </div>
 		</div>
             <div ng-controller="firstCtrl"">
@@ -860,7 +859,7 @@
 
 
 													<button id="split-button" type="button"
-														class="btn btn-danger dropdown-toggle">{{selectedItem || 'Choose chart'}} &#9660;</button>
+														class="btn btn-danger dropdown-toggle">{{selectedItem || 'SELECT CHART'}} &#9660;</button>
 													<ul uib-dropdown-menu="" role="menu"
 														aria-labelledby="split-button" class="dropdown-menu">
 														<li role="menuitem" ng-repeat="item in items"
