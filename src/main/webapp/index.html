@@ -5,6 +5,7 @@
         <title>DQ Dashboard</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="assets/img/favicon.png"/>
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
   		 <script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
    		 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -766,7 +767,7 @@
 		
 
         </style>
-        <link rel="shortcut icon" type="image/png" href="https://www.swedbank.com/idc/fragments/wcm_fr_head/images/favicon.ico"/>
+
 
         <body ng-app="app">
         <div style="background-color:#100C08">
@@ -859,7 +860,7 @@
 
 
 													<button id="split-button" type="button"
-														class="btn btn-danger dropdown-toggle">{{selectedItem || 'SELECT CHART'}} &#9660;</button>
+														class="btn btn-danger dropdown-toggle">{{selectedItem || '... Chart'}} &#9660;</button>
 													<ul uib-dropdown-menu="" role="menu"
 														aria-labelledby="split-button" class="dropdown-menu">
 														<li role="menuitem" ng-repeat="item in items"
