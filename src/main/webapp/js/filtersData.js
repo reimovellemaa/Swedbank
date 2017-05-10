@@ -10,7 +10,7 @@ function optionsForCountryFilter(divTag){
                for(var i = 0; i < json.length; i++) {
                    var opt = document.createElement('option');
                    if(json[i].country==="GR"){
-                	   json[i].country="All";
+                	   json[i].country="BB";
                    }
                    opt.innerHTML = json[i].country;
                    opt.value = json[i].country;

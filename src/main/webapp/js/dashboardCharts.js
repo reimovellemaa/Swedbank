@@ -111,7 +111,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 			function circleChart(divTag,value,serviceName,country,dqName,info,categType,date){
 				var value2=0;
 			    if(country==="GR"){
-		        	   country="All";
+		        	   country="BB";
 		        }
 				if(categType==="DQERR"){
 					if(value>0){
