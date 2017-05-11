@@ -149,7 +149,7 @@
                             strUser:strUser
                         }
                        cachedData.push(dictionary);
-                       localStorage.setItem("cache", JSON.stringify(cachedData));
+                       sessionStorage.setItem("cache", JSON.stringify(cachedData));
                         // GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis
 						var NoResTimer = 3000; //set time how long "no r
                         if (strUser == "Map") {
@@ -603,19 +603,21 @@
           		alert("Got some");
           	}*/
     
-          /*	if(localStorage.getItem('cache')) {
-          	var localCache=JSON.parse(localStorage.getItem('cache'));
+          	if(sessionStorage.getItem('cache')) {
+          	var localCache=JSON.parse(sessionStorage.getItem('cache'));
           	console.log(JSON.stringify(localCache));
           	for (i = 0; i < localCache.length; i++) {
-          	    for (item in localCache[i]) {
-          	  	  // console.log(item+" "+);
+          		
+          	
+          	  
           	       reGenerateChart(localCache[i].metric_categ ,localCache[i].service_group_name,localCache[i].country,localCache[i].metric_name,localCache[i].date1,localCache[i].date2,localCache[i].service,localCache[i].validation,localCache[i].strUser);
-          	    }
+          	 		
+          	    
           	}
           	
           	
-          	}*/
-          	 localStorage.clear();
+          	}
+          	localStorage.clear();
          
         });
         </script>
@@ -774,7 +776,7 @@
             
             <div class="topnav" id="myTopnav">
 
-                    <a href="homeDashboard.html">Overview <span class="label label-danger" style="float:right;">2</span></a>
+                    <a href="homeDashboard.html">Overview</a>
                 <a class="active" href="index.html">Chart generation</a> 
             </div>
 		</div>

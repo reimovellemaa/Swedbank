@@ -1,5 +1,5 @@
  
-function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,compile){
+function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser){
 	
             
 
@@ -63,7 +63,8 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
                                     
                                     
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    
+                                    childNode = '<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
                                     container.prepend(childNode);
                                     mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName,date1.concat(" - "+date2));
                                     count = 0;
@@ -153,7 +154,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
                                
                          
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 600px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = '<div class="box panel panel-default" style = "float:left; width: 600px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
                                     container.prepend(childNode);
                                     barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
                                    
@@ -215,7 +216,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                                     var divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode ='<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
                                     container.prepend(childNode);
                                     lineChart(divTag, dataX, dataY,country,serviceGroupName,MetricType,qualityMetricName);
 
@@ -265,7 +266,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                                     var divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 720px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = '<div class="box panel panel-default" style = "float:left; width: 720px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
                                     container.prepend(childNode);
                                     heatMap(divTag, dataX, dataY, dataZ, serviceGroupName);
 
@@ -328,7 +329,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                                    
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 720px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = '<div class="box panel panel-default" style = "float:left; width: 720px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
                                     container.prepend(childNode);
                                     bubbleChart(divTag, dataX, dataY, dataZ, serviceGroupName,dataDate,country);
                                    
@@ -387,7 +388,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
                                         var divTag = "divDonut_" + new Date().getTime().toString();
                                    
                                         container = angular.element(document.querySelector("#container"));
-                                        childNode = $compile('<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div class="panel-body" id="' + divTag + '"" ></div></div>')(container);
+                                        childNode = '<div class="box panel panel-default" style = "float:left; width: 550px; margin-top:35px; margin-bottom:5px;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div class="panel-body" id="' + divTag + '"" ></div></div>';
                                         container.prepend(childNode);
                                         circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType, date1.concat(" - "+date2));
                                         console.log(obj.qualityMetricTypeComment);
