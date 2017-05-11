@@ -45,8 +45,8 @@ function bubbleChart(divTag,xValues,yValues,zValues,serviceGroupName,dataDate,co
 			var layout = {
 			  title: serviceGroupName+" "+country,
 			  showlegend: false,
-			  height: 400,
-			  width: 500
+			  height: 500,
+			  width: 1400
 			};
 
 	Plotly.newPlot(divTag, data, layout);
@@ -87,8 +87,8 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 
 				var layout = {
 				    	title:extrainfo+" "+serviceGroupName+"<br>"+date,
-				    	height: 400,
-						width: 500,
+				    	height: 500,
+						width: 700,
 						'geo': {
 				        'scope': 'europe',
 				        'resolution': 500,
