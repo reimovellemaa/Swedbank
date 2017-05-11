@@ -92,7 +92,7 @@
          
             
         }
-        var cachedData=[];
+      
         var app = angular.module('app', ['ui.bootstrap']);
     	var selectedChart;
     
@@ -111,7 +111,7 @@
                 restrict: 'AE',
                 link: function (scope, element, attr) {
                     element.bind("click", function (e) {
-                    	
+                    	 var cachedData=[];
                         var e = document.getElementById("split-button");
                        // var strUser = e.options[e.selectedIndex].text;
 						var strUser=selectedChart;
@@ -149,7 +149,28 @@
                             strUser:strUser
                         }
                        cachedData.push(dictionary);
-                       sessionStorage.setItem("cache", JSON.stringify(cachedData));
+                      if(sessionStorage.getItem('cache')){
+                    	  	var localCache=JSON.parse(sessionStorage.getItem('cache'));
+                    	  	for (i = localCache.length-1; i>=0; i--) {
+                          	
+                          			
+                          		
+                    	  		cachedData.push(localCache[i]);
+                    	  		
+                    		}
+                    	  	
+                       	      
+                       	    
+                       
+                    
+                    	  	
+                      }else{
+                    	  
+                    	    cachedData.push(dictionary);
+                      }
+                    	  sessionStorage.setItem("cache", JSON.stringify(cachedData));
+                      
+          
                         // GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis
 						var NoResTimer = 3000; //set time how long "no r
                         if (strUser == "Map") {
