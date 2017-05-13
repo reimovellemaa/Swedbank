@@ -88,23 +88,29 @@
     		
     	   var localCache=JSON.parse(sessionStorage.getItem('cache'));
     	   console.log('local cache in delete'+localCache);
-    	   var localCahceCopy=localCache;
-   	  	for (i = localCahceCopy.length-1; i>=0; i--) {
+    	  
+    	   var newCahce=[];
+   	  	for (i = localCache.length-1; i>=0; i--) {
          
          		var local=localCache[i];	
          		console.log('local'+local.divTag);
           		console.log(divTag);
          	if(angular.equals(local.divTag,divTag)){
-         		delete localCache[i];
+         	
+        
          	   console.log('local cache in delete'+localCache);
          		alert("Deleted");
          		$('#'+divTag).parent().remove();
-         		sessionStorage.setItem('cache',localCache);
-         	}	
+         		
+         	   
+              	
+         	}else{
+         		newCahce.push(local);
+         	}
    	  		
    	  		
    		}
-    	 
+   	 	sessionStorage.setItem("cache", JSON.stringify(newCahce));
        }
         
 
