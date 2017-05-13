@@ -125,11 +125,29 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 					value2=100-value;
 					
 				}
-			    
+			    var errorName;
+				if(dqName==="ACCURACY TO SOURCE"){
+					errorName="Inaccurate";
+					dqName="Aaccurate";
+				}else if(dqName==="DATAPROFILE"){
+					errorName="Error";
+					dqName="Good";
+					
+				}else if(dqName==="COMPLETENESS"){
+					errorName="Incomplete";
+					dqName="Complete";
+				}else if(dqName==="CONSISTENCY"){
+					errorName="Consistent";
+					dqName="Inconsistent";
+				}else if(dqName==="FORMAT  CONFORMANCY"){
+					errorName="Non-conform";
+					dqName="Conform";
+				}
+				
 			    
 				var data = [{
 						values: [value,value2],
-					  labels: [dqName],
+					  labels: [dqName,errorName],
 					  marker:{  colors:['rgb(238,112,35)','rgb(194,63,56)']},
 					  domain: {
 					    x: [0, .65]

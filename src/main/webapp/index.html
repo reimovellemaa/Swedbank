@@ -83,7 +83,30 @@
        		 	alert("Remove");
         	   $(this).closest("div").remove(); 
         	});
-
+		
+       function deleteChart(divTag){
+    		
+    	   var localCache=JSON.parse(sessionStorage.getItem('cache'));
+    	   console.log('local cache in delete'+localCache);
+    	   var localCahceCopy=localCache;
+   	  	for (i = localCahceCopy.length-1; i>=0; i--) {
+         
+         		var local=localCache[i];	
+         		console.log('local'+local.divTag);
+          		console.log(divTag);
+         	if(angular.equals(local.divTag,divTag)){
+         		delete localCache[i];
+         	   console.log('local cache in delete'+localCache);
+         		alert("Deleted");
+         		$('#'+divTag).parent().remove();
+         		sessionStorage.setItem('cache',localCache);
+         	}	
+   	  		
+   	  		
+   		}
+    	 
+       }
+        
 
         function initialize() {
 
@@ -93,6 +116,46 @@
             
         }
       
+        function cacheData(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag){
+       			var cachedData=[];
+        	
+        	   var dictionary={
+                       metric_categ: MetricType,
+                       service_group_name: serviceGroupName,
+                       country: country,
+                       metric_name: qualityMetricName,
+                       date1: date1,
+                       date2: date2,
+                       service:service,
+                       validation:validation,
+                       strUser:strUser,
+                       divTag:divTag
+                   }
+              console.log("Suka polski tag "+divTag);
+                 // cachedData.push(dictionary);
+                 if(sessionStorage.getItem('cache')){
+               	  	var localCache=JSON.parse(sessionStorage.getItem('cache'));
+               	  	for (i = localCache.length-1; i>=0; i--) {
+                     	
+                     			
+                     		
+               	  		cachedData.push(localCache[i]);
+               	  		
+               		}
+                	    cachedData.push(dictionary);
+                  	      
+                  	    
+                  
+               
+               	  	
+                 }else{
+               	  
+               	    cachedData.push(dictionary);
+                 }
+               	  sessionStorage.setItem("cache", JSON.stringify(cachedData));
+        	
+        }
+        
         var app = angular.module('app', ['ui.bootstrap']);
     	var selectedChart;
     
@@ -105,18 +168,18 @@
           selectedChart=item;
         }
         }
-        
+        var divTag;
         app.directive("addDiv", function ($compile) {
             return {
                 restrict: 'AE',
                 link: function (scope, element, attr) {
                     element.bind("click", function (e) {
-                    	 var cachedData=[];
+                    
                         var e = document.getElementById("split-button");
                        // var strUser = e.options[e.selectedIndex].text;
 						var strUser=selectedChart;
              			
-					
+						
 
                         var date1 = $("#date1").val();
 
@@ -137,38 +200,7 @@
                         var container;
                         var childNode;
 						
-                       var dictionary={
-                            metric_categ: MetricType,
-                            service_group_name: serviceGroupName,
-                            country: country,
-                            metric_name: qualityMetricName,
-                            date1: date1,
-                            date2: date2,
-                            service:service,
-                            validation:validation,
-                            strUser:strUser                         
-                        }
-                      // cachedData.push(dictionary);
-                      if(sessionStorage.getItem('cache')){
-                    	  	var localCache=JSON.parse(sessionStorage.getItem('cache'));
-                    	  	for (i = localCache.length-1; i>=0; i--) {
-                          	
-                          			
-                          		
-                    	  		cachedData.push(localCache[i]);
-                    	  		
-                    		}
-                     	    cachedData.push(dictionary);
-                       	      
-                       	    
                        
-                    
-                    	  	
-                      }else{
-                    	  
-                    	    cachedData.push(dictionary);
-                      }
-                    	  sessionStorage.setItem("cache", JSON.stringify(cachedData));
                       
           
                         // GET Päringud servletidele ja chartide loomine. Chartide confimine ja chartide mudimine toimub chart.js failis
@@ -193,7 +225,7 @@
                                 var extraInfo = [];
                                 var count = 0;
                                 var json = jQuery.parseJSON(responseText);
-                                var divTag = "divMap_" + new Date().getTime().toString();
+                                divTag = "divMap_" + new Date().getTime().toString();
                                 if (json.length > 0) {
 
                                     for (var i = 0; i < json.length; i++) {
@@ -233,11 +265,11 @@
                                     
                                     
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName,date1.concat(" - "+date2));
                                     count = 0;
-                                    
+                                    cacheData(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag);
                                     var mapPlot = document.getElementById(divTag);
                                     
                                     
@@ -300,7 +332,7 @@
 
                                 var json = jQuery.parseJSON(responseText);
                                 if (json.length > 0) {
-                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    divTag = "divBar_" + new Date().getTime().toString();
                                     for (var i = 0; i < json.length; i++) {
                                         var obj = json[i];
                                         dataX.push(obj.measure_date);
@@ -323,10 +355,10 @@
                                
                          
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
-                                   
+                                    cacheData(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag);
  									var barPlot = document.getElementById(divTag);
                                     
                                     
@@ -383,12 +415,12 @@
 
                                     }
 
-                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     lineChart(divTag, dataX, dataY,country,serviceGroupName,MetricType,qualityMetricName);
-
+                                    cacheData(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag);
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
                                     document.getElementById("noResult").innerHTML = "No result";
@@ -433,12 +465,12 @@
 
                                     }
 
-                                    var divTag = "divBar_" + new Date().getTime().toString();
+                                    divTag = "divBar_" + new Date().getTime().toString();
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     heatMap(divTag, dataX, dataY, dataZ, serviceGroupName);
-
+                                    cacheData(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag);
                                     document.getElementById("demo").innerHTML = "";
                                 } else {
 
@@ -472,7 +504,7 @@
 
                                 var json = jQuery.parseJSON(responseText);
                                 if (json.length > 0) {
-                                	 var divTag = "divBubble_" + new Date().getTime().toString();
+                                	 divTag = "divBubble_" + new Date().getTime().toString();
                                     for (var i = 0; i < json.length; i++) {
                                         var obj = json[i];
                                         dataX.push(obj.qualityMetricTypeComment);
@@ -498,10 +530,10 @@
 
                                    
                                     container = angular.element(document.querySelector("#container"));
-                                    childNode = $compile('<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;""><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>')(container);
+                                    childNode = $compile('<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;""><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>')(container);
                                     container.prepend(childNode);
                                     bubbleChart(divTag, dataX, dataY, dataZ, serviceGroupName,dataDate,country);
-                                   
+                                    cacheData(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag);
                                     
                                     var myPlot = document.getElementById(divTag);
                                     myPlot.on('plotly_click', function(d) {
@@ -554,23 +586,24 @@
                                     	   
                                     	   
                                        }*/
-                                        var divTag = "divDonut_" + new Date().getTime().toString();
+                                       var data={
+                                           	 'metric_categ': MetricType,
+                                                'service_group_name': serviceGroupName,
+                                                'country': country,
+                                                'metric_name': qualityMetricName,
+                                                'date1': date1,
+                                                'date2': date2,
+                                                'comment': obj.qualityMetricTypeComment,
+                                                'validation':validation
+                                           };
+                                        divTag = "divDonut_" + new Date().getTime().toString();
                                    
                                         container = angular.element(document.querySelector("#container"));
-                                        childNode = $compile('<div class="box"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div class="panel-body" id="' + divTag + '"" ></div></div>')(container);
+                                        childNode = $compile('<div class="box"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div class="panel-body" id="' + divTag + '"" ></div></div>')(container);
                                         container.prepend(childNode);
                                         circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType, date1.concat(" - "+date2));
                                         console.log(obj.qualityMetricTypeComment);
-                                        var data={
-                                             	 'metric_categ': MetricType,
-                                                  'service_group_name': serviceGroupName,
-                                                  'country': country,
-                                                  'metric_name': qualityMetricName,
-                                                  'date1': date1,
-                                                  'date2': date2,
-                                                  'comment': obj.qualityMetricTypeComment,
-                                                  'validation':validation
-                                             };
+                                        cacheData(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag);
                                        localStorage.setItem(divTag, JSON.stringify(data) );
                                         
                                        var myPlot = document.getElementById(divTag);
@@ -604,7 +637,7 @@
                             });
 
                         }
-
+                     
                     });
                 }
             };
@@ -629,9 +662,9 @@
           	console.log(JSON.stringify(localCache));
           	for (i = 0; i < localCache.length; i++) {
           		
-          	
+          			console.log("Fucking tag here"+localCache[i].divTag);
           	  
-          	       reGenerateChart(localCache[i].metric_categ ,localCache[i].service_group_name,localCache[i].country,localCache[i].metric_name,localCache[i].date1,localCache[i].date2,localCache[i].service,localCache[i].validation,localCache[i].strUser);
+          	       reGenerateChart(localCache[i].metric_categ ,localCache[i].service_group_name,localCache[i].country,localCache[i].metric_name,localCache[i].date1,localCache[i].date2,localCache[i].service,localCache[i].validation,localCache[i].strUser,localCache[i].divTag);
           	 		
           	    
           	}

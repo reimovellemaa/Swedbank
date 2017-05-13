@@ -1,5 +1,5 @@
  
-function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser){
+function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag){
 	
             
 
@@ -23,7 +23,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
                var extraInfo = [];
                var count = 0;
                var json = jQuery.parseJSON(responseText);
-               var divTag = "divMap_" + new Date().getTime().toString();
+           
                if (json.length > 0) {
 
                    for (var i = 0; i < json.length; i++) {
@@ -130,7 +130,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                var json = jQuery.parseJSON(responseText);
                if (json.length > 0) {
-                   var divTag = "divBar_" + new Date().getTime().toString();
+                   var divTag = divTag;
                    for (var i = 0; i < json.length; i++) {
                        var obj = json[i];
                        dataX.push(obj.measure_date);
@@ -213,7 +213,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                    }
 
-                   var divTag = "divBar_" + new Date().getTime().toString();
+           
                    container = angular.element(document.querySelector("#container"));
                    childNode ='<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
                    container.prepend(childNode);
@@ -263,7 +263,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                    }
 
-                   var divTag = "divBar_" + new Date().getTime().toString();
+                
                    container = angular.element(document.querySelector("#container"));
                    childNode ='<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
                    container.prepend(childNode);
@@ -302,7 +302,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                var json = jQuery.parseJSON(responseText);
                if (json.length > 0) {
-               	 var divTag = "divBubble_" + new Date().getTime().toString();
+            	
                    for (var i = 0; i < json.length; i++) {
                        var obj = json[i];
                        dataX.push(obj.qualityMetricTypeComment);
@@ -384,13 +384,13 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
                    	   
                    	   
                       }*/
-                       var divTag = "divDonut_" + new Date().getTime().toString();
-                  
+              
+                       console.log("Tag in chartRegen "+divTag);
                        container = angular.element(document.querySelector("#container"));
                        childNode = '<div class="box"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div class="panel-body" id="' + divTag + '"" ></div></div>';
                        container.prepend(childNode);
                        circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType, date1.concat(" - "+date2));
-                       console.log(obj.qualityMetricTypeComment);
+            
                        var data={
                             	 'metric_categ': MetricType,
                                  'service_group_name': serviceGroupName,
