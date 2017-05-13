@@ -4,7 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import com.google.gson.Gson;
@@ -602,20 +608,22 @@ public class AndmedDAO {
 
 	}
 	
-
+//For home page---------------------------------------------------------------------------------------------------------------------------------------
 	
-	public String getCompleteness(){
+	public String getCompleteness(String region, String timeframe){
 
-		String andmed = "";
+		String andmed = "0";
 		Connection conn = null;
 
 		try {
 			conn = DBConnection.getConnection();          
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM get_data('GR','DQKPI','BB Data Warehouse','COMPLETENESS','2017-01-01','2017-04-04');");
+			ResultSet rs = st.executeQuery("SELECT * FROM get_data('"+regionPicker(region)+"','DQKPI','BB Data Warehouse','COMPLETENESS','"+getFirstDate(timeframe)+"','"+getSecondDate(timeframe)+"');");
 
-			rs.next();
-			andmed = rs.getString(1);
+			if (rs.next()){
+				rs.next();
+				andmed = rs.getString(1);
+			}
 
 			rs.close();
 			st.close();
@@ -629,18 +637,20 @@ public class AndmedDAO {
 		return andmed;
 	}
 	
-	public String getAccuracy(){
+	public String getAccuracy(String region, String timeframe){
 
-		String andmed = "";
+		String andmed = "0";
 		Connection conn = null;
 
 		try {
 			conn = DBConnection.getConnection();          
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM get_data('GR','DQKPI','BB Data Warehouse','ACCURACY TO SOURCE','2017-01-01','2017-04-04');");
+			ResultSet rs = st.executeQuery("SELECT * FROM get_data('"+regionPicker(region)+"','DQKPI','BB Data Warehouse','ACCURACY TO SOURCE','"+getFirstDate(timeframe)+"','"+getSecondDate(timeframe)+"');");
 
-			rs.next();
-			andmed = rs.getString(1);
+			if (rs.next()){
+				rs.next();
+				andmed = rs.getString(1);
+			}
 
 			rs.close();
 			st.close();
@@ -654,18 +664,21 @@ public class AndmedDAO {
 		return andmed;
 	}
 	
-	public String getConformancy(){
+	public String getConformancy(String region, String timeframe){
 
-		String andmed = "";
+		String andmed = "0";
 		Connection conn = null;
 
 		try {
 			conn = DBConnection.getConnection();          
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM get_data('GR','DQKPI','BB Data Warehouse','FORMAT CONFORMANCY','2017-01-01','2017-04-04');");
+			ResultSet rs = st.executeQuery("SELECT * FROM get_data('"+regionPicker(region)+"','DQKPI','BB Data Warehouse','FORMAT CONFORMANCY','"+getFirstDate(timeframe)+"','"+getSecondDate(timeframe)+"');");
 
-			rs.next();
-			andmed = rs.getString(1);
+			
+			if (rs.next()){
+				rs.next();
+				andmed = rs.getString(1);
+			}
 
 			rs.close();
 			st.close();
@@ -679,18 +692,20 @@ public class AndmedDAO {
 		return andmed;
 	}
 	
-	public String getConsistency(){
+	public String getConsistency(String region, String timeframe){
 
-		String andmed = "";
+		String andmed = "0";
 		Connection conn = null;
 
 		try {
 			conn = DBConnection.getConnection();          
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM get_data('GR','DQKPI','BB Data Warehouse','CONSISTENCY','2017-01-01','2017-04-04');");
+			ResultSet rs = st.executeQuery("SELECT * FROM get_data('"+regionPicker(region)+"','DQKPI','BB Data Warehouse','CONSISTENCY','"+getFirstDate(timeframe)+"','"+getSecondDate(timeframe)+"');");
 
-			rs.next();
-			andmed = rs.getString(1);
+			if (rs.next()){
+				rs.next();
+				andmed = rs.getString(1);
+			}
 
 			rs.close();
 			st.close();
@@ -703,6 +718,63 @@ public class AndmedDAO {
 		}
 		return andmed;
 	}
+	
+	public String getSecondDate(String timeframe){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDateTime date = LocalDateTime.now();
+		
+		if (timeframe.equals("pmonth")){
+			Calendar aCalendar = Calendar.getInstance();
+			aCalendar.set(Calendar.DATE, 1);
+			aCalendar.add(Calendar.DAY_OF_MONTH, -1);
+			aCalendar.set(Calendar.DATE, 1);
+			Date firstDateOfPreviousMonth = aCalendar.getTime();
+			return dateFormat.format(firstDateOfPreviousMonth);
+		}
+		else{
+			String todate = date.format(formatter);
+			return todate;
+		}
+	}
+	
+	public String getFirstDate(String timeframe){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDateTime now = LocalDateTime.now();
+        
+        
+		if (timeframe.equals("week")){
+			LocalDateTime then = now.minusWeeks(1);
+			return then.format(formatter);
+		}
+		if (timeframe.equals("month")){
+			LocalDateTime then = now.minusMonths(1);
+			return then.format(formatter);
+		}
+		if (timeframe.equals("pmonth")){
+			Calendar aCalendar = Calendar.getInstance();
+			aCalendar.set(Calendar.DATE, 1);
+			aCalendar.add(Calendar.DAY_OF_MONTH, -1);
+			Date lastDateOfPreviousMonth = aCalendar.getTime();
+			aCalendar.set(Calendar.DATE, 1);
+			return dateFormat.format(lastDateOfPreviousMonth);
+		}
+		else {
+			return "1900-01-01";
+		}
+	}
+	
+	public String regionPicker(String region){
+		if (region.equals("BB") || region.equals("PB")){
+			return "GR";
+		}
+		else{
+			return region;
+		}
+	}
+	
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	public String getDetailFailedData(String metric_categ, String service_group_name, String country, String metric_name,
 			String date1, String date2,String comment,String validation)throws SQLException {
