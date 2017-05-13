@@ -217,32 +217,39 @@ public class AndmedResource {
 	@Path("getCompleteness")
 	@GET
 	@Produces("text/plain")
-	public String getCompleteness(){
-		
-			return dao.getCompleteness();
+	public String getCompleteness(
+	@QueryParam("region") @DefaultValue("BB") String region,
+	@QueryParam("timeframe") @DefaultValue("week") String timeframe){
+			return dao.getCompleteness(region, timeframe);
 	}
 	
 	@Path("getAccuracy")
 	@GET
 	@Produces("text/plain")
-	public String getAccuracy(){
+	public String getAccuracy(
+	@QueryParam("region") @DefaultValue("BB") String region,
+	@QueryParam("timeframe") @DefaultValue("week") String timeframe){
 		
-			return dao.getAccuracy();
+			return dao.getAccuracy(region, timeframe);
 	}
 	
 	@Path("getConformancy")
 	@GET
 	@Produces("text/plain")
-	public String getConformancy(){
+	public String getConformancy(
+	@QueryParam("region") @DefaultValue("BB") String region,
+	@QueryParam("timeframe") @DefaultValue("week") String timeframe){
 		
-			return dao.getConformancy();
+			return dao.getConformancy(region, timeframe);
 	}
 	
 	@Path("getConsistency")
 	@GET
 	@Produces("text/plain")
-	public String getConsistency(){
+	public String getConsistency(
+	@QueryParam("region") @DefaultValue("BB") String region,
+	@QueryParam("timeframe") @DefaultValue("week") String timeframe){
 		
-			return dao.getConsistency();
+			return dao.getConsistency(region, timeframe);
 	}
 }
