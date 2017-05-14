@@ -4,6 +4,7 @@ public class QualityModel {
 
 		private int measure_amt;
 		private String measure_date;
+		private String validation;
 		private String qualityMetricTypeName;
 		private String validationQualityRuleComment;
 		private String service_main_group_name;
@@ -13,7 +14,27 @@ public class QualityModel {
 		private String service;
 		private int fact_row;
 		private int fact_col;
+		private int allDataCount;
 		
+		public void setValidation(String value){
+			
+			this.validation=value;
+		}
+		
+		public String getValidation(){
+			
+			return this.validation;
+		}
+		
+		public void setAllDataCount(int value){
+			
+			this.allDataCount=value;
+		}
+		
+		public int getAllDataCountl(){
+			
+			return this.allDataCount;
+		}
 		
 	public void setFactCol(int value){
 			

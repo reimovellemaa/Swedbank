@@ -55,11 +55,11 @@ public class AndmedDAO {
 
 		String queryString;
 		if(service.equals("None")){
-		queryString="SELECT AVG(f."+measure_type+") as average_amt FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"
+		queryString="SELECT AVG(f."+measure_type+") as average_amt, COUNT(*) AS allDataCount FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"
 				+ " INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='"+country_shortname+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'"
 				+ "AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and '"+date2+"'";
 		}else{
-			queryString="SELECT AVG(f."+measure_type+") as average_amt FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"
+			queryString="SELECT AVG(f."+measure_type+") as average_amt,COUNT(*) AS allDataCount FROM mesa.PL_MEASURE_FACT_PRT f INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"
 					+ " INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='"+country_shortname+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'"
 					+ "AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND f.measure_fact_date BETWEEN '"+date1+"' and '"+date2+"'"
 					+ "AND dim1.service_component_shortname='"+service+"'";
@@ -83,6 +83,7 @@ public class AndmedDAO {
 			QualityModel model=new QualityModel();
 			model.setMeasureAmt(rs.getInt("average_amt"));
 			model.setServiceMainGroupName(service_group_name);
+			model.setAllDataCount(rs.getInt("allDataCount"));
 			//model.setDate(rs.getString("measure_fact_date"));
 			//model.setQualityMetricTypeComment(rs.getString("validation_rule_name").replaceAll("(.{50})", "$1<br>"));
 
@@ -799,7 +800,7 @@ public class AndmedDAO {
 		}
 		
 		
-		String queryString="SELECT DISTINCT f.country_shortname,dim1.service_component_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+		String queryString="SELECT DISTINCT f.country_shortname,dim1.service_component_shortname,f.validation_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f."+measure_type+"<=99 AND f.country_shortname='"+country+"'"
 				+"AND dim2.quality_metric_categ_shortname='"+metric_categ+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
@@ -827,6 +828,7 @@ public class AndmedDAO {
             model.setCountry(rs.getString("country_shortname"));
             model.setDate(rs.getString("measure_fact_date"));
             model.setService(rs.getString("service_component_shortname"));
+            model.setValidation(rs.getString("validation_shortname"));
 			responseArray.add(model);
 		}
 		jsonResult = gson.toJson(responseArray);
@@ -938,7 +940,7 @@ public class AndmedDAO {
 		
 		
 		
-		String queryString="SELECT DISTINCT f.country_shortname,dim1.service_component_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+		String queryString="SELECT DISTINCT f.country_shortname,dim1.service_component_shortname,f.validation_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f."+measure_type+">=100 AND f.country_shortname='"+country+"'"
 				+"AND dim2.quality_metric_categ_shortname='"+metric_categ+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
@@ -968,6 +970,7 @@ public class AndmedDAO {
             model.setCountry(rs.getString("country_shortname"));
             model.setDate(rs.getString("measure_fact_date"));
             model.setService(rs.getString("service_component_shortname"));
+            model.setValidation(rs.getString("validation_shortname"));
 			responseArray.add(model);
 		}
 		jsonResult = gson.toJson(responseArray);
@@ -1005,7 +1008,7 @@ public class AndmedDAO {
 		}
 		
 		
-		String queryString="SELECT DISTINCT f.country_shortname,dim1.service_component_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
+		String queryString="SELECT DISTINCT f.country_shortname,dim1.service_component_shortname,f.validation_shortname, f.fact_row_no,f.fact_col_no,f."+measure_type+" as Average_amt,dim2.validation_rule_name,f.measure_fact_date, dim2.quality_metric_type_comment,dim2.quality_metric_categ_shortname,dim1.service_main_group_name,dim2.quality_metric_type_name FROM mesa.PL_MEASURE_FACT_PRT f "
 				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 				+"INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE f.country_shortname='"+country+"' "
 				+"AND dim2.quality_metric_categ_shortname='"+metric_categ+"' AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_name+"' AND f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"'";
@@ -1033,8 +1036,9 @@ public class AndmedDAO {
             model.setCountry(rs.getString("country_shortname"));
             model.setDate(rs.getString("measure_fact_date"));
             model.setService(rs.getString("service_component_shortname"));
+            model.setValidation(rs.getString("validation_shortname"));
 			responseArray.add(model);
-		}
+		}    
 		jsonResult = gson.toJson(responseArray);
 		System.out.println(jsonResult);
 		rs.close();

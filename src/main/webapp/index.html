@@ -593,7 +593,8 @@
                                     	   
                                        }*/
                                        var data={
-                                           	 'metric_categ': MetricType,
+                                    		    'allDataCount':obj.allDataCount,
+                                              	'metric_categ': MetricType,
                                                 'service_group_name': serviceGroupName,
                                                 'country': country,
                                                 'metric_name': qualityMetricName,
@@ -621,7 +622,24 @@
                                         	//var obj=JSON.parse(d);
                                         	console.log(JSON.stringify(d.points[0].label));
                                         	var labelName=JSON.stringify(d.points[0].label);
-                                        	if(d.points[0].label===qualityMetricName){
+                                        	if(qualityMetricName==="ACCURACY TO SOURCE"){
+                
+                            					dqName="Aaccurate";
+                            				}else if(qualityMetricName==="DATAPROFILE"){
+                           
+                            					dqName="Good";
+                            					
+                            				}else if(qualityMetricName==="COMPLETENESS"){
+                            				
+                            					dqName="Complete";
+                            				}else if(qualityMetricName==="CONSISTENCY"){
+                            				
+                            					dqName="Consistent";
+                            				}else if(qualityMetricName==="FORMAT  CONFORMANCY"){
+                            				
+                            					dqName="Conform";
+                            				}
+                                        	if(d.points[0].label===dqName){
                                         		
                                         		window.location.href ="advancedQuery.html?store=" + divTag + "&result=1";
                                         	}else{
@@ -867,7 +885,7 @@
 					            		<td><select class="form-control" name="service_main_group_name" id="service_main_group_name"></select></td>
 					            	</tr>
 					            	<tr class="fiter_data">
-					            		<td><label for="Quality_metric_type_name">Data quality metric</label></td>
+					            		<td><label for="Quality_metric_type_name">Data quality dimension</label></td>
 					            		<td><select class="form-control" name="Quality_metric_type_name" id="Quality_metric_type_name"></select></td>
 					            	</tr>
 									<tr class="fiter_data">

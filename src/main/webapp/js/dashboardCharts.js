@@ -137,8 +137,8 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 					errorName="Incomplete";
 					dqName="Complete";
 				}else if(dqName==="CONSISTENCY"){
-					errorName="Consistent";
-					dqName="Inconsistent";
+					errorName="Inonsistent";
+					dqName="Consistent";
 				}else if(dqName==="FORMAT  CONFORMANCY"){
 					errorName="Non-conform";
 					dqName="Conform";
@@ -148,7 +148,7 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 				var data = [{
 						values: [value,value2],
 					  labels: [dqName,errorName],
-					  marker:{  colors:['rgb(238,112,35)','rgb(194,63,56)']},
+					  marker:{  colors:['rgb(35,113,26)','rgb(194,63,56)']},
 					  domain: {
 					    x: [0, .65]
 					  },

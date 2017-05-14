@@ -417,7 +417,8 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
                        container.prepend(childNode);
                        circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType, date1.concat(" - "+date2));
             
-                       var data={
+                       var data={ 
+                    		   'allDataCount':obj.allDataCount,
                             	 'metric_categ': MetricType,
                                  'service_group_name': serviceGroupName,
                                  'country': country,
