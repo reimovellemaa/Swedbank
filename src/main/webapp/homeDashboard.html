@@ -28,9 +28,8 @@
 
     <!-- inside js -->
   	<script type="text/javascript" src="js/app-ajax.js"></script>
-    <script type="text/javascript" src="js/dashboardCharts.js"></script>
-    <script type="text/javascript" src="js/draggable.js"></script>
-    <script type="text/javascript" src="js/filtersData.js"></script>
+
+
     
  
     <!-- inside css -->
@@ -52,11 +51,30 @@
 		    { name: 'All time', value: 'alltime' }
 		];
 		    
+		//first value is selected
 		$scope.form = {type : $scope.timeOptions[0].value};
 		
 		
-		//country options
-		optionsForCountryFilter('CountrySelect');
+			
+		//region options
+		$scope.countryOptions = [];	
+		$http.get('rest/andmed/getDistinctCountrys').then(function (responseText) {     		
+	        for(var i = 0; i < responseText.data.length; i++) {
+	        	if(responseText.data[i].country==="GR"){
+	        		responseText.data[i].country="PB";
+	            }          	
+	            $scope.countryOptions.push({name: responseText.data[i].country, value: responseText.data[i].country});
+	        }     
+	        //first value is selected
+	        $scope.region = {country : $scope.countryOptions[0].value};
+	        
+	      	//executing initial data collection and drawing 
+		    $scope.updateData($scope.timeOptions[0].value, $scope.countryOptions[0].value);
+	        	
+	    });
+		
+		
+		
 		
 		
 		//drawing gauges
@@ -97,12 +115,7 @@
             })
             
 	    };
-	    
-	    
-	    
-	  	//executing initial data collection and drawing
-	    $scope.updateData($scope.timeOptions[0].value, "BB");
-	     
+	         
 	});	
 	</script>
 	
@@ -146,10 +159,10 @@
 		</div>
 		
 		<!-- selection -->
-		<div id="container">	
+		<div id="container" align="right">	
 			<div class="form-control" >		
 				<select name="TimeFrame" ng-model='form.type' required ng-options='option.value as option.name for option in timeOptions' ng-change="updateData(form.type, region.country)" id="TimeFrame"></select>
-				<select name="CountrySelect" ng-model="region.country" ng-change="updateData(form.type, region.country)" id="CountrySelect"></select>		
+				<select name="CountrySelect" ng-model="region.country" ng-options='option.value as option.name for option in countryOptions' ng-change="updateData(form.type, region.country)" id="CountrySelect"></select>		
 			</div>							
 		</div>
 	</div>
