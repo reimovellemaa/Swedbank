@@ -679,7 +679,7 @@
         $('#service_main_group_name').change(function() {
                removeOptions(document.getElementById("ServiceSelect"),1);
         	  var serviceGroupName =$('select[name=service_main_group_name]').val();
-        	  alert('Value changed to ' + serviceGroupName);
+    
         	  optionsForFilterService('ServiceSelect','rest/andmed/getDisticntServices',serviceGroupName);
            
 		
@@ -690,7 +690,7 @@
         	  removeOptions(document.getElementById("valName"),1);
         	  var serviceGroupName =$('select[name=service_main_group_name]').val();
         	  var serviceSelect =$('select[name=ServiceSelect]').val();
-        	  alert('Value changed to ' + serviceGroupName);
+        	
         	    optionsForFilterValidation('valName','rest/andmed/getDistinctValidationShortName',serviceGroupName,serviceSelect);
          });
          
