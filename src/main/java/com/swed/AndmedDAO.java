@@ -375,7 +375,7 @@ public class AndmedDAO {
 	}
 	
 	public String getDistinctQualityMetricTypeNames() throws SQLException{
-
+		System.out.println("Shit gordagaga ga g");
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
 		Connection conn = null;
@@ -469,7 +469,7 @@ public class AndmedDAO {
 
 	}
 	
-	public String getDistinctValidationShortName() throws SQLException{
+	public String getDistinctValidationShortName(String service_main_group_name,String service_component_shortname) throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
 		
@@ -485,7 +485,7 @@ public class AndmedDAO {
 		String queryString="SELECT DISTINCT f.validation_shortname FROM mesa.pl_measure_fact_prt "
 				+"f  INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON"
 				+"(f.Validation_Rule_Id = dim2.Validation_Rule_Id)"
-				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"; 
+				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) WHERE dim1.service_main_group_name='"+service_main_group_name+"' AND dim1.service_component_shortname='"+service_component_shortname+"'"; 
 
 
 		System.out.println(queryString);
@@ -561,7 +561,7 @@ public class AndmedDAO {
 	}
 	
 	
-	public String getDistinctServices() throws SQLException{
+	public String getDistinctServices(String service_main_group_name) throws SQLException{
 
 		ArrayList responseArray = new ArrayList();
 		String jsonResult="";
@@ -576,7 +576,7 @@ public class AndmedDAO {
 		String queryString="SELECT DISTINCT dim1.service_component_shortname FROM mesa.pl_measure_fact_prt "
 				+"f  INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON"
 				+"(f.Validation_Rule_Id = dim2.Validation_Rule_Id)"
-				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName)"; 
+				+"INNER JOIN mesa.PL_SERVICE_PRT dim1 ON (f.validation_service_shortname = dim1.Service_Component_ShortName) WHERE dim1.service_main_group_name='"+service_main_group_name+"'"; 
 
 
 		System.out.println(queryString);

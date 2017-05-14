@@ -19,7 +19,69 @@ function optionsForCountryFilter(divTag){
                
                });
 			
+} 
+
+function optionsForFilterValidation(divTag,restCall,service,serviceShort){
+	
+	$.get(restCall, {service:service,serviceShort:serviceShort
+       }, function (responseText) {
+       var json = jQuery.parseJSON(responseText);   
+       var sel = document.getElementById(divTag);
+       for(var i = 0; i < json.length; i++) {
+    	 
+           var opt = document.createElement('option');
+           opt.innerHTML =json[i].value;
+           opt.value =json[i].value;
+           console.log(json[i].value);
+           sel.appendChild(opt);
+       }
+       
+       });
+	
 }
+
+
+
+function optionsForFilterQualityMetric(divTag,restCall,service,serviceShort){
+	
+	$.get(restCall, {service:service,serviceShort:serviceShort
+       }, function (responseText) {
+       var json = jQuery.parseJSON(responseText);   
+       var sel = document.getElementById(divTag);
+       for(var i = 0; i < json.length; i++) {
+    	 
+           var opt = document.createElement('option');
+           opt.innerHTML =json[i].value;
+           opt.value =json[i].value;
+           console.log(json[i].value);
+           sel.appendChild(opt);
+       }
+       
+       });
+	
+}
+
+
+
+function optionsForFilterService(divTag,restCall,service){
+	
+	$.get(restCall, {service:service
+       }, function (responseText) {
+       var json = jQuery.parseJSON(responseText);   
+       var sel = document.getElementById(divTag);
+       for(var i = 0; i < json.length; i++) {
+    	 
+           var opt = document.createElement('option');
+           opt.innerHTML =json[i].value;
+           opt.value =json[i].value;
+           console.log(json[i].value);
+           sel.appendChild(opt);
+       }
+       
+       });
+	
+}
+
 
 function optionsForFilter(divTag,restCall){
 	

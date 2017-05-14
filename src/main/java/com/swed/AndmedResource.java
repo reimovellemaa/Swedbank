@@ -166,9 +166,10 @@ public class AndmedResource {
 	@Path("getDistinctValidationShortName")
 	@GET
 	@Produces("text/plain")
-	public String getDistinctValidationShortName() throws SQLException{
+	public String getDistinctValidationShortName(@QueryParam("service") @DefaultValue("") String service,@QueryParam("serviceShort") @DefaultValue("") String serviceShort
+			) throws SQLException{
 		
-			return dao.getDistinctValidationShortName();
+			return dao.getDistinctValidationShortName(service,serviceShort);
 	}
 	
 	@Path("getDistinctCountrys")
@@ -184,9 +185,9 @@ public class AndmedResource {
 	@Path("getDisticntServices")
 	@GET
 	@Produces("text/plain")
-	public String getDistinctServices() throws SQLException{
+	public String getDistinctServices(@QueryParam("service") @DefaultValue("") String service) throws SQLException{
 		
-			return dao.getDistinctServices();
+			return dao.getDistinctServices(service);
 	}
 	
 	

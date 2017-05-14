@@ -666,16 +666,44 @@
                 }
             };
         });
-	
-        
+        function removeOptions(selectbox,removeUntil)
+        {
+            var i;
+            for(i = selectbox.options.length - 1 ; i >= removeUntil ; i--)
+            {
+                selectbox.remove(i);
+            }
+        }
+        $(document).ready(function () {
+        	//valName
+        $('#service_main_group_name').change(function() {
+               removeOptions(document.getElementById("ServiceSelect"),1);
+        	  var serviceGroupName =$('select[name=service_main_group_name]').val();
+        	  alert('Value changed to ' + serviceGroupName);
+        	  optionsForFilterService('ServiceSelect','rest/andmed/getDisticntServices',serviceGroupName);
+           
+		
+        	});
+       
+         $('#ServiceSelect').change(function() {
+        		 
+        	  removeOptions(document.getElementById("valName"),1);
+        	  var serviceGroupName =$('select[name=service_main_group_name]').val();
+        	  var serviceSelect =$('select[name=ServiceSelect]').val();
+        	  alert('Value changed to ' + serviceGroupName);
+        	    optionsForFilterValidation('valName','rest/andmed/getDistinctValidationShortName',serviceGroupName,serviceSelect);
+         });
+         
+       
+         
+         
+    	});
         app.controller('firstCtrl', function ($scope) {
-        	
-        	 optionsForCountryFilter('CountrySelect');
-         	 optionsForFilter('ServiceSelect','rest/andmed/getDisticntServices');
-        	 optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
-        	 optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
-          	 optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
-          	optionsForFilter('valName','rest/andmed/getDistinctValidationShortName');
+        
+        	optionsForCountryFilter('CountrySelect');
+            optionsForFilter('service_main_group_name','rest/andmed/getDisticntQualityServiceName');
+        	optionsForFilter('MetricType','rest/andmed/getDistinctCategMetricType');
+        	optionsForFilter('Quality_metric_type_name','rest/andmed/getDisticntQualityMetricTypeName');
           	/*if(localStorage.getItem('Charts')) {
           		$('#form').html(localStorage.getItem('Charts'));
           		alert("Got some");
@@ -877,22 +905,23 @@
 					            </thead>
 					            <tbody>
 					            	<tr class="fiter_data">
-					            		<td><label for="ServiceSelect">Service shortname</label></td>
-					            		<td><select class="form-control" name="ServiceSelect" id="ServiceSelect"><option value="None">All services</option></select></td>
-					            	</tr>
-					            	<tr class="fiter_data">
 					            		<td><label for="service_main_group_name">Service group name</label></td>
 					            		<td><select class="form-control" name="service_main_group_name" id="service_main_group_name"></select></td>
 					            	</tr>
 					            	<tr class="fiter_data">
-					            		<td><label for="Quality_metric_type_name">Data quality dimension</label></td>
-					            		<td><select class="form-control" name="Quality_metric_type_name" id="Quality_metric_type_name"></select></td>
+					            		<td><label for="ServiceSelect">Service shortname</label></td>
+					            		<td><select class="form-control" name="ServiceSelect" id="ServiceSelect"><option value="None">All services</option></select></td>
 					            	</tr>
-									<tr class="fiter_data">
+					            	<tr class="fiter_data">
 										<td><label for="valName">Validation shortname</label></td>
 										<td><select class="form-control" name="valName"
 											id="valName"><option value="None">All validations</option></select></td>
 									</tr>
+					            	<tr class="fiter_data">
+					            		<td><label for="Quality_metric_type_name">Data quality dimension</label></td>
+					            		<td><select class="form-control" name="Quality_metric_type_name" id="Quality_metric_type_name"></select></td>
+					            	</tr>
+									
 									<tr class="fiter_data">
 					            		<td><label for="CountrySelect">Country</label></td>
 					            		<td><select class="form-control" name="CountrySelect" id="CountrySelect"></select></td>
