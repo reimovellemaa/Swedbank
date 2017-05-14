@@ -1,4 +1,30 @@
- 
+ function deleteChart(divTag){
+    		
+    	   var localCache=JSON.parse(sessionStorage.getItem('cache'));
+    	   console.log('local cache in delete'+localCache);
+    	  
+    	   var newCahce=[];
+   	  	for (i = localCache.length-1; i>=0; i--) {
+         
+         		var local=localCache[i];	
+         		console.log('local'+local.divTag);
+          		console.log(divTag);
+         	if(angular.equals(local.divTag,divTag)){
+         	
+        
+         	   console.log('local cache in delete'+localCache);
+         		alert("Deleted");
+         		$('#'+divTag).parent().remove();
+         		
+         	   
+              	
+         	}else{
+         		newCahce.push(local);
+         	}
+   	  		
+   	  		
+ } 
+ }
 function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,date1,date2,service,validation,strUser,divTag){
 	
             
@@ -63,7 +89,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
                    
                    
                    container = angular.element(document.querySelector("#container"));
-                   childNode ='<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
+                   childNode ='<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>';
                    container.prepend(childNode);
                    mapChart(divTag, country, measures, json[i - 1].qualityMetricTypeComment, qualityMetricName,serviceGroupName,date1.concat(" - "+date2));
                    count = 0;
@@ -153,7 +179,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
               
         
                    container = angular.element(document.querySelector("#container"));
-                   childNode ='<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
+                   childNode ='<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>';
                    container.prepend(childNode);
                    barChart(divTag, dataX, dataY, serviceGroupName, extraInfo, obj.qualityMetricTypeComment, country);
                   
@@ -215,7 +241,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
            
                    container = angular.element(document.querySelector("#container"));
-                   childNode ='<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
+                   childNode ='<div class="box-lrg"  ng-draggable="dragOptions"  style = "float:left; width: 50%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>';
                    container.prepend(childNode);
                    lineChart(divTag, dataX, dataY,country,serviceGroupName,MetricType,qualityMetricName);
 
@@ -265,7 +291,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                 
                    container = angular.element(document.querySelector("#container"));
-                   childNode ='<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
+                   childNode ='<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>';
                    container.prepend(childNode);
                    heatMap(divTag, dataX, dataY, dataZ, serviceGroupName);
 
@@ -328,7 +354,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
 
                   
                    container = angular.element(document.querySelector("#container"));
-                   childNode ='<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;""><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div id="' + divTag + '""></div></div>';
+                   childNode ='<div class="box-full"  ng-draggable="dragOptions"  style = "float:left; width: 100%;""><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div id="' + divTag + '""></div></div>';
                    container.prepend(childNode);
                    bubbleChart(divTag, dataX, dataY, dataZ, serviceGroupName,dataDate,country);
                   
@@ -387,7 +413,7 @@ function reGenerateChart(MetricType,serviceGroupName,country,qualityMetricName,d
               
                        console.log("Tag in chartRegen "+divTag);
                        container = angular.element(document.querySelector("#container"));
-                       childNode = '<div class="box"><button type="button" class="close" onclick="$(this).parent().remove();">×</button><div class="panel-body" id="' + divTag + '"" ></div></div>';
+                       childNode = '<div class="box"><button type="button" class="close" onclick="deleteChart(\''+divTag+ '\')">×</button><div class="panel-body" id="' + divTag + '"" ></div></div>';
                        container.prepend(childNode);
                        circleChart(divTag, obj.measure_amt, obj.service_main_group_name, country, qualityMetricName, obj.qualityMetricTypeComment, MetricType, date1.concat(" - "+date2));
             
