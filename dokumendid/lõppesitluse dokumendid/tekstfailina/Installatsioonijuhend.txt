@@ -1,0 +1,16 @@
+Eeldused:
+
+root-õigustega server (me kasutasime Ubuntu 16.04 serverit)
+Putty(serverile terminalist ligipääsemiseks)
+PostgreSQL andmebaas (koos andmetega)
+FileZilla (.war faili tõstmiseks serverisse)
+Installatsioonijuhend:
+
+Installi Java 8+: http://www.linuxtechi.com/install-apache-tomcat9-centos7-rhel7-ubuntu16-04/
+Installi ja seadista Tomcat 9+ soovitatavalt /opt/tomcat9 kausta ja anna tavakasutajale selle kausta kirjutusõigused, sest muidu ei saa hiljem .war faili kerge vaevaga sinna tõsta: http://www.linuxtechi.com/install-apache-tomcat9-centos7-rhel7-ubuntu16-04/
+Seadista ühendus andmebaasiga: Dashboard/Java resources/src/main/java/com.swed kaustas on DBConnection.java fail, kus on kõik parameetrid, millega luuakse ühendus andmebaasiga. Eeldus on, et andmed asuvad juba PostgreSQL andmebaasis, kuid siiski selgitus: Installi PostgreSQL 9.5.6+: https://tecadmin.net/install-postgresql-server-on-ubuntu/ Impordi andmed andmebaasi
+Valmista projekt endal arvutis ette: *Klooni omale giti repo https://github.com/reimovellemaa/Swedbank.git Eclipse Neon-iga *Impordi projekt ("Dashboard") enda arvutisse (Kloonitud repole paremklikk -> Import projects -> Next -> Linnuke "Dashboardile" -> Finish) *Paremklikk Dashboard'il -> Build path -> Configure build path -> Libraries, siin peab kasutusel olema jdk1.8+ ja kindlasti mitte jre *Paremklikk Dashboard'il -> Team -> Run as -> Maven generate-sources (See installib maveni dependencied) *Siin etapis muuta projekti, kui on soov muudatusi teha projektile. *Paremklikk Dashboard'il -> Run as -> Maven build... [Goali reale kirjutada: clean install] -> Run (Konsooli peab tulema "BUILD SUCCESS") (Dashboard/target kausta peab tekkima Dashboard.war)
+Logi FileZillaga serverisse ning liigu /opt/tomcat9/webapps kausta (siia jõudmiseks peavad olema root õigused) ning kopeeri siia eelnevas punktis tekkinud Dashboard.war fail
+Kui pole eelnevalt käivitanud tomcati, siis nüüd on aeg seda teha: Putty terminalis kirjutada ./opt/tomcat9/bin/catalina.sh start
+Ava veebilehitsejaga http://www.SINUSERVER.ee:8080/Dashboard
+Õnnitle ennast, tegid kogu kadalipu läbi ja said oma serverisse töötava rakenduse, kui mitte, siis Google ja reimovellemaa@hotmail.com on sinu sõbrad.

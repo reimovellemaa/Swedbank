@@ -1,0 +1,7 @@
+Edaspidiseks:
+
+andmete võrdlust täiustada mis iganes viisil
+piirmäärad erroritele, et kui künnis on ületatud, siis saadetakse teade laiali, et a'la "Error threshold for completness is breached"
+andmeid kirjeldavaid ning sobivaid graafe juurde lisada
+filtreerimine teha dünaamiliseks - kui mingi filter on valitud, siis see eemaldab ebasobivad väljad teistelt filtritelt
+algus- ja lõppkuupäeva filtrile lisada range slider ehk et kuupäeva saab valida teistmoodi visuaalselt
