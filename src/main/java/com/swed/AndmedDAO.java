@@ -279,7 +279,7 @@ public class AndmedDAO {
 					+ "INNER JOIN mesa.PL_SERVICE_PRT dim1 "
 					+ "ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 					+ "INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE "
-					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' ";
+					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' ";
 
 
 		}else{
@@ -290,11 +290,8 @@ public class AndmedDAO {
 					+ "INNER JOIN mesa.PL_SERVICE_PRT dim1 "
 					+ "ON (f.validation_service_shortname = dim1.Service_Component_ShortName) "
 					+ "INNER JOIN mesa.PL_VALIDATION_RULE_EXT dim2 ON (f.Validation_Rule_Id = dim2.Validation_Rule_Id) WHERE "
-					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.service_component_shortname='"+service+"' ";
+					+ " f.country_shortname='"+country_shortname+"'AND dim1.service_main_group_name='"+service_group_name+"' AND dim2.quality_metric_type_name='"+metric_type+"' AND dim2.quality_metric_categ_shortname='"+categ_metric+"'  AND  f.measure_fact_date BETWEEN '"+date1+"' and'"+date2+"' AND dim1.service_component_shortname='"+service+"' ";
 
-
-			
-			
 		}
 	
 	   if(validation.equals("None")){
