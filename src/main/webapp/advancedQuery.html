@@ -59,9 +59,10 @@
 		 if(firstData.metric_categ){
 			   if(firstData.metric_categ==="DQKPI"){
 			var headers = document.getElementsByTagName("th"); 
+			
 			for (var i = 0; i < headers.length; i++) {
 				
-			  headers[i].innerHTML = headers[i].innerHTML.replace("Measure result as count", "Measure result as %");
+			  headers[i].innerHTML = headers[i].innerHTML.replace("Measure(count)", "measure(%)");
 			                         
 			}
 		   }
@@ -82,17 +83,54 @@
 		var firstData = jQuery.parseJSON(myData);
 		
 		setMeasureTypeHeader(firstData);
+		console.log(firstData.allDataCount);
 		
-		
-		
+		var dgName;
 		var rest='';
 	    if(me2=="1"){
 	    	console.log("Correct"+firstData.comment);
 	    	rest='rest/andmed/getDetailCorrectData';
+	    
+	    	if(firstData.metric_name==="ACCURACY TO SOURCE"){
+                
+				dqName="Aaccurate";
+			}else if(firstData.metric_name==="DATAPROFILE"){
+
+				dqName="Good";
+				
+			}else if(firstData.metric_name==="COMPLETENESS"){
+			
+				dqName="Complete";
+			}else if(firstData.metric_name==="CONSISTENCY"){
+			
+				dqName="Consistent";
+			}else if(firstData.metric_name==="FORMAT  CONFORMANCY"){
+			
+				dqName="Conform";
+			}
 	    }
 	    if(me2=="2"){
 	    	console.log("Not Correct"+country);
 	    	rest='rest/andmed/getDetailData';
+
+	    	if(firstData.metric_name==="ACCURACY TO SOURCE"){
+                
+				dqName="Inaccurate";
+			}else if(firstData.metric_name==="DATAPROFILE"){
+
+				dqName="Bad";
+				
+			}else if(firstData.metric_name==="COMPLETENESS"){
+			
+				dqName="Incomplete";
+			}else if(firstData.metric_name==="CONSISTENCY"){
+			
+				dqName="Inconsistent";
+			}else if(firstData.metric_name==="FORMAT  CONFORMANCY"){
+			
+				dqName="Non-conform";
+			}
+	    	
 	    }
 	    if(me2=="0"){
 	    	
@@ -121,11 +159,12 @@
                        var obj = json[i];
                   
                       
-                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'qualityMetricTypeComment':obj.qualityMetricTypeComment,'measure_date':obj.measure_date,'Service_nr':obj.service});
+                    	listOfData.push({'Service':obj.service_main_group_name,'Country':obj.country,'measure_amt':obj.measure_amt,'qualityMetricTypeComment':obj.qualityMetricTypeComment,'measure_date':obj.measure_date,'Service_nr':obj.service,'validation':obj.validation});
             		
                    }
-                   
-                 
+              if(me2!==0){    
+              document.getElementById("Total").innerHTML ="Total count:"+firstData.allDataCount+" "+dqName +":"+listOfData.length+"";
+           }
                    
                $('#myTable').DataTable({ "data":listOfData,
 			    "columns": [
@@ -134,16 +173,9 @@
 			        { "data": "Country","name": "Country" },
 			        { "data": "measure_amt","name": "Measure Result"},
 			        { "data": "qualityMetricTypeComment","name": "Comment"},
-			        { "data": "measure_date","name": "measure date"}
-			    ],
-			    "columnDefs": [
-			        { "name": "engine",   "targets": 0 },
-			        { "name": "browser",  "targets": 1 },
-			        { "name": "platform", "targets": 2 },
-			        { "name": "version",  "targets": 3 },
-			        { "name": "grade",    "targets": 4 },
-			        { "name": "grade",    "targets": 5 }
-			      ]});
+			        { "data": "measure_date","name": "measure date"},
+			        { "data": "validation","name": "validation"}
+			    ]});
           
                
            });
@@ -230,25 +262,27 @@ body {
 	 <a href="index.html">Chart generation</a>
 	   <a class="active" href="advancedQuery.html">Advanced</a>
 	</div>
-    
+    <p id="Total">0</p>
   <table id="myTable" class="display" cellspacing="0" width="100%">  <thead>
             <tr>
-                <th>Service nr</th>
+                <th>Context service shortname</th>
                 <th>Service</th>
                 <th>Country</th>
-                <th>Measure result as count</th>
+                <th>Measure(count)</th>
                 <th>Comment</th>
                 <th>Measure date</th>
+                <th>Validation rule</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th>Service nr</th>
+                <th>Context service shortname</th>
                 <th>Service</th>
                 <th>Country</th>
-                <th>Measure result as count</th>
+                <th>Measure(count)</th>
                 <th>Comment</th>
                 <th>Measure date</th>
+                <th>Validation rule</th>
             </tr>
         </tfoot>
  </table>
