@@ -46,7 +46,7 @@ function bubbleChart(divTag,xValues,yValues,zValues,serviceGroupName,dataDate,co
 			  title: serviceGroupName+" "+country,
 			  showlegend: false,
 			  height: 500,
-			  width: 1400
+			  width: 1200
 			};
 
 	Plotly.newPlot(divTag, data, layout);
@@ -209,7 +209,9 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 						var data = [trace1];
 		
 						var layout = {
-						  title:country+" "+serviceName+"<br>"+info
+						  title:country+" "+serviceName+"<br>"+info,
+						    width: 750,
+						    height: 400
 						  
 						};
 		
@@ -228,8 +230,9 @@ function mapChart(divTag,country,measures,extrainfo,metricTypeName,serviceGroupN
 					];
 				
 				var layout = {
-						  title:country+" "+serviceName+" "+info2 +"<br>"+info
-						  
+						  title:country+" "+serviceName+" "+info2 +"<br>"+info,
+						    width: 750,
+						    height: 400
 						};
 				Plotly.newPlot(divTag,data,layout,{displaylogo: false});
 			}
