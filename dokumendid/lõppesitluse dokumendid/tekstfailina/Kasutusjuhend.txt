@@ -1,0 +1,9 @@
+Kasutaja soovib leida probleemseid kohti andmetes. Kasutaja läheb http://swedbank.sidron.ee lehele 
+ning valib soovitud parameetrid, et leida probleeme andmetes. Kasutaja valib graafi(chart) tüübi ning 
+vajutab Generate. Tekib graaf, mis kuvab andmeid visuaalselt. Kasutaja vajutab kuvatud graafil piirkonnale, 
+mis tähistab vigu ning avaneb täpsem vaade, kus on kuvatud probleemsed read. Kasutaja läheb lehel tagasi ja 
+talle avanevad juba eelnevalt genereeritud graafid ning saab ka nendel vajutada probleemsetele kohtadele.
+
+Kasutaja tahab näha üldist ülevaadet kõikide andmete seisust. Kasutaja läheb http://swedbank.sidron.ee
+ lehele ning valib ülevalt servast "Overview". Kasutajale kuvatakse üldised graafid, et saada andmetest ülevaade. 
+ Kasutaja valib filtritest aja ja piirkonna, mille kohta tahab üldist ülevaadet saada.
