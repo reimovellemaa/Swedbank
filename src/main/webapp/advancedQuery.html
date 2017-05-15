@@ -113,7 +113,12 @@
 	    	console.log("Not Correct"+country);
 	    	rest='rest/andmed/getDetailData';
 
-	    	if(firstData.metric_name==="ACCURACY TO SOURCE"){
+	    
+	    	
+	    }
+	    if(me2=="0"){
+	    	
+		if(firstData.metric_name==="ACCURACY TO SOURCE"){
                 
 				dqName="Inaccurate";
 			}else if(firstData.metric_name==="DATAPROFILE"){
@@ -130,11 +135,6 @@
 			
 				dqName="Non-conform";
 			}
-	    	
-	    }
-	    if(me2=="0"){
-	    	
-
 	    	console.log("Get all");
 	    	rest='rest/andmed/getDetailFailedData';
 	    	
